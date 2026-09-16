@@ -1,0 +1,248 @@
+{
+  "id": "04-zhao-pian-zhen-shi",
+  "revision": 0,
+  "last_node_id": 14,
+  "last_link_id": 16,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "UNETLoader",
+      "pos": [40, 80],
+      "size": [360, 82],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [{ "name": "MODEL", "type": "MODEL", "links": [1] }],
+      "properties": { "Node name for S&R": "UNETLoader" },
+      "widgets_values": ["z_image_turbo_bf16.safetensors", "default"],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 2,
+      "type": "CLIPLoader",
+      "pos": [40, 210],
+      "size": [360, 106],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [{ "name": "CLIP", "type": "CLIP", "links": [2] }],
+      "properties": { "Node name for S&R": "CLIPLoader" },
+      "widgets_values": ["qwen_3_4b.safetensors", "lumina2", "default"],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [40, 360],
+      "size": [360, 60],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [{ "name": "VAE", "type": "VAE", "links": [3, 12] }],
+      "properties": { "Node name for S&R": "VAELoader" },
+      "widgets_values": ["ae.safetensors"],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 4,
+      "type": "LoadImage",
+      "pos": [40, 470],
+      "size": [360, 420],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        { "name": "IMAGE", "type": "IMAGE", "links": [7] },
+        { "name": "MASK", "type": "MASK", "links": null }
+      ],
+      "properties": { "Node name for S&R": "LoadImage" },
+      "widgets_values": ["", "image"]
+    },
+    {
+      "id": 5,
+      "type": "ImageScaleToTotalPixels",
+      "pos": [440, 470],
+      "size": [280, 106],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [{ "name": "image", "type": "IMAGE", "link": 7 }],
+      "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [8, 14] }],
+      "title": "Work at 2MP",
+      "properties": { "Node name for S&R": "ImageScaleToTotalPixels" },
+      "widgets_values": ["lanczos", 2.0, 16]
+    },
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [440, 80],
+      "size": [430, 220],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [{ "name": "clip", "type": "CLIP", "link": 2 }],
+      "outputs": [{ "name": "CONDITIONING", "type": "CONDITIONING", "links": [4, 5] }],
+      "title": "Realism Prompt",
+      "properties": { "Node name for S&R": "CLIPTextEncode" },
+      "widgets_values": [
+        "实拍照片，真实相机拍摄，自然皮肤纹理，毛孔和细小绒毛可见，发丝根根分明，真实光影，轻微胶片颗粒，没有美颜，没有磨皮，没有塑料感皮肤，没有CGI，没有涂抹感，高细节。"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 7,
+      "type": "ConditioningZeroOut",
+      "pos": [440, 340],
+      "size": [220, 50],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [{ "name": "conditioning", "type": "CONDITIONING", "link": 5 }],
+      "outputs": [{ "name": "CONDITIONING", "type": "CONDITIONING", "links": [6] }],
+      "properties": { "Node name for S&R": "ConditioningZeroOut" },
+      "widgets_values": []
+    },
+    {
+      "id": 8,
+      "type": "ModelSamplingAuraFlow",
+      "pos": [900, 80],
+      "size": [270, 58],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [{ "name": "model", "type": "MODEL", "link": 1 }],
+      "outputs": [{ "name": "MODEL", "type": "MODEL", "links": [9] }],
+      "properties": { "Node name for S&R": "ModelSamplingAuraFlow" },
+      "widgets_values": [3]
+    },
+    {
+      "id": 9,
+      "type": "VAEEncode",
+      "pos": [760, 470],
+      "size": [210, 46],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        { "name": "pixels", "type": "IMAGE", "link": 8 },
+        { "name": "vae", "type": "VAE", "link": 3 }
+      ],
+      "outputs": [{ "name": "LATENT", "type": "LATENT", "links": [10] }],
+      "properties": { "Node name for S&R": "VAEEncode" },
+      "widgets_values": []
+    },
+    {
+      "id": 10,
+      "type": "KSampler",
+      "pos": [900, 180],
+      "size": [315, 262],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        { "name": "model", "type": "MODEL", "link": 9 },
+        { "name": "positive", "type": "CONDITIONING", "link": 4 },
+        { "name": "negative", "type": "CONDITIONING", "link": 6 },
+        { "name": "latent_image", "type": "LATENT", "link": 10 }
+      ],
+      "outputs": [{ "name": "LATENT", "type": "LATENT", "links": [11] }],
+      "title": "Realism denoise 0.20",
+      "properties": { "Node name for S&R": "KSampler" },
+      "widgets_values": [0, "randomize", 8, 1, "res_multistep", "simple", 0.2]
+    },
+    {
+      "id": 11,
+      "type": "VAEDecode",
+      "pos": [1260, 180],
+      "size": [210, 46],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        { "name": "samples", "type": "LATENT", "link": 11 },
+        { "name": "vae", "type": "VAE", "link": 12 }
+      ],
+      "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [13] }],
+      "properties": { "Node name for S&R": "VAEDecode" },
+      "widgets_values": []
+    },
+    {
+      "id": 12,
+      "type": "ImageBlend",
+      "pos": [1520, 180],
+      "size": [280, 102],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        { "name": "image1", "type": "IMAGE", "link": 14 },
+        { "name": "image2", "type": "IMAGE", "link": 13 }
+      ],
+      "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [16] }],
+      "title": "Keep original 15%",
+      "properties": { "Node name for S&R": "ImageBlend" },
+      "widgets_values": [0.85, "normal"]
+    },
+    {
+      "id": 13,
+      "type": "SaveImage",
+      "pos": [1860, 80],
+      "size": [420, 400],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [{ "name": "images", "type": "IMAGE", "link": 16 }],
+      "outputs": [],
+      "title": "Save realistic",
+      "properties": { "Node name for S&R": "SaveImage" },
+      "widgets_values": ["RealisticPhoto"]
+    },
+    {
+      "id": 14,
+      "type": "Note",
+      "pos": [440, 620],
+      "size": [460, 300],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "用途：照片真实化",
+      "properties": {},
+      "widgets_values": [
+        "用途：让已有照片更像实拍\n不生图、不改构图。加载照片后 Queue。\n这条会改皮肤和纹理。只想变清楚、不改小细节：用「02_提升画质」。\n只想补人物细节（衣服/头发/脸/手）、保持原风格：用「05_提升人物衣物细节」。\n\ndenoise 是强度：\n0.10 很轻 / 0.20 默认 / 0.28 更强（盯着脸）\n不要超过 0.35。\n\nImageBlend 0.85 = 85%精修 + 15%原图。\n还假就往 1.00 加；脸漂了就降到 0.70。"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    }
+  ],
+  "links": [
+    [1, 1, 0, 8, 0, "MODEL"],
+    [2, 2, 0, 6, 0, "CLIP"],
+    [3, 3, 0, 9, 1, "VAE"],
+    [4, 6, 0, 10, 1, "CONDITIONING"],
+    [5, 6, 0, 7, 0, "CONDITIONING"],
+    [6, 7, 0, 10, 2, "CONDITIONING"],
+    [7, 4, 0, 5, 0, "IMAGE"],
+    [8, 5, 0, 9, 0, "IMAGE"],
+    [9, 8, 0, 10, 0, "MODEL"],
+    [10, 9, 0, 10, 3, "LATENT"],
+    [11, 10, 0, 11, 0, "LATENT"],
+    [12, 3, 0, 11, 1, "VAE"],
+    [13, 11, 0, 12, 1, "IMAGE"],
+    [14, 5, 0, 12, 0, "IMAGE"],
+    [16, 12, 0, 13, 0, "IMAGE"]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": { "ds": { "scale": 0.82, "offset": [0, 0] }, "frontendVersion": "1.23.4" },
+  "version": 0.4
+}
