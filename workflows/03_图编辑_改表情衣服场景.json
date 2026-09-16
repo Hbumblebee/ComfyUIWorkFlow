@@ -1,6 +1,6 @@
 {
   "id": "03-tu-bian-ji",
-  "revision": 0,
+  "revision": 1,
   "last_node_id": 18,
   "last_link_id": 21,
   "nodes": [
@@ -60,7 +60,7 @@
       "inputs": [{ "name": "model", "type": "MODEL", "link": 1 }],
       "outputs": [{ "name": "MODEL", "type": "MODEL", "links": [7] }],
       "properties": { "Node name for S&R": "LoraLoaderModelOnly" },
-      "widgets_values": ["Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors", 1]
+      "widgets_values": ["Qwen-Image-Edit-2511-Lightning-8steps-V1.0-bf16.safetensors", 1]
     },
     {
       "id": 5,
@@ -115,7 +115,7 @@
       "inputs": [{ "name": "image", "type": "IMAGE", "link": 10 }],
       "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [11, 12, 13] }],
       "properties": { "Node name for S&R": "ImageScaleToTotalPixels" },
-      "widgets_values": ["lanczos", 1.0, 16]
+      "widgets_values": ["lanczos", 1.5, 16]
     },
     {
       "id": 9,
@@ -215,7 +215,7 @@
       ],
       "outputs": [{ "name": "LATENT", "type": "LATENT", "links": [19] }],
       "properties": { "Node name for S&R": "KSampler" },
-      "widgets_values": [0, "randomize", 4, 1, "euler", "simple", 1]
+      "widgets_values": [0, "randomize", 8, 1, "euler", "simple", 1]
     },
     {
       "id": 15,
@@ -259,7 +259,7 @@
       "title": "用途：图编辑",
       "properties": {},
       "widgets_values": [
-        "用途：改人物的表情、衣服、动作、场景\n加载一张图，在绿色节点写「要改什么」，不要重写整张画面。\n\n示例：\n- 把她的表情改成微笑\n- 把衣服换成黑色高领毛衣\n- 把背景换成夜晚的城市街道，人物保持不变\n- 让她微微侧头看向画面左侧\n\n表情、衣服、光线、背景最稳。大动作容易跑偏。\n4 步 + CFG 1。"
+        "用途：改人物的表情、衣服、动作、场景\n加载一张图，在绿色节点写「要改什么」，不要重写整张画面。\n\n示例：\n- 把她的表情改成微笑\n- 把衣服换成黑色高领毛衣\n- 把背景换成夜晚的城市街道，人物保持不变\n- 让她微微侧头看向画面左侧\n\n表情、衣服、光线、背景最稳。大动作容易跑偏。\n8 步 Lightning + CFG 1。工作分辨率约 1.5MP。\n底模是 INT8 ConvRot（14GB 内最接近 BF16；FP8/BF16 整模塞不进）。"
       ],
       "color": "#432",
       "bgcolor": "#653"

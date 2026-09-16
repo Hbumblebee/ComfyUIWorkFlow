@@ -1,6 +1,6 @@
 {
   "id": "05-ti-sheng-ren-wu-yi-wu-xi-jie",
-  "revision": 0,
+  "revision": 1,
   "last_node_id": 14,
   "last_link_id": 16,
   "nodes": [
@@ -154,9 +154,9 @@
         { "name": "latent_image", "type": "LATENT", "link": 10 }
       ],
       "outputs": [{ "name": "LATENT", "type": "LATENT", "links": [11] }],
-      "title": "Detail denoise 0.22",
+      "title": "Detail denoise 0.26",
       "properties": { "Node name for S&R": "KSampler" },
-      "widgets_values": [0, "randomize", 8, 1, "res_multistep", "simple", 0.22]
+      "widgets_values": [0, "randomize", 8, 1, "res_multistep", "simple", 0.26]
     },
     {
       "id": 11,
@@ -187,9 +187,9 @@
         { "name": "image2", "type": "IMAGE", "link": 13 }
       ],
       "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [16] }],
-      "title": "Keep original 22%",
+      "title": "Keep original 18%",
       "properties": { "Node name for S&R": "ImageBlend" },
-      "widgets_values": [0.78, "normal"]
+      "widgets_values": [0.82, "normal"]
     },
     {
       "id": 13,
@@ -218,7 +218,7 @@
       "title": "用途：提升人物细节",
       "properties": {},
       "widgets_values": [
-        "用途：加强图里人物细节（衣服、头发、脸、手）。\n不改款式、颜色、五官、姿势。加载照片后 Queue。\n\n和 02 不同：02 只变清楚、不重画；这条会补衣服、发丝、皮肤和手部纹理。\n和 04 不同：04 是改成实拍感；这条保持原图风格。\n\ndenoise：0.16 更稳（脸/手） / 0.22 默认 / 0.28 衣服仍太平。不要超过 0.32。\n五官、手指或饰品漂了：denoise 降到 0.16，或把 ImageBlend 降到 0.65。\nCFG 必须为 1。要变大再走 02。"
+        "用途：加强图里人物细节（衣服、头发、脸、手）。\n不改款式、颜色、五官、姿势。加载照片后 Queue。\n\n和 02 不同：02 只变清楚、不重画；这条会补衣服、发丝、皮肤和手部纹理。\n和 04 不同：04 是改成实拍感；这条保持原图风格。\n\n底模 z_image_turbo_bf16，8 步，CFG 必须为 1。工作分辨率约 2MP。\n\ndenoise：0.18 更稳（脸/手） / 0.26 默认 / 0.30 衣服仍太平。不要超过 0.32。\n五官、手指或饰品漂了：denoise 降到 0.18，或把 ImageBlend 降到 0.68。\n要变大再走 02。"
       ],
       "color": "#432",
       "bgcolor": "#653"

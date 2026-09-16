@@ -1,6 +1,6 @@
 {
   "id": "06-dong-man-gao-qing",
-  "revision": 1,
+  "revision": 2,
   "last_node_id": 23,
   "last_link_id": 29,
   "nodes": [
@@ -15,7 +15,7 @@
       "inputs": [],
       "outputs": [{ "name": "MODEL", "type": "MODEL", "links": [1] }],
       "properties": { "Node name for S&R": "UNETLoader" },
-      "widgets_values": ["z-anime-base-fp8.safetensors", "default"],
+      "widgets_values": ["z-anime-base-bf16.safetensors", "default"],
       "color": "#223",
       "bgcolor": "#335"
     },
@@ -60,7 +60,7 @@
       "inputs": [],
       "outputs": [{ "name": "UPSCALE_MODEL", "type": "UPSCALE_MODEL", "links": [25] }],
       "properties": { "Node name for S&R": "UpscaleModelLoader" },
-      "widgets_values": ["RealESRGAN_x4plus_anime_6B.pth"]
+      "widgets_values": ["4x-AnimeSharp.pth"]
     },
     {
       "id": 5,
@@ -108,9 +108,9 @@
       "mode": 0,
       "inputs": [],
       "outputs": [{ "name": "LATENT", "type": "LATENT", "links": [11] }],
-      "title": "Portrait 832x1216",
+      "title": "Portrait 1024x1536",
       "properties": { "Node name for S&R": "EmptySD3LatentImage" },
-      "widgets_values": [832, 1216, 1]
+      "widgets_values": [1024, 1536, 1]
     },
     {
       "id": 8,
@@ -140,9 +140,9 @@
         { "name": "latent_image", "type": "LATENT", "link": 11 }
       ],
       "outputs": [{ "name": "LATENT", "type": "LATENT", "links": [14] }],
-      "title": "Generate 32 steps CFG4",
+      "title": "Generate 40 steps CFG4",
       "properties": { "Node name for S&R": "KSampler" },
-      "widgets_values": [0, "randomize", 32, 4, "euler_ancestral", "beta", 1]
+      "widgets_values": [0, "randomize", 40, 4, "euler_ancestral", "beta", 1]
     },
     {
       "id": 10,
@@ -219,9 +219,9 @@
         { "name": "latent_image", "type": "LATENT", "link": 19 }
       ],
       "outputs": [{ "name": "LATENT", "type": "LATENT", "links": [20] }],
-      "title": "Hires 20 steps denoise 0.32",
+      "title": "Hires 28 steps denoise 0.28",
       "properties": { "Node name for S&R": "KSampler" },
-      "widgets_values": [0, "randomize", 20, 4, "euler", "beta", 0.32]
+      "widgets_values": [0, "randomize", 28, 4, "euler", "beta", 0.28]
     },
     {
       "id": 15,
@@ -283,7 +283,7 @@
         { "name": "image", "type": "IMAGE", "link": 23 }
       ],
       "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [26] }],
-      "title": "Anime RealESRGAN 4x",
+      "title": "AnimeSharp 4x",
       "properties": { "Node name for S&R": "ImageUpscaleWithModel" },
       "widgets_values": []
     },
@@ -328,9 +328,9 @@
         { "name": "image2", "type": "IMAGE", "link": 28 }
       ],
       "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [29] }],
-      "title": "4K mix 0.40",
+      "title": "4K mix 0.46",
       "properties": { "Node name for S&R": "ImageBlend" },
-      "widgets_values": [0.4, "normal"]
+      "widgets_values": [0.46, "normal"]
     },
     {
       "id": 22,
@@ -359,7 +359,7 @@
       "title": "用途：动漫高清文生图",
       "properties": {},
       "widgets_values": [
-        "用途：稳定生成二次元插画。底模是 Z-Anime Base，不是写实 Z-Image Turbo。\n一次 Queue 三张：Preview / Detail / 4K。\n\n只改绿色 Positive。红色 Negative 一般不用动。\n竖图 832x1216；方图 1024；横图 1216x832。\n\n32 步，CFG 4，euler_a + beta。不要改成 CFG 1。\nhires denoise：0.22 更稳 / 0.32 默认 / 0.40 仍糊。不要超过 0.45。\n脸漂了：denoise 降到 0.22。\n线稿发脆：4K mix 降到 0.28。\n\n提示词用自然语言写要画什么。前面保留 anime illustration / cel-shaded / clean lineart。不要写「不要变成真人」。"
+        "用途：稳定生成二次元插画。底模是 Z-Anime Base BF16，不是写实 Z-Image Turbo，也不是 FP8。\n一次 Queue 三张：Preview / Detail / 4K。\n\n若 UNET 列表里还没有 z-anime-base-bf16（约 12.3GB，首次会下载到 ComfyUI-Shared/models/diffusion_models），可临时改成已有的 z-anime-base-fp8。下载完成后把文件名改回 bf16。\n\n只改绿色 Positive。红色 Negative 一般不用动。\n竖图细节向 1024x1536；方图 1024；横图 1536x1024。长边不要超过 1536。\n\n40 步，CFG 4，euler_a + beta。不要改成 CFG 1。\nhires denoise：0.22 更稳 / 0.28 默认 / 0.36 仍糊。不要超过 0.42。\n脸漂了：denoise 降到 0.22。\n线稿发脆：4K mix 降到 0.32。\n超分用 4x-AnimeSharp；超分前最长边压到 2048，4K 用超分得到。\n\n提示词用自然语言写要画什么。前面保留 anime illustration / cel-shaded / clean lineart。不要写「不要变成真人」。"
       ],
       "color": "#432",
       "bgcolor": "#653"

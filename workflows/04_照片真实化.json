@@ -1,6 +1,6 @@
 {
   "id": "04-zhao-pian-zhen-shi",
-  "revision": 0,
+  "revision": 1,
   "last_node_id": 14,
   "last_link_id": 16,
   "nodes": [
@@ -154,9 +154,9 @@
         { "name": "latent_image", "type": "LATENT", "link": 10 }
       ],
       "outputs": [{ "name": "LATENT", "type": "LATENT", "links": [11] }],
-      "title": "Realism denoise 0.20",
+      "title": "Realism denoise 0.24",
       "properties": { "Node name for S&R": "KSampler" },
-      "widgets_values": [0, "randomize", 8, 1, "res_multistep", "simple", 0.2]
+      "widgets_values": [0, "randomize", 8, 1, "res_multistep", "simple", 0.24]
     },
     {
       "id": 11,
@@ -187,9 +187,9 @@
         { "name": "image2", "type": "IMAGE", "link": 13 }
       ],
       "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [16] }],
-      "title": "Keep original 15%",
+      "title": "Keep original 12%",
       "properties": { "Node name for S&R": "ImageBlend" },
-      "widgets_values": [0.85, "normal"]
+      "widgets_values": [0.88, "normal"]
     },
     {
       "id": 13,
@@ -218,7 +218,7 @@
       "title": "用途：照片真实化",
       "properties": {},
       "widgets_values": [
-        "用途：让已有照片更像实拍\n不生图、不改构图。加载照片后 Queue。\n这条会改皮肤和纹理。只想变清楚、不改小细节：用「02_提升画质」。\n只想补人物细节（衣服/头发/脸/手）、保持原风格：用「05_提升人物衣物细节」。\n\ndenoise 是强度：\n0.10 很轻 / 0.20 默认 / 0.28 更强（盯着脸）\n不要超过 0.35。\n\nImageBlend 0.85 = 85%精修 + 15%原图。\n还假就往 1.00 加；脸漂了就降到 0.70。"
+        "用途：让已有照片更像实拍\n不生图、不改构图。加载照片后 Queue。\n这条会改皮肤和纹理。只想变清楚、不改小细节：用「02_提升画质」。\n只想补人物细节（衣服/头发/脸/手）、保持原风格：用「05_提升人物衣物细节」。\n\n底模 z_image_turbo_bf16，8 步，CFG 必须为 1，res_multistep + simple。工作分辨率约 2MP。\n\ndenoise 是强度：\n0.16 很轻 / 0.24 默认 / 0.30 更强（盯着脸）\n不要超过 0.35。\n\nImageBlend 0.88 = 88%精修 + 12%原图。\n还假就往 1.00 加；脸漂了就降到 0.72。"
       ],
       "color": "#432",
       "bgcolor": "#653"

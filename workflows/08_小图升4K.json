@@ -1,6 +1,6 @@
 {
   "id": "08-xiao-tu-sheng-4k",
-  "revision": 0,
+  "revision": 2,
   "last_node_id": 23,
   "last_link_id": 26,
   "nodes": [
@@ -76,7 +76,7 @@
       "inputs": [],
       "outputs": [{ "name": "UPSCALE_MODEL", "type": "UPSCALE_MODEL", "links": [9, 22] }],
       "properties": { "Node name for S&R": "UpscaleModelLoader" },
-      "widgets_values": ["RealESRGAN_x4plus.safetensors"]
+      "widgets_values": ["4xNomos8kSC.pth"]
     },
     {
       "id": 6,
@@ -105,7 +105,7 @@
         { "name": "image", "type": "IMAGE", "link": 8 }
       ],
       "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [10] }],
-      "title": "RealESRGAN pass 1",
+      "title": "Nomos8kSC pass 1",
       "properties": { "Node name for S&R": "ImageUpscaleWithModel" },
       "widgets_values": []
     },
@@ -198,9 +198,9 @@
         { "name": "latent_image", "type": "LATENT", "link": 14 }
       ],
       "outputs": [{ "name": "LATENT", "type": "LATENT", "links": [15] }],
-      "title": "Refine denoise 0.24",
+      "title": "Refine denoise 0.26",
       "properties": { "Node name for S&R": "KSampler" },
-      "widgets_values": [0, "randomize", 8, 1, "res_multistep", "simple", 0.24]
+      "widgets_values": [0, "randomize", 8, 1, "res_multistep", "simple", 0.26]
     },
     {
       "id": 14,
@@ -231,9 +231,9 @@
         { "name": "image2", "type": "IMAGE", "link": 17 }
       ],
       "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [18, 19, 20] }],
-      "title": "Keep ESRGAN 20%",
+      "title": "Keep Nomos 18%",
       "properties": { "Node name for S&R": "ImageBlend" },
-      "widgets_values": [0.8, "normal"]
+      "widgets_values": [0.82, "normal"]
     },
     {
       "id": 16,
@@ -276,7 +276,7 @@
         { "name": "image", "type": "IMAGE", "link": 21 }
       ],
       "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [23] }],
-      "title": "RealESRGAN pass 2",
+      "title": "Nomos8kSC pass 2",
       "properties": { "Node name for S&R": "ImageUpscaleWithModel" },
       "widgets_values": []
     },
@@ -321,9 +321,9 @@
         { "name": "image2", "type": "IMAGE", "link": 25 }
       ],
       "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [26] }],
-      "title": "4K mix 0.48",
+      "title": "4K mix 0.55",
       "properties": { "Node name for S&R": "ImageBlend" },
-      "widgets_values": [0.48, "normal"]
+      "widgets_values": [0.55, "normal"]
     },
     {
       "id": 22,
@@ -352,7 +352,7 @@
       "title": "用途：小图升 4K",
       "properties": {},
       "widgets_values": [
-        "用途：把几百像素的小图同时提高画质和分辨率到长边 4096。\n加载图片后 Queue。一次两张：Detail（约 2MP）和 4K。\n\n不要用 02：02 会先 Lanczos 拉到 2048 再超分，小图会更糊。\n这条是：原图直接 RealESRGAN → 2MP 用 Z-Image Turbo 补纹理 → 再超分到 4K。不在 4K 上扩散采样。\n\ndenoise：0.18 更稳（脸/手） / 0.24 默认 / 0.32 仍糊。不要超过 0.35。\n五官或手指漂了：denoise 降到 0.18，或把 Keep ESRGAN 的 mix 降到 0.65。\n4K 发脆：4K mix 降到 0.32。还想更锐：升到 0.60。\nCFG 必须为 1。\n已经是 1K 以上、只想变清楚：用 02。\n动漫小图：把超分模型改成 RealESRGAN_x4plus_anime_6B.pth，并下调 denoise；写实 Turbo 容易把二次元画成真脸。"
+        "用途：把几百像素的小图同时提高画质和分辨率到长边 4096。\n加载图片后 Queue。一次两张：Detail（约 2MP）和 4K。\n\n不要用 02：02 会先 Lanczos 拉到 2048 再超分，小图会更糊。\n这条是：原图直接 4xNomos8kSC → 2MP 用 Z-Image Turbo 补纹理 → 再超分到 4K。不在 4K 上扩散采样。\n\n底模 z_image_turbo_bf16，8 步，CFG 必须为 1。\n\ndenoise：0.18 更稳（脸/手） / 0.26 默认 / 0.32 仍糊。不要超过 0.35。\n五官或手指漂了：denoise 降到 0.18，或把 Keep 超分 的 mix 降到 0.65。\n4K 发脆：4K mix 降到 0.36。还想更锐：升到 0.68。\n已经是 1K 以上、只想变清楚：用 02。\n动漫小图：把超分模型改成 4x-AnimeSharp.pth，并下调 denoise；写实 Turbo 容易把二次元画成真脸。"
       ],
       "color": "#432",
       "bgcolor": "#653"

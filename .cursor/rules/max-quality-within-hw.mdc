@@ -1,5 +1,5 @@
 ---
-description: 新建/调整工作流时顶满本机性能但不超限，输出文件必须以时间戳结尾
+description: 新建/调整工作流时顶满本机性能但不超限，缺更好模型就下载，输出文件必须以时间戳结尾
 alwaysApply: true
 ---
 
@@ -14,13 +14,19 @@ alwaysApply: true
 - 内存：约 **32 GB**（不要把大模型权重和巨大中间图画到系统内存爆掉）
 - 禁止：fp32 权重、batch>1、原生 4K 扩散采样、同时常驻两套大 UNet、超分前不限边长
 
+## 缺模型就下载（强制）
+
+- 本地没有更好/更合适的模型时：**直接下载**到 `ComfyUI-Shared/models` 对应子目录，禁止用更差精度或错误品类凑合
+- 仍须能在 14 GB 内跑。下载前核对体积：bf16/fp16 能塞进就用；否则 fp8；再不行才 int8 / GGUF
+- Qwen-Image-Edit 的 FP8/BF16 整模（约 20.5 / 41 GB）塞不进：继续用 `qwen_image_edit_2511_int8_convrot`（INT8 ConvRot 比 FP8 更接近 BF16）
+
 ## 质量优先（在上限内尽量顶满）
 
 - 写实文生图 / 照片向：`z_image_turbo_bf16` + `qwen_3_4b` + `ae`；8 步、CFG 1、`res_multistep` + `simple`
-- 图编辑 / 换脸：`qwen_image_edit_2511_int8_convrot` + `qwen_2.5_vl_7b_fp8_scaled` + Lightning 4 步
-- 动漫：`z-anime-base-fp8`（不要用写实 Turbo 硬出二次元）
-- 提分辨率：先出好构图，再用 RealESRGAN；超分输入最长边先压到 **2048**，4K 用超分得到，不要直接 4096 采样
-- 默认分辨率：方图 1024；竖图约 768x1280 或 832x1216；长边一般不超过 **1536**
+- 图编辑 / 换脸：`qwen_image_edit_2511_int8_convrot` + `qwen_2.5_vl_7b_fp8_scaled` + **Lightning 8 步**（不要用 4 步）
+- 动漫：`z-anime-base-bf16`（不要用 FP8，不要用写实 Turbo 硬出二次元）；28–50 步、CFG 4、`euler_ancestral` + `beta`
+- 提分辨率：先出好构图，再用超分。照片 `4xNomos8kSC`（ESRGAN；同 Nomos 数据集。本机 DAT 会 NaN 出黑图，不要用 `4xNomos8kDAT`）；动漫 `4x-AnimeSharp`。超分输入最长边先压到 **2048**，4K 用超分得到，不要直接 4096 采样
+- 默认分辨率：方图 1024；竖图约 768x1280、832x1216 或细节向 **1024x1536**；长边一般不超过 **1536**
 - 有 fp16/bf16 且能塞进 14 GB 就用，否则才降到 fp8/int8；不要为“保险”无故降级
 
 ## 输出命名（强制）
