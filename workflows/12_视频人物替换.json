@@ -1,0 +1,2088 @@
+{
+  "id": "12-shi-pin-ren-wu-ti-huan",
+  "revision": 1,
+  "last_node_id": 37,
+  "last_link_id": 51,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "UNETLoader",
+      "pos": [
+        40,
+        40
+      ],
+      "size": [
+        460,
+        82
+      ],
+      "order": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "widgets_values": [
+        "wan2.1_14B_SCAIL_2_int8_convrot.safetensors",
+        "default"
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      }
+    },
+    {
+      "id": 5,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        540,
+        40
+      ],
+      "size": [
+        420,
+        82
+      ],
+      "order": 1,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "widgets_values": [
+        "wan2.1_SCAIL_2_DPO_lora_bf16.safetensors",
+        1
+      ],
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      }
+    },
+    {
+      "id": 6,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        1000,
+        40
+      ],
+      "size": [
+        460,
+        82
+      ],
+      "order": 2,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "widgets_values": [
+        "lightx2v_I2V_14B_480p_cfg_step_distill_rank64_bf16.safetensors",
+        0.8
+      ],
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      }
+    },
+    {
+      "id": 7,
+      "type": "ModelSamplingSD3",
+      "pos": [
+        1500,
+        40
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "order": 3,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "widgets_values": [
+        5
+      ],
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "ModelSamplingSD3"
+      }
+    },
+    {
+      "id": 2,
+      "type": "CLIPLoader",
+      "pos": [
+        40,
+        170
+      ],
+      "size": [
+        460,
+        106
+      ],
+      "order": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            5,
+            6
+          ]
+        }
+      ],
+      "widgets_values": [
+        "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "wan",
+        "default"
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      }
+    },
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [
+        540,
+        170
+      ],
+      "size": [
+        420,
+        58
+      ],
+      "order": 5,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            7,
+            8
+          ]
+        }
+      ],
+      "widgets_values": [
+        "Wan2_1_VAE_bf16.safetensors"
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      }
+    },
+    {
+      "id": 4,
+      "type": "CLIPVisionLoader",
+      "pos": [
+        1000,
+        170
+      ],
+      "size": [
+        460,
+        58
+      ],
+      "order": 6,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP_VISION",
+          "type": "CLIP_VISION",
+          "links": [
+            9
+          ]
+        }
+      ],
+      "widgets_values": [
+        "clip_vision_h.safetensors"
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "CLIPVisionLoader"
+      }
+    },
+    {
+      "id": 20,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        1500,
+        150
+      ],
+      "size": [
+        330,
+        98
+      ],
+      "order": 7,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            10,
+            11
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            12,
+            13
+          ]
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": null
+        }
+      ],
+      "widgets_values": [
+        "sam3.1_multiplex_fp16.safetensors"
+      ],
+      "title": "SAM3.1",
+      "color": "#223",
+      "bgcolor": "#335",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      }
+    },
+    {
+      "id": 8,
+      "type": "LoadVideo",
+      "pos": [
+        40,
+        360
+      ],
+      "size": [
+        320,
+        220
+      ],
+      "order": 8,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            14
+          ]
+        }
+      ],
+      "widgets_values": [
+        "",
+        "video"
+      ],
+      "title": "原视频（单人）",
+      "color": "#223",
+      "bgcolor": "#335",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "LoadVideo"
+      }
+    },
+    {
+      "id": 9,
+      "type": "Video Slice",
+      "pos": [
+        40,
+        620
+      ],
+      "size": [
+        320,
+        106
+      ],
+      "order": 9,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            15
+          ]
+        }
+      ],
+      "widgets_values": [
+        0.0,
+        0.0,
+        false
+      ],
+      "title": "截取片段（秒）",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "Video Slice"
+      }
+    },
+    {
+      "id": 15,
+      "type": "LoadImage",
+      "pos": [
+        400,
+        360
+      ],
+      "size": [
+        280,
+        314
+      ],
+      "order": 10,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            22
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "参考 正面 0°",
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      }
+    },
+    {
+      "id": 16,
+      "type": "LoadImage",
+      "pos": [
+        700,
+        360
+      ],
+      "size": [
+        280,
+        314
+      ],
+      "order": 11,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            23
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "参考 侧面 90°",
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      }
+    },
+    {
+      "id": 17,
+      "type": "LoadImage",
+      "pos": [
+        1000,
+        360
+      ],
+      "size": [
+        280,
+        314
+      ],
+      "order": 12,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            24
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "参考 背面 180°",
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      }
+    },
+    {
+      "id": 18,
+      "type": "BatchImagesNode",
+      "pos": [
+        1320,
+        360
+      ],
+      "size": [
+        250,
+        90
+      ],
+      "order": 13,
+      "inputs": [
+        {
+          "label": "image0",
+          "name": "images.image0",
+          "type": "IMAGE",
+          "link": 22
+        },
+        {
+          "label": "image1",
+          "name": "images.image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 23
+        },
+        {
+          "label": "image2",
+          "name": "images.image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 24
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            25,
+            26,
+            27
+          ]
+        }
+      ],
+      "widgets_values": [],
+      "title": "拼接多角度参考",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "BatchImagesNode"
+      }
+    },
+    {
+      "id": 19,
+      "type": "ImageFromBatch",
+      "pos": [
+        1320,
+        490
+      ],
+      "size": [
+        250,
+        82
+      ],
+      "order": 14,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 25
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            28
+          ]
+        }
+      ],
+      "widgets_values": [
+        0,
+        1
+      ],
+      "title": "CLIP Vision 用正面",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      }
+    },
+    {
+      "id": 34,
+      "type": "Note",
+      "pos": [
+        1620,
+        360
+      ],
+      "size": [
+        520,
+        430
+      ],
+      "order": 15,
+      "inputs": [],
+      "outputs": [],
+      "widgets_values": [
+        "用途：用工作流 10 的多角度人物图，替换一小段单人视频里的人物。\n\n流程：先跑 10_人物多角度.json，再把输出图填进三个绿色节点。\n1) MultiView_000_Front → 主参考（身份/衣服以这张为准）\n2) MultiView_090_Left 或 MultiView_270_Right → 侧脸/轮廓\n3) MultiView_180_Back → 后脑勺和衣服背面\n没有侧面或背面时，把正面图再拖进空槽即可，不要留空。\n\n蓝色节点上传要换人的视频（画面里只有一个人）。\n「截取片段」默认 duration=0 表示从头开始尽量用整段；超过约 81 帧会自动截断。\n24fps 大约 3.4 秒，30fps 大约 2.7 秒。更长的视频请改 start_time 选一段再跑。\n\n提示词用英文写：参考图里的人 + 视频里正在做的动作 + 保留原背景和运镜。\nSAM3 分割词默认 person。预览遮罩没套住人时改成 man / woman / the person in black。\n\nreplace 模式会把视频里被跟踪的人换成参考角色，背景和动作跟着原视频。\nSCAIL-2 INT8 ConvRot + DPO LoRA + LightX2V 8 步 CFG 1。最长边 896，对齐 32。\n显存按 14 GB 顶：不要加第二套大 UNet，不要把 81 帧改成更长。\n重启 ComfyUI 后才能看到 Save Video (Timestamp) 节点。"
+      ],
+      "title": "用途：视频人物替换",
+      "properties": {},
+      "color": "#432",
+      "bgcolor": "#653",
+      "flags": {},
+      "mode": 0
+    },
+    {
+      "id": 10,
+      "type": "GetVideoComponents",
+      "pos": [
+        400,
+        720
+      ],
+      "size": [
+        240,
+        110
+      ],
+      "order": 16,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            16
+          ]
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            49
+          ]
+        },
+        {
+          "name": "fps",
+          "type": "FLOAT",
+          "links": [
+            50
+          ]
+        },
+        {
+          "name": "bit_depth",
+          "type": "COMBO",
+          "links": null
+        },
+        {
+          "name": "color_space",
+          "type": "COMBO",
+          "links": null
+        }
+      ],
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "GetVideoComponents"
+      }
+    },
+    {
+      "id": 11,
+      "type": "ImageFromBatch",
+      "pos": [
+        680,
+        720
+      ],
+      "size": [
+        240,
+        82
+      ],
+      "order": 17,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            17
+          ]
+        }
+      ],
+      "widgets_values": [
+        0,
+        81
+      ],
+      "title": "最多 81 帧",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      }
+    },
+    {
+      "id": 12,
+      "type": "ResizeImageMaskNode",
+      "pos": [
+        960,
+        720
+      ],
+      "size": [
+        260,
+        100
+      ],
+      "order": 18,
+      "inputs": [
+        {
+          "name": "input",
+          "type": "IMAGE,MASK",
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "name": "resized",
+          "type": "IMAGE",
+          "links": [
+            18
+          ]
+        }
+      ],
+      "widgets_values": [
+        "scale longer dimension",
+        896,
+        "area"
+      ],
+      "title": "最长边 896",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "ResizeImageMaskNode"
+      }
+    },
+    {
+      "id": 13,
+      "type": "ResizeImageMaskNode",
+      "pos": [
+        1260,
+        720
+      ],
+      "size": [
+        250,
+        100
+      ],
+      "order": 19,
+      "inputs": [
+        {
+          "name": "input",
+          "type": "IMAGE,MASK",
+          "link": 18
+        }
+      ],
+      "outputs": [
+        {
+          "name": "resized",
+          "type": "IMAGE",
+          "links": [
+            19,
+            20,
+            21
+          ]
+        }
+      ],
+      "widgets_values": [
+        "scale to multiple",
+        32,
+        "area"
+      ],
+      "title": "对齐 32",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "ResizeImageMaskNode"
+      }
+    },
+    {
+      "id": 14,
+      "type": "GetImageSize",
+      "pos": [
+        1540,
+        720
+      ],
+      "size": [
+        220,
+        90
+      ],
+      "order": 20,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 19
+        }
+      ],
+      "outputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            40
+          ]
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            41
+          ]
+        },
+        {
+          "name": "batch_size",
+          "type": "INT",
+          "links": [
+            42
+          ]
+        }
+      ],
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "GetImageSize"
+      }
+    },
+    {
+      "id": 35,
+      "type": "ComfyMathExpression",
+      "pos": [
+        1800,
+        720
+      ],
+      "size": [
+        240,
+        120
+      ],
+      "order": 21,
+      "inputs": [
+        {
+          "label": "a",
+          "name": "values.a",
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": 42
+        },
+        {
+          "label": "b",
+          "name": "values.b",
+          "shape": 7,
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": null
+        },
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            43
+          ]
+        },
+        {
+          "name": "BOOL",
+          "type": "BOOLEAN",
+          "links": null
+        }
+      ],
+      "widgets_values": [
+        "((a - 1) // 4) * 4 + 1"
+      ],
+      "title": "帧数 4n+1",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "ComfyMathExpression"
+      }
+    },
+    {
+      "id": 21,
+      "type": "CLIPTextEncode",
+      "pos": [
+        40,
+        900
+      ],
+      "size": [
+        340,
+        88
+      ],
+      "order": 22,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 12
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            29
+          ]
+        }
+      ],
+      "widgets_values": [
+        "person"
+      ],
+      "title": "SAM3 视频分割词",
+      "color": "#223",
+      "bgcolor": "#335",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      }
+    },
+    {
+      "id": 22,
+      "type": "CLIPTextEncode",
+      "pos": [
+        40,
+        1030
+      ],
+      "size": [
+        340,
+        88
+      ],
+      "order": 23,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 13
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            30
+          ]
+        }
+      ],
+      "widgets_values": [
+        "person"
+      ],
+      "title": "SAM3 参考图分割词",
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      }
+    },
+    {
+      "id": 23,
+      "type": "SAM3_VideoTrack",
+      "pos": [
+        420,
+        900
+      ],
+      "size": [
+        280,
+        150
+      ],
+      "order": 24,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 20
+        },
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 10
+        },
+        {
+          "name": "initial_mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "conditioning",
+          "shape": 7,
+          "type": "CONDITIONING",
+          "link": 29
+        }
+      ],
+      "outputs": [
+        {
+          "name": "track_data",
+          "type": "SAM3_TRACK_DATA",
+          "links": [
+            31
+          ]
+        }
+      ],
+      "widgets_values": [
+        0.5,
+        1,
+        1
+      ],
+      "title": "跟踪视频人物",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "SAM3_VideoTrack"
+      }
+    },
+    {
+      "id": 24,
+      "type": "SAM3_VideoTrack",
+      "pos": [
+        420,
+        1080
+      ],
+      "size": [
+        280,
+        150
+      ],
+      "order": 25,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 26
+        },
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 11
+        },
+        {
+          "name": "initial_mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "conditioning",
+          "shape": 7,
+          "type": "CONDITIONING",
+          "link": 30
+        }
+      ],
+      "outputs": [
+        {
+          "name": "track_data",
+          "type": "SAM3_TRACK_DATA",
+          "links": [
+            32
+          ]
+        }
+      ],
+      "widgets_values": [
+        0.5,
+        1,
+        1
+      ],
+      "title": "分割参考人物",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "SAM3_VideoTrack"
+      }
+    },
+    {
+      "id": 25,
+      "type": "SCAIL2ColoredMask",
+      "pos": [
+        740,
+        900
+      ],
+      "size": [
+        320,
+        130
+      ],
+      "order": 26,
+      "inputs": [
+        {
+          "name": "driving_track_data",
+          "type": "SAM3_TRACK_DATA",
+          "link": 31
+        },
+        {
+          "name": "ref_track_data",
+          "shape": 7,
+          "type": "SAM3_TRACK_DATA,MASK",
+          "link": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "pose_video_mask",
+          "type": "IMAGE",
+          "links": [
+            33,
+            35
+          ]
+        },
+        {
+          "name": "reference_image_mask",
+          "type": "IMAGE",
+          "links": [
+            34,
+            36
+          ]
+        }
+      ],
+      "widgets_values": [
+        "",
+        "left_to_right",
+        true
+      ],
+      "title": "替换模式遮罩",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "SCAIL2ColoredMask"
+      }
+    },
+    {
+      "id": 36,
+      "type": "PreviewImage",
+      "pos": [
+        1100,
+        900
+      ],
+      "size": [
+        280,
+        250
+      ],
+      "order": 27,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 35
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "widgets_values": [],
+      "title": "预览视频人物遮罩",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 37,
+      "type": "PreviewImage",
+      "pos": [
+        1410,
+        900
+      ],
+      "size": [
+        280,
+        250
+      ],
+      "order": 28,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 36
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "widgets_values": [],
+      "title": "预览参考人物遮罩",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 26,
+      "type": "CLIPTextEncode",
+      "pos": [
+        40,
+        1280
+      ],
+      "size": [
+        460,
+        180
+      ],
+      "order": 29,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            37
+          ]
+        }
+      ],
+      "widgets_values": [
+        "The same person as the reference photos, matching face, hairstyle, body shape and clothing, replacing the person in the driving video. Keep the original background, camera motion, lighting and timing. Natural movement, photorealistic, temporally consistent."
+      ],
+      "title": "Positive",
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      }
+    },
+    {
+      "id": 27,
+      "type": "CLIPTextEncode",
+      "pos": [
+        40,
+        1500
+      ],
+      "size": [
+        460,
+        90
+      ],
+      "order": 30,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            38
+          ]
+        }
+      ],
+      "widgets_values": [
+        ""
+      ],
+      "title": "Negative",
+      "color": "#322",
+      "bgcolor": "#533",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      }
+    },
+    {
+      "id": 28,
+      "type": "CLIPVisionEncode",
+      "pos": [
+        540,
+        1280
+      ],
+      "size": [
+        250,
+        78
+      ],
+      "order": 31,
+      "inputs": [
+        {
+          "name": "clip_vision",
+          "type": "CLIP_VISION",
+          "link": 9
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 28
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CLIP_VISION_OUTPUT",
+          "type": "CLIP_VISION_OUTPUT",
+          "links": [
+            39
+          ]
+        }
+      ],
+      "widgets_values": [
+        "none"
+      ],
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "CLIPVisionEncode"
+      }
+    },
+    {
+      "id": 29,
+      "type": "WanSCAILToVideo",
+      "pos": [
+        830,
+        1280
+      ],
+      "size": [
+        320,
+        360
+      ],
+      "order": 32,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 37
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 38
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 7
+        },
+        {
+          "name": "pose_video",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 21
+        },
+        {
+          "name": "pose_video_mask",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 33
+        },
+        {
+          "name": "reference_image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 27
+        },
+        {
+          "name": "reference_image_mask",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 34
+        },
+        {
+          "name": "clip_vision_output",
+          "shape": 7,
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 39
+        },
+        {
+          "name": "previous_frames",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 40
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 41
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "widget": {
+            "name": "length"
+          },
+          "link": 43
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            44
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            45
+          ]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            46
+          ]
+        },
+        {
+          "name": "video_frame_offset",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "widgets_values": [
+        512,
+        896,
+        81,
+        1,
+        1,
+        0,
+        1,
+        0,
+        5,
+        true
+      ],
+      "title": "SCAIL-2 人物替换",
+      "color": "#322",
+      "bgcolor": "#533",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "WanSCAILToVideo"
+      }
+    },
+    {
+      "id": 30,
+      "type": "KSampler",
+      "pos": [
+        1190,
+        1280
+      ],
+      "size": [
+        315,
+        262
+      ],
+      "order": 33,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 4
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 44
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 45
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 46
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            47
+          ]
+        }
+      ],
+      "widgets_values": [
+        0,
+        "randomize",
+        8,
+        1,
+        "euler",
+        "simple",
+        1
+      ],
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "KSampler"
+      }
+    },
+    {
+      "id": 31,
+      "type": "VAEDecode",
+      "pos": [
+        1540,
+        1280
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "order": 34,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 47
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            48
+          ]
+        }
+      ],
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 32,
+      "type": "CreateVideo",
+      "pos": [
+        1540,
+        1370
+      ],
+      "size": [
+        250,
+        80
+      ],
+      "order": 35,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 48
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": 49
+        },
+        {
+          "name": "fps",
+          "type": "FLOAT",
+          "widget": {
+            "name": "fps"
+          },
+          "link": 50
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            51
+          ]
+        }
+      ],
+      "widgets_values": [
+        24,
+        8
+      ],
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "CreateVideo"
+      }
+    },
+    {
+      "id": 33,
+      "type": "SaveVideoTimestamp",
+      "pos": [
+        1830,
+        1280
+      ],
+      "size": [
+        360,
+        280
+      ],
+      "order": 36,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 51
+        }
+      ],
+      "outputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "links": null
+        }
+      ],
+      "widgets_values": [
+        "PersonSwap"
+      ],
+      "title": "保存换人视频",
+      "flags": {},
+      "mode": 0,
+      "properties": {
+        "Node name for S&R": "SaveVideoTimestamp"
+      }
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      5,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      5,
+      0,
+      6,
+      0,
+      "MODEL"
+    ],
+    [
+      3,
+      6,
+      0,
+      7,
+      0,
+      "MODEL"
+    ],
+    [
+      4,
+      7,
+      0,
+      30,
+      0,
+      "MODEL"
+    ],
+    [
+      5,
+      2,
+      0,
+      26,
+      0,
+      "CLIP"
+    ],
+    [
+      6,
+      2,
+      0,
+      27,
+      0,
+      "CLIP"
+    ],
+    [
+      7,
+      3,
+      0,
+      29,
+      2,
+      "VAE"
+    ],
+    [
+      8,
+      3,
+      0,
+      31,
+      1,
+      "VAE"
+    ],
+    [
+      9,
+      4,
+      0,
+      28,
+      0,
+      "CLIP_VISION"
+    ],
+    [
+      10,
+      20,
+      0,
+      23,
+      1,
+      "MODEL"
+    ],
+    [
+      11,
+      20,
+      0,
+      24,
+      1,
+      "MODEL"
+    ],
+    [
+      12,
+      20,
+      1,
+      21,
+      0,
+      "CLIP"
+    ],
+    [
+      13,
+      20,
+      1,
+      22,
+      0,
+      "CLIP"
+    ],
+    [
+      14,
+      8,
+      0,
+      9,
+      0,
+      "VIDEO"
+    ],
+    [
+      15,
+      9,
+      0,
+      10,
+      0,
+      "VIDEO"
+    ],
+    [
+      16,
+      10,
+      0,
+      11,
+      0,
+      "IMAGE"
+    ],
+    [
+      17,
+      11,
+      0,
+      12,
+      0,
+      "IMAGE"
+    ],
+    [
+      18,
+      12,
+      0,
+      13,
+      0,
+      "IMAGE"
+    ],
+    [
+      19,
+      13,
+      0,
+      14,
+      0,
+      "IMAGE"
+    ],
+    [
+      20,
+      13,
+      0,
+      23,
+      0,
+      "IMAGE"
+    ],
+    [
+      21,
+      13,
+      0,
+      29,
+      3,
+      "IMAGE"
+    ],
+    [
+      22,
+      15,
+      0,
+      18,
+      0,
+      "IMAGE"
+    ],
+    [
+      23,
+      16,
+      0,
+      18,
+      1,
+      "IMAGE"
+    ],
+    [
+      24,
+      17,
+      0,
+      18,
+      2,
+      "IMAGE"
+    ],
+    [
+      25,
+      18,
+      0,
+      19,
+      0,
+      "IMAGE"
+    ],
+    [
+      26,
+      18,
+      0,
+      24,
+      0,
+      "IMAGE"
+    ],
+    [
+      27,
+      18,
+      0,
+      29,
+      5,
+      "IMAGE"
+    ],
+    [
+      28,
+      19,
+      0,
+      28,
+      1,
+      "IMAGE"
+    ],
+    [
+      29,
+      21,
+      0,
+      23,
+      3,
+      "CONDITIONING"
+    ],
+    [
+      30,
+      22,
+      0,
+      24,
+      3,
+      "CONDITIONING"
+    ],
+    [
+      31,
+      23,
+      0,
+      25,
+      0,
+      "SAM3_TRACK_DATA"
+    ],
+    [
+      32,
+      24,
+      0,
+      25,
+      1,
+      "SAM3_TRACK_DATA"
+    ],
+    [
+      33,
+      25,
+      0,
+      29,
+      4,
+      "IMAGE"
+    ],
+    [
+      34,
+      25,
+      1,
+      29,
+      6,
+      "IMAGE"
+    ],
+    [
+      35,
+      25,
+      0,
+      36,
+      0,
+      "IMAGE"
+    ],
+    [
+      36,
+      25,
+      1,
+      37,
+      0,
+      "IMAGE"
+    ],
+    [
+      37,
+      26,
+      0,
+      29,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      38,
+      27,
+      0,
+      29,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      39,
+      28,
+      0,
+      29,
+      7,
+      "CLIP_VISION_OUTPUT"
+    ],
+    [
+      40,
+      14,
+      0,
+      29,
+      9,
+      "INT"
+    ],
+    [
+      41,
+      14,
+      1,
+      29,
+      10,
+      "INT"
+    ],
+    [
+      42,
+      14,
+      2,
+      35,
+      0,
+      "FLOAT,INT,BOOLEAN"
+    ],
+    [
+      43,
+      35,
+      1,
+      29,
+      11,
+      "INT"
+    ],
+    [
+      44,
+      29,
+      0,
+      30,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      45,
+      29,
+      1,
+      30,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      46,
+      29,
+      2,
+      30,
+      3,
+      "LATENT"
+    ],
+    [
+      47,
+      30,
+      0,
+      31,
+      0,
+      "LATENT"
+    ],
+    [
+      48,
+      31,
+      0,
+      32,
+      0,
+      "IMAGE"
+    ],
+    [
+      49,
+      10,
+      1,
+      32,
+      1,
+      "AUDIO"
+    ],
+    [
+      50,
+      10,
+      2,
+      32,
+      2,
+      "FLOAT"
+    ],
+    [
+      51,
+      32,
+      0,
+      33,
+      0,
+      "VIDEO"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.72,
+      "offset": [
+        0,
+        0
+      ]
+    },
+    "frontendVersion": "1.23.4"
+  },
+  "version": 0.4
+}
