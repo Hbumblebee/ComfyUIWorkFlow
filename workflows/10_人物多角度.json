@@ -1,0 +1,4665 @@
+{
+  "id": "10-ren-wu-duo-jiao-du",
+  "revision": 2,
+  "last_node_id": 230,
+  "last_link_id": 247,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "UNETLoader",
+      "pos": [40, 60],
+      "size": [420, 82],
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [1]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": ["qwen_image_edit_2511_int8_convrot.safetensors", "default"],
+      "color": "#223",
+      "bgcolor": "#335",
+      "flags": {},
+      "mode": 0,
+      "order": 0
+    },
+    {
+      "id": 2,
+      "type": "CLIPLoader",
+      "pos": [40, 190],
+      "size": [420, 106],
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [7, 11, 24, 37, 50, 63, 76, 89, 102, 115, 128, 141, 154, 167, 180, 193, 206]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": ["qwen_2.5_vl_7b_fp8_scaled.safetensors", "qwen_image", "default"],
+      "color": "#223",
+      "bgcolor": "#335",
+      "flags": {},
+      "mode": 0,
+      "order": 1
+    },
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [40, 340],
+      "size": [420, 60],
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [6, 8, 12, 20, 25, 33, 38, 46, 51, 59, 64, 72, 77, 85, 90, 98, 103, 111, 116, 124, 129, 137, 142, 150, 155, 163, 168, 176, 181, 189, 194, 202, 207, 215]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": ["qwen_image_vae.safetensors"],
+      "color": "#223",
+      "bgcolor": "#335",
+      "flags": {},
+      "mode": 0,
+      "order": 2
+    },
+    {
+      "id": 4,
+      "type": "LoraLoaderModelOnly",
+      "pos": [500, 60],
+      "size": [380, 82],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [2]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": ["Qwen-Image-Edit-2511-Lightning-8steps-V1.0-bf16.safetensors", 1],
+      "flags": {},
+      "mode": 0,
+      "order": 3
+    },
+    {
+      "id": 5,
+      "type": "ModelSamplingAuraFlow",
+      "pos": [920, 60],
+      "size": [270, 58],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [3]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingAuraFlow"
+      },
+      "widgets_values": [3.1],
+      "flags": {},
+      "mode": 0,
+      "order": 4
+    },
+    {
+      "id": 6,
+      "type": "CFGNorm",
+      "pos": [1220, 60],
+      "size": [250, 82],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "patched_model",
+          "type": "MODEL",
+          "links": [15, 28, 41, 54, 67, 80, 93, 106, 119, 132, 145, 158, 171, 184, 197, 210]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CFGNorm"
+      },
+      "widgets_values": [1, false],
+      "flags": {},
+      "mode": 0,
+      "order": 5
+    },
+    {
+      "id": 7,
+      "type": "LoadImage",
+      "pos": [40, 470],
+      "size": [300, 314],
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [4]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "人物原图",
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": ["", "image"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 6
+    },
+    {
+      "id": 8,
+      "type": "ImageScaleToTotalPixels",
+      "pos": [360, 560],
+      "size": [280, 106],
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [5, 9, 13, 22, 35, 48, 61, 74, 87, 100, 113, 126, 139, 152, 165, 178, 191, 204]
+        }
+      ],
+      "title": "工作分辨率 ~1.5MP",
+      "properties": {
+        "Node name for S&R": "ImageScaleToTotalPixels"
+      },
+      "widgets_values": ["lanczos", 1.5, 16],
+      "flags": {},
+      "mode": 0,
+      "order": 7
+    },
+    {
+      "id": 9,
+      "type": "VAEEncode",
+      "pos": [360, 700],
+      "size": [280, 50],
+      "inputs": [
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 5
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [18, 31, 44, 57, 70, 83, 96, 109, 122, 135, 148, 161, 174, 187, 200, 213]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEEncode"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 8
+    },
+    {
+      "id": 10,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [680, 470],
+      "size": [430, 140],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 7
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 8
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 9
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [10]
+        }
+      ],
+      "title": "Negative",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": [""],
+      "color": "#322",
+      "bgcolor": "#533",
+      "flags": {},
+      "mode": 0,
+      "order": 9
+    },
+    {
+      "id": 11,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [1140, 490],
+      "size": [280, 58],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [17, 30, 43, 56, 69, 82, 95, 108, 121, 134, 147, 160, 173, 186, 199, 212]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": ["index_timestep_zero"],
+      "flags": {},
+      "mode": 0,
+      "order": 10
+    },
+    {
+      "id": 21,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [280, 820],
+      "size": [430, 200],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 11
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 12
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 13
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [14]
+        }
+      ],
+      "title": "正面 0° 指令",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": ["把摄像机转到人物正前方平视（环绕 0 度）。根据 Picture 1 生成同一人物在新机位下的画面。严格保持人物身份、五官结构、脸型、发型、发色、体型、年龄、服装款式与颜色、配饰完全不变。只改变摄像机角度；构图裁切范围与原图相同（半身仍半身，全身仍全身）。保持原图画风（照片保持照片，插画保持插画）。背景换成干净浅灰棚拍，柔和均匀光线，方便当角色参考。不要变成另一个人，不要改衣服，不要添加文字、箭头或九宫格。"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 11
+    },
+    {
+      "id": 22,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [730, 820],
+      "size": [280, 58],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [16]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": ["index_timestep_zero"],
+      "flags": {},
+      "mode": 0,
+      "order": 12
+    },
+    {
+      "id": 23,
+      "type": "KSampler",
+      "pos": [1030, 820],
+      "size": [315, 262],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 15
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 16
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 17
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 18
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [19]
+        }
+      ],
+      "title": "采样 正面 0°",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 8, 1, "euler", "simple", 1],
+      "flags": {},
+      "mode": 0,
+      "order": 13
+    },
+    {
+      "id": 24,
+      "type": "VAEDecode",
+      "pos": [1370, 820],
+      "size": [210, 46],
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 19
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [21, 23, 217]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 14
+    },
+    {
+      "id": 25,
+      "type": "SaveImageTimestamp",
+      "pos": [1610, 820],
+      "size": [420, 300],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 21
+        }
+      ],
+      "outputs": [],
+      "title": "保存 正面 0°",
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": ["MultiView_000_Front"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 15
+    },
+    {
+      "id": 30,
+      "type": "UseImageAfter",
+      "pos": [40, 1200],
+      "size": [220, 50],
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 22
+        },
+        {
+          "name": "after",
+          "type": "IMAGE",
+          "link": 23
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [26]
+        }
+      ],
+      "title": "等上一视角完成",
+      "properties": {
+        "Node name for S&R": "UseImageAfter"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 16
+    },
+    {
+      "id": 31,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [280, 1200],
+      "size": [430, 200],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 24
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 25
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 26
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [27]
+        }
+      ],
+      "title": "左前 30° 指令",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": ["把摄像机转到人物左前方约 30 度，仍能看清大部分正面五官。根据 Picture 1 生成同一人物在新机位下的画面。严格保持人物身份、五官结构、脸型、发型、发色、体型、年龄、服装款式与颜色、配饰完全不变。只改变摄像机角度；构图裁切范围与原图相同（半身仍半身，全身仍全身）。保持原图画风（照片保持照片，插画保持插画）。背景换成干净浅灰棚拍，柔和均匀光线，方便当角色参考。不要变成另一个人，不要改衣服，不要添加文字、箭头或九宫格。"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 17
+    },
+    {
+      "id": 32,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [730, 1200],
+      "size": [280, 58],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 27
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [29]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": ["index_timestep_zero"],
+      "flags": {},
+      "mode": 0,
+      "order": 18
+    },
+    {
+      "id": 33,
+      "type": "KSampler",
+      "pos": [1030, 1200],
+      "size": [315, 262],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 28
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 29
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 30
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 31
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [32]
+        }
+      ],
+      "title": "采样 左前 30°",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 8, 1, "euler", "simple", 1],
+      "flags": {},
+      "mode": 0,
+      "order": 19
+    },
+    {
+      "id": 34,
+      "type": "VAEDecode",
+      "pos": [1370, 1200],
+      "size": [210, 46],
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 32
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 33
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [34, 36, 218]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 20
+    },
+    {
+      "id": 35,
+      "type": "SaveImageTimestamp",
+      "pos": [1610, 1200],
+      "size": [420, 300],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 34
+        }
+      ],
+      "outputs": [],
+      "title": "保存 左前 30°",
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": ["MultiView_030"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 21
+    },
+    {
+      "id": 40,
+      "type": "UseImageAfter",
+      "pos": [40, 1580],
+      "size": [220, 50],
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 35
+        },
+        {
+          "name": "after",
+          "type": "IMAGE",
+          "link": 36
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [39]
+        }
+      ],
+      "title": "等上一视角完成",
+      "properties": {
+        "Node name for S&R": "UseImageAfter"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 22
+    },
+    {
+      "id": 41,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [280, 1580],
+      "size": [430, 200],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 37
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 38
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 39
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [40]
+        }
+      ],
+      "title": "左前 60° 指令",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": ["把摄像机转到人物左前方约 60 度，接近四分之三侧面。根据 Picture 1 生成同一人物在新机位下的画面。严格保持人物身份、五官结构、脸型、发型、发色、体型、年龄、服装款式与颜色、配饰完全不变。只改变摄像机角度；构图裁切范围与原图相同（半身仍半身，全身仍全身）。保持原图画风（照片保持照片，插画保持插画）。背景换成干净浅灰棚拍，柔和均匀光线，方便当角色参考。不要变成另一个人，不要改衣服，不要添加文字、箭头或九宫格。"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 23
+    },
+    {
+      "id": 42,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [730, 1580],
+      "size": [280, 58],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 40
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [42]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": ["index_timestep_zero"],
+      "flags": {},
+      "mode": 0,
+      "order": 24
+    },
+    {
+      "id": 43,
+      "type": "KSampler",
+      "pos": [1030, 1580],
+      "size": [315, 262],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 41
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 42
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 43
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 44
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [45]
+        }
+      ],
+      "title": "采样 左前 60°",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 8, 1, "euler", "simple", 1],
+      "flags": {},
+      "mode": 0,
+      "order": 25
+    },
+    {
+      "id": 44,
+      "type": "VAEDecode",
+      "pos": [1370, 1580],
+      "size": [210, 46],
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 45
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 46
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [47, 49, 220]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 26
+    },
+    {
+      "id": 45,
+      "type": "SaveImageTimestamp",
+      "pos": [1610, 1580],
+      "size": [420, 300],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 47
+        }
+      ],
+      "outputs": [],
+      "title": "保存 左前 60°",
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": ["MultiView_060"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 27
+    },
+    {
+      "id": 50,
+      "type": "UseImageAfter",
+      "pos": [40, 1960],
+      "size": [220, 50],
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 48
+        },
+        {
+          "name": "after",
+          "type": "IMAGE",
+          "link": 49
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [52]
+        }
+      ],
+      "title": "等上一视角完成",
+      "properties": {
+        "Node name for S&R": "UseImageAfter"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 28
+    },
+    {
+      "id": 51,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [280, 1960],
+      "size": [430, 200],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 50
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 51
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 52
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [53]
+        }
+      ],
+      "title": "左侧 90° 指令",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": ["把摄像机转到人物正左侧 90 度，标准侧面轮廓。根据 Picture 1 生成同一人物在新机位下的画面。严格保持人物身份、五官结构、脸型、发型、发色、体型、年龄、服装款式与颜色、配饰完全不变。只改变摄像机角度；构图裁切范围与原图相同（半身仍半身，全身仍全身）。保持原图画风（照片保持照片，插画保持插画）。背景换成干净浅灰棚拍，柔和均匀光线，方便当角色参考。不要变成另一个人，不要改衣服，不要添加文字、箭头或九宫格。"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 29
+    },
+    {
+      "id": 52,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [730, 1960],
+      "size": [280, 58],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 53
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [55]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": ["index_timestep_zero"],
+      "flags": {},
+      "mode": 0,
+      "order": 30
+    },
+    {
+      "id": 53,
+      "type": "KSampler",
+      "pos": [1030, 1960],
+      "size": [315, 262],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 54
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 55
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 56
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 57
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [58]
+        }
+      ],
+      "title": "采样 左侧 90°",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 8, 1, "euler", "simple", 1],
+      "flags": {},
+      "mode": 0,
+      "order": 31
+    },
+    {
+      "id": 54,
+      "type": "VAEDecode",
+      "pos": [1370, 1960],
+      "size": [210, 46],
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 58
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 59
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [60, 62, 222]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 32
+    },
+    {
+      "id": 55,
+      "type": "SaveImageTimestamp",
+      "pos": [1610, 1960],
+      "size": [420, 300],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 60
+        }
+      ],
+      "outputs": [],
+      "title": "保存 左侧 90°",
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": ["MultiView_090_Left"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 33
+    },
+    {
+      "id": 60,
+      "type": "UseImageAfter",
+      "pos": [40, 2340],
+      "size": [220, 50],
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 61
+        },
+        {
+          "name": "after",
+          "type": "IMAGE",
+          "link": 62
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [65]
+        }
+      ],
+      "title": "等上一视角完成",
+      "properties": {
+        "Node name for S&R": "UseImageAfter"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 34
+    },
+    {
+      "id": 61,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [280, 2340],
+      "size": [430, 200],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 63
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 64
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 65
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [66]
+        }
+      ],
+      "title": "左后 120° 指令",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": ["把摄像机转到人物左后方约 120 度，可见后脑勺和部分侧脸。根据 Picture 1 生成同一人物在新机位下的画面。严格保持人物身份、五官结构、脸型、发型、发色、体型、年龄、服装款式与颜色、配饰完全不变。只改变摄像机角度；构图裁切范围与原图相同（半身仍半身，全身仍全身）。保持原图画风（照片保持照片，插画保持插画）。背景换成干净浅灰棚拍，柔和均匀光线，方便当角色参考。不要变成另一个人，不要改衣服，不要添加文字、箭头或九宫格。"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 35
+    },
+    {
+      "id": 62,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [730, 2340],
+      "size": [280, 58],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 66
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [68]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": ["index_timestep_zero"],
+      "flags": {},
+      "mode": 0,
+      "order": 36
+    },
+    {
+      "id": 63,
+      "type": "KSampler",
+      "pos": [1030, 2340],
+      "size": [315, 262],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 67
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 68
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 69
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 70
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [71]
+        }
+      ],
+      "title": "采样 左后 120°",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 8, 1, "euler", "simple", 1],
+      "flags": {},
+      "mode": 0,
+      "order": 37
+    },
+    {
+      "id": 64,
+      "type": "VAEDecode",
+      "pos": [1370, 2340],
+      "size": [210, 46],
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 71
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 72
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [73, 75, 223]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 38
+    },
+    {
+      "id": 65,
+      "type": "SaveImageTimestamp",
+      "pos": [1610, 2340],
+      "size": [420, 300],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 73
+        }
+      ],
+      "outputs": [],
+      "title": "保存 左后 120°",
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": ["MultiView_120"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 39
+    },
+    {
+      "id": 70,
+      "type": "UseImageAfter",
+      "pos": [40, 2720],
+      "size": [220, 50],
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 74
+        },
+        {
+          "name": "after",
+          "type": "IMAGE",
+          "link": 75
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [78]
+        }
+      ],
+      "title": "等上一视角完成",
+      "properties": {
+        "Node name for S&R": "UseImageAfter"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 40
+    },
+    {
+      "id": 71,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [280, 2720],
+      "size": [430, 200],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 76
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 77
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 78
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [79]
+        }
+      ],
+      "title": "左后 150° 指令",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": ["把摄像机转到人物左后方约 150 度，后脑为主、仍带一点侧脸。根据 Picture 1 生成同一人物在新机位下的画面。严格保持人物身份、五官结构、脸型、发型、发色、体型、年龄、服装款式与颜色、配饰完全不变。只改变摄像机角度；构图裁切范围与原图相同（半身仍半身，全身仍全身）。保持原图画风（照片保持照片，插画保持插画）。背景换成干净浅灰棚拍，柔和均匀光线，方便当角色参考。不要变成另一个人，不要改衣服，不要添加文字、箭头或九宫格。"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 41
+    },
+    {
+      "id": 72,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [730, 2720],
+      "size": [280, 58],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 79
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [81]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": ["index_timestep_zero"],
+      "flags": {},
+      "mode": 0,
+      "order": 42
+    },
+    {
+      "id": 73,
+      "type": "KSampler",
+      "pos": [1030, 2720],
+      "size": [315, 262],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 80
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 81
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 82
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 83
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [84]
+        }
+      ],
+      "title": "采样 左后 150°",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 8, 1, "euler", "simple", 1],
+      "flags": {},
+      "mode": 0,
+      "order": 43
+    },
+    {
+      "id": 74,
+      "type": "VAEDecode",
+      "pos": [1370, 2720],
+      "size": [210, 46],
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 84
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 85
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [86, 88, 224]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 44
+    },
+    {
+      "id": 75,
+      "type": "SaveImageTimestamp",
+      "pos": [1610, 2720],
+      "size": [420, 300],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 86
+        }
+      ],
+      "outputs": [],
+      "title": "保存 左后 150°",
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": ["MultiView_150"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 45
+    },
+    {
+      "id": 80,
+      "type": "UseImageAfter",
+      "pos": [40, 3100],
+      "size": [220, 50],
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 87
+        },
+        {
+          "name": "after",
+          "type": "IMAGE",
+          "link": 88
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [91]
+        }
+      ],
+      "title": "等上一视角完成",
+      "properties": {
+        "Node name for S&R": "UseImageAfter"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 46
+    },
+    {
+      "id": 81,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [280, 3100],
+      "size": [430, 200],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 89
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 90
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 91
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [92]
+        }
+      ],
+      "title": "背面 180° 指令",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": ["把摄像机转到人物正后方 180 度，只看到后脑勺、后背和发型后侧。根据 Picture 1 生成同一人物在新机位下的画面。严格保持人物身份、五官结构、脸型、发型、发色、体型、年龄、服装款式与颜色、配饰完全不变。只改变摄像机角度；构图裁切范围与原图相同（半身仍半身，全身仍全身）。保持原图画风（照片保持照片，插画保持插画）。背景换成干净浅灰棚拍，柔和均匀光线，方便当角色参考。不要变成另一个人，不要改衣服，不要添加文字、箭头或九宫格。"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 47
+    },
+    {
+      "id": 82,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [730, 3100],
+      "size": [280, 58],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 92
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [94]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": ["index_timestep_zero"],
+      "flags": {},
+      "mode": 0,
+      "order": 48
+    },
+    {
+      "id": 83,
+      "type": "KSampler",
+      "pos": [1030, 3100],
+      "size": [315, 262],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 93
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 94
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 95
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 96
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [97]
+        }
+      ],
+      "title": "采样 背面 180°",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 8, 1, "euler", "simple", 1],
+      "flags": {},
+      "mode": 0,
+      "order": 49
+    },
+    {
+      "id": 84,
+      "type": "VAEDecode",
+      "pos": [1370, 3100],
+      "size": [210, 46],
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 97
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 98
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [99, 101, 226]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 50
+    },
+    {
+      "id": 85,
+      "type": "SaveImageTimestamp",
+      "pos": [1610, 3100],
+      "size": [420, 300],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 99
+        }
+      ],
+      "outputs": [],
+      "title": "保存 背面 180°",
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": ["MultiView_180_Back"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 51
+    },
+    {
+      "id": 90,
+      "type": "UseImageAfter",
+      "pos": [40, 3480],
+      "size": [220, 50],
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 100
+        },
+        {
+          "name": "after",
+          "type": "IMAGE",
+          "link": 101
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [104]
+        }
+      ],
+      "title": "等上一视角完成",
+      "properties": {
+        "Node name for S&R": "UseImageAfter"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 52
+    },
+    {
+      "id": 91,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [280, 3480],
+      "size": [430, 200],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 102
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 103
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 104
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [105]
+        }
+      ],
+      "title": "右后 210° 指令",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": ["把摄像机转到人物右后方约 210 度，后脑为主、仍带一点侧脸。根据 Picture 1 生成同一人物在新机位下的画面。严格保持人物身份、五官结构、脸型、发型、发色、体型、年龄、服装款式与颜色、配饰完全不变。只改变摄像机角度；构图裁切范围与原图相同（半身仍半身，全身仍全身）。保持原图画风（照片保持照片，插画保持插画）。背景换成干净浅灰棚拍，柔和均匀光线，方便当角色参考。不要变成另一个人，不要改衣服，不要添加文字、箭头或九宫格。"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 53
+    },
+    {
+      "id": 92,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [730, 3480],
+      "size": [280, 58],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 105
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [107]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": ["index_timestep_zero"],
+      "flags": {},
+      "mode": 0,
+      "order": 54
+    },
+    {
+      "id": 93,
+      "type": "KSampler",
+      "pos": [1030, 3480],
+      "size": [315, 262],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 106
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 107
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 108
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 109
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [110]
+        }
+      ],
+      "title": "采样 右后 210°",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 8, 1, "euler", "simple", 1],
+      "flags": {},
+      "mode": 0,
+      "order": 55
+    },
+    {
+      "id": 94,
+      "type": "VAEDecode",
+      "pos": [1370, 3480],
+      "size": [210, 46],
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 110
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 111
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [112, 114, 228]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 56
+    },
+    {
+      "id": 95,
+      "type": "SaveImageTimestamp",
+      "pos": [1610, 3480],
+      "size": [420, 300],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 112
+        }
+      ],
+      "outputs": [],
+      "title": "保存 右后 210°",
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": ["MultiView_210"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 57
+    },
+    {
+      "id": 100,
+      "type": "UseImageAfter",
+      "pos": [40, 3860],
+      "size": [220, 50],
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 113
+        },
+        {
+          "name": "after",
+          "type": "IMAGE",
+          "link": 114
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [117]
+        }
+      ],
+      "title": "等上一视角完成",
+      "properties": {
+        "Node name for S&R": "UseImageAfter"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 58
+    },
+    {
+      "id": 101,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [280, 3860],
+      "size": [430, 200],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 115
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 116
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 117
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [118]
+        }
+      ],
+      "title": "右后 240° 指令",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": ["把摄像机转到人物右后方约 240 度，可见后脑勺和部分侧脸。根据 Picture 1 生成同一人物在新机位下的画面。严格保持人物身份、五官结构、脸型、发型、发色、体型、年龄、服装款式与颜色、配饰完全不变。只改变摄像机角度；构图裁切范围与原图相同（半身仍半身，全身仍全身）。保持原图画风（照片保持照片，插画保持插画）。背景换成干净浅灰棚拍，柔和均匀光线，方便当角色参考。不要变成另一个人，不要改衣服，不要添加文字、箭头或九宫格。"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 59
+    },
+    {
+      "id": 102,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [730, 3860],
+      "size": [280, 58],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 118
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [120]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": ["index_timestep_zero"],
+      "flags": {},
+      "mode": 0,
+      "order": 60
+    },
+    {
+      "id": 103,
+      "type": "KSampler",
+      "pos": [1030, 3860],
+      "size": [315, 262],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 119
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 120
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 121
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 122
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [123]
+        }
+      ],
+      "title": "采样 右后 240°",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 8, 1, "euler", "simple", 1],
+      "flags": {},
+      "mode": 0,
+      "order": 61
+    },
+    {
+      "id": 104,
+      "type": "VAEDecode",
+      "pos": [1370, 3860],
+      "size": [210, 46],
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 123
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 124
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [125, 127, 229]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 62
+    },
+    {
+      "id": 105,
+      "type": "SaveImageTimestamp",
+      "pos": [1610, 3860],
+      "size": [420, 300],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 125
+        }
+      ],
+      "outputs": [],
+      "title": "保存 右后 240°",
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": ["MultiView_240"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 63
+    },
+    {
+      "id": 110,
+      "type": "UseImageAfter",
+      "pos": [40, 4240],
+      "size": [220, 50],
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 126
+        },
+        {
+          "name": "after",
+          "type": "IMAGE",
+          "link": 127
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [130]
+        }
+      ],
+      "title": "等上一视角完成",
+      "properties": {
+        "Node name for S&R": "UseImageAfter"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 64
+    },
+    {
+      "id": 111,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [280, 4240],
+      "size": [430, 200],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 128
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 129
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 130
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [131]
+        }
+      ],
+      "title": "右侧 270° 指令",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": ["把摄像机转到人物正右侧 90 度，标准侧面轮廓。根据 Picture 1 生成同一人物在新机位下的画面。严格保持人物身份、五官结构、脸型、发型、发色、体型、年龄、服装款式与颜色、配饰完全不变。只改变摄像机角度；构图裁切范围与原图相同（半身仍半身，全身仍全身）。保持原图画风（照片保持照片，插画保持插画）。背景换成干净浅灰棚拍，柔和均匀光线，方便当角色参考。不要变成另一个人，不要改衣服，不要添加文字、箭头或九宫格。"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 65
+    },
+    {
+      "id": 112,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [730, 4240],
+      "size": [280, 58],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 131
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [133]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": ["index_timestep_zero"],
+      "flags": {},
+      "mode": 0,
+      "order": 66
+    },
+    {
+      "id": 113,
+      "type": "KSampler",
+      "pos": [1030, 4240],
+      "size": [315, 262],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 132
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 133
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 134
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 135
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [136]
+        }
+      ],
+      "title": "采样 右侧 270°",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 8, 1, "euler", "simple", 1],
+      "flags": {},
+      "mode": 0,
+      "order": 67
+    },
+    {
+      "id": 114,
+      "type": "VAEDecode",
+      "pos": [1370, 4240],
+      "size": [210, 46],
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 136
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 137
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [138, 140, 230]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 68
+    },
+    {
+      "id": 115,
+      "type": "SaveImageTimestamp",
+      "pos": [1610, 4240],
+      "size": [420, 300],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 138
+        }
+      ],
+      "outputs": [],
+      "title": "保存 右侧 270°",
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": ["MultiView_270_Right"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 69
+    },
+    {
+      "id": 120,
+      "type": "UseImageAfter",
+      "pos": [40, 4620],
+      "size": [220, 50],
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 139
+        },
+        {
+          "name": "after",
+          "type": "IMAGE",
+          "link": 140
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [143]
+        }
+      ],
+      "title": "等上一视角完成",
+      "properties": {
+        "Node name for S&R": "UseImageAfter"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 70
+    },
+    {
+      "id": 121,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [280, 4620],
+      "size": [430, 200],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 141
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 142
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 143
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [144]
+        }
+      ],
+      "title": "右前 300° 指令",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": ["把摄像机转到人物右前方约 60 度，接近四分之三侧面。根据 Picture 1 生成同一人物在新机位下的画面。严格保持人物身份、五官结构、脸型、发型、发色、体型、年龄、服装款式与颜色、配饰完全不变。只改变摄像机角度；构图裁切范围与原图相同（半身仍半身，全身仍全身）。保持原图画风（照片保持照片，插画保持插画）。背景换成干净浅灰棚拍，柔和均匀光线，方便当角色参考。不要变成另一个人，不要改衣服，不要添加文字、箭头或九宫格。"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 71
+    },
+    {
+      "id": 122,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [730, 4620],
+      "size": [280, 58],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 144
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [146]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": ["index_timestep_zero"],
+      "flags": {},
+      "mode": 0,
+      "order": 72
+    },
+    {
+      "id": 123,
+      "type": "KSampler",
+      "pos": [1030, 4620],
+      "size": [315, 262],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 145
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 146
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 147
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 148
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [149]
+        }
+      ],
+      "title": "采样 右前 300°",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 8, 1, "euler", "simple", 1],
+      "flags": {},
+      "mode": 0,
+      "order": 73
+    },
+    {
+      "id": 124,
+      "type": "VAEDecode",
+      "pos": [1370, 4620],
+      "size": [210, 46],
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 149
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 150
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [151, 153, 232]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 74
+    },
+    {
+      "id": 125,
+      "type": "SaveImageTimestamp",
+      "pos": [1610, 4620],
+      "size": [420, 300],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 151
+        }
+      ],
+      "outputs": [],
+      "title": "保存 右前 300°",
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": ["MultiView_300"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 75
+    },
+    {
+      "id": 130,
+      "type": "UseImageAfter",
+      "pos": [40, 5000],
+      "size": [220, 50],
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 152
+        },
+        {
+          "name": "after",
+          "type": "IMAGE",
+          "link": 153
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [156]
+        }
+      ],
+      "title": "等上一视角完成",
+      "properties": {
+        "Node name for S&R": "UseImageAfter"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 76
+    },
+    {
+      "id": 131,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [280, 5000],
+      "size": [430, 200],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 154
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 155
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 156
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [157]
+        }
+      ],
+      "title": "右前 330° 指令",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": ["把摄像机转到人物右前方约 30 度，仍能看清大部分正面五官。根据 Picture 1 生成同一人物在新机位下的画面。严格保持人物身份、五官结构、脸型、发型、发色、体型、年龄、服装款式与颜色、配饰完全不变。只改变摄像机角度；构图裁切范围与原图相同（半身仍半身，全身仍全身）。保持原图画风（照片保持照片，插画保持插画）。背景换成干净浅灰棚拍，柔和均匀光线，方便当角色参考。不要变成另一个人，不要改衣服，不要添加文字、箭头或九宫格。"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 77
+    },
+    {
+      "id": 132,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [730, 5000],
+      "size": [280, 58],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 157
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [159]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": ["index_timestep_zero"],
+      "flags": {},
+      "mode": 0,
+      "order": 78
+    },
+    {
+      "id": 133,
+      "type": "KSampler",
+      "pos": [1030, 5000],
+      "size": [315, 262],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 158
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 159
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 160
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 161
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [162]
+        }
+      ],
+      "title": "采样 右前 330°",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 8, 1, "euler", "simple", 1],
+      "flags": {},
+      "mode": 0,
+      "order": 79
+    },
+    {
+      "id": 134,
+      "type": "VAEDecode",
+      "pos": [1370, 5000],
+      "size": [210, 46],
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 162
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 163
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [164, 166, 234]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 80
+    },
+    {
+      "id": 135,
+      "type": "SaveImageTimestamp",
+      "pos": [1610, 5000],
+      "size": [420, 300],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 164
+        }
+      ],
+      "outputs": [],
+      "title": "保存 右前 330°",
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": ["MultiView_330"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 81
+    },
+    {
+      "id": 140,
+      "type": "UseImageAfter",
+      "pos": [40, 5380],
+      "size": [220, 50],
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 165
+        },
+        {
+          "name": "after",
+          "type": "IMAGE",
+          "link": 166
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [169]
+        }
+      ],
+      "title": "等上一视角完成",
+      "properties": {
+        "Node name for S&R": "UseImageAfter"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 82
+    },
+    {
+      "id": 141,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [280, 5380],
+      "size": [430, 200],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 167
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 168
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 169
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [170]
+        }
+      ],
+      "title": "俯拍 30° 指令",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": ["把摄像机转到人物正前方，机位抬高约 30 度俯拍，略微往下看人物。根据 Picture 1 生成同一人物在新机位下的画面。严格保持人物身份、五官结构、脸型、发型、发色、体型、年龄、服装款式与颜色、配饰完全不变。只改变摄像机角度；构图裁切范围与原图相同（半身仍半身，全身仍全身）。保持原图画风（照片保持照片，插画保持插画）。背景换成干净浅灰棚拍，柔和均匀光线，方便当角色参考。不要变成另一个人，不要改衣服，不要添加文字、箭头或九宫格。"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 83
+    },
+    {
+      "id": 142,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [730, 5380],
+      "size": [280, 58],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 170
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [172]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": ["index_timestep_zero"],
+      "flags": {},
+      "mode": 0,
+      "order": 84
+    },
+    {
+      "id": 143,
+      "type": "KSampler",
+      "pos": [1030, 5380],
+      "size": [315, 262],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 171
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 172
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 173
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 174
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [175]
+        }
+      ],
+      "title": "采样 俯拍 30°",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 8, 1, "euler", "simple", 1],
+      "flags": {},
+      "mode": 0,
+      "order": 85
+    },
+    {
+      "id": 144,
+      "type": "VAEDecode",
+      "pos": [1370, 5380],
+      "size": [210, 46],
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 175
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 176
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [177, 179, 235]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 86
+    },
+    {
+      "id": 145,
+      "type": "SaveImageTimestamp",
+      "pos": [1610, 5380],
+      "size": [420, 300],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 177
+        }
+      ],
+      "outputs": [],
+      "title": "保存 俯拍 30°",
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": ["MultiView_High"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 87
+    },
+    {
+      "id": 150,
+      "type": "UseImageAfter",
+      "pos": [40, 5760],
+      "size": [220, 50],
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 178
+        },
+        {
+          "name": "after",
+          "type": "IMAGE",
+          "link": 179
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [182]
+        }
+      ],
+      "title": "等上一视角完成",
+      "properties": {
+        "Node name for S&R": "UseImageAfter"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 88
+    },
+    {
+      "id": 151,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [280, 5760],
+      "size": [430, 200],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 180
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 181
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 182
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [183]
+        }
+      ],
+      "title": "仰拍 20° 指令",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": ["把摄像机转到人物正前方，机位降低约 20 度仰拍，略微往上看人物。根据 Picture 1 生成同一人物在新机位下的画面。严格保持人物身份、五官结构、脸型、发型、发色、体型、年龄、服装款式与颜色、配饰完全不变。只改变摄像机角度；构图裁切范围与原图相同（半身仍半身，全身仍全身）。保持原图画风（照片保持照片，插画保持插画）。背景换成干净浅灰棚拍，柔和均匀光线，方便当角色参考。不要变成另一个人，不要改衣服，不要添加文字、箭头或九宫格。"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 89
+    },
+    {
+      "id": 152,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [730, 5760],
+      "size": [280, 58],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 183
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [185]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": ["index_timestep_zero"],
+      "flags": {},
+      "mode": 0,
+      "order": 90
+    },
+    {
+      "id": 153,
+      "type": "KSampler",
+      "pos": [1030, 5760],
+      "size": [315, 262],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 184
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 185
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 186
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 187
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [188]
+        }
+      ],
+      "title": "采样 仰拍 20°",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 8, 1, "euler", "simple", 1],
+      "flags": {},
+      "mode": 0,
+      "order": 91
+    },
+    {
+      "id": 154,
+      "type": "VAEDecode",
+      "pos": [1370, 5760],
+      "size": [210, 46],
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 188
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 189
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [190, 192, 236]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 92
+    },
+    {
+      "id": 155,
+      "type": "SaveImageTimestamp",
+      "pos": [1610, 5760],
+      "size": [420, 300],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 190
+        }
+      ],
+      "outputs": [],
+      "title": "保存 仰拍 20°",
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": ["MultiView_Low"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 93
+    },
+    {
+      "id": 160,
+      "type": "UseImageAfter",
+      "pos": [40, 6140],
+      "size": [220, 50],
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 191
+        },
+        {
+          "name": "after",
+          "type": "IMAGE",
+          "link": 192
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [195]
+        }
+      ],
+      "title": "等上一视角完成",
+      "properties": {
+        "Node name for S&R": "UseImageAfter"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 94
+    },
+    {
+      "id": 161,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [280, 6140],
+      "size": [430, 200],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 193
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 194
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 195
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [196]
+        }
+      ],
+      "title": "顶视 指令",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": ["把摄像机转到人物正上方，接近顶视，看到头顶、肩线和衣服上表面，脸不要完全消失。根据 Picture 1 生成同一人物在新机位下的画面。严格保持人物身份、五官结构、脸型、发型、发色、体型、年龄、服装款式与颜色、配饰完全不变。只改变摄像机角度；构图裁切范围与原图相同（半身仍半身，全身仍全身）。保持原图画风（照片保持照片，插画保持插画）。背景换成干净浅灰棚拍，柔和均匀光线，方便当角色参考。不要变成另一个人，不要改衣服，不要添加文字、箭头或九宫格。"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 95
+    },
+    {
+      "id": 162,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [730, 6140],
+      "size": [280, 58],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 196
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [198]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": ["index_timestep_zero"],
+      "flags": {},
+      "mode": 0,
+      "order": 96
+    },
+    {
+      "id": 163,
+      "type": "KSampler",
+      "pos": [1030, 6140],
+      "size": [315, 262],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 197
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 198
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 199
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 200
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [201]
+        }
+      ],
+      "title": "采样 顶视",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 8, 1, "euler", "simple", 1],
+      "flags": {},
+      "mode": 0,
+      "order": 97
+    },
+    {
+      "id": 164,
+      "type": "VAEDecode",
+      "pos": [1370, 6140],
+      "size": [210, 46],
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 201
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 202
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [203, 205, 238]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 98
+    },
+    {
+      "id": 165,
+      "type": "SaveImageTimestamp",
+      "pos": [1610, 6140],
+      "size": [420, 300],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 203
+        }
+      ],
+      "outputs": [],
+      "title": "保存 顶视",
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": ["MultiView_Top"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 99
+    },
+    {
+      "id": 170,
+      "type": "UseImageAfter",
+      "pos": [40, 6520],
+      "size": [220, 50],
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 204
+        },
+        {
+          "name": "after",
+          "type": "IMAGE",
+          "link": 205
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [208]
+        }
+      ],
+      "title": "等上一视角完成",
+      "properties": {
+        "Node name for S&R": "UseImageAfter"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 100
+    },
+    {
+      "id": 171,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [280, 6520],
+      "size": [430, 200],
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 206
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 207
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 208
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [209]
+        }
+      ],
+      "title": "左前俯 45° 指令",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": ["把摄像机转到人物左前方约 45 度，同时略微俯视约 25 度，四分之三侧面俯拍。根据 Picture 1 生成同一人物在新机位下的画面。严格保持人物身份、五官结构、脸型、发型、发色、体型、年龄、服装款式与颜色、配饰完全不变。只改变摄像机角度；构图裁切范围与原图相同（半身仍半身，全身仍全身）。保持原图画风（照片保持照片，插画保持插画）。背景换成干净浅灰棚拍，柔和均匀光线，方便当角色参考。不要变成另一个人，不要改衣服，不要添加文字、箭头或九宫格。"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 101
+    },
+    {
+      "id": 172,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [730, 6520],
+      "size": [280, 58],
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 209
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [211]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": ["index_timestep_zero"],
+      "flags": {},
+      "mode": 0,
+      "order": 102
+    },
+    {
+      "id": 173,
+      "type": "KSampler",
+      "pos": [1030, 6520],
+      "size": [315, 262],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 210
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 211
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 212
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 213
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [214]
+        }
+      ],
+      "title": "采样 左前俯 45°",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 8, 1, "euler", "simple", 1],
+      "flags": {},
+      "mode": 0,
+      "order": 103
+    },
+    {
+      "id": 174,
+      "type": "VAEDecode",
+      "pos": [1370, 6520],
+      "size": [210, 46],
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 214
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 215
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [216, 240]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "flags": {},
+      "mode": 0,
+      "order": 104
+    },
+    {
+      "id": 175,
+      "type": "SaveImageTimestamp",
+      "pos": [1610, 6520],
+      "size": [420, 300],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 216
+        }
+      ],
+      "outputs": [],
+      "title": "保存 左前俯 45°",
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": ["MultiView_HighFL"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 105
+    },
+    {
+      "id": 200,
+      "type": "ImageStitch",
+      "pos": [40, 6940],
+      "size": [240, 130],
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 217
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 218
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [219]
+        }
+      ],
+      "title": "拼接 right",
+      "properties": {
+        "Node name for S&R": "ImageStitch"
+      },
+      "widgets_values": ["right", true, 16, "white"],
+      "flags": {},
+      "mode": 0,
+      "order": 106
+    },
+    {
+      "id": 201,
+      "type": "ImageStitch",
+      "pos": [300, 6940],
+      "size": [240, 130],
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 219
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 220
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [221]
+        }
+      ],
+      "title": "拼接 right",
+      "properties": {
+        "Node name for S&R": "ImageStitch"
+      },
+      "widgets_values": ["right", true, 16, "white"],
+      "flags": {},
+      "mode": 0,
+      "order": 107
+    },
+    {
+      "id": 202,
+      "type": "ImageStitch",
+      "pos": [560, 6940],
+      "size": [240, 130],
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 221
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 222
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [241]
+        }
+      ],
+      "title": "拼接 right",
+      "properties": {
+        "Node name for S&R": "ImageStitch"
+      },
+      "widgets_values": ["right", true, 16, "white"],
+      "flags": {},
+      "mode": 0,
+      "order": 108
+    },
+    {
+      "id": 203,
+      "type": "ImageStitch",
+      "pos": [40, 7100],
+      "size": [240, 130],
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 223
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 224
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [225]
+        }
+      ],
+      "title": "拼接 right",
+      "properties": {
+        "Node name for S&R": "ImageStitch"
+      },
+      "widgets_values": ["right", true, 16, "white"],
+      "flags": {},
+      "mode": 0,
+      "order": 109
+    },
+    {
+      "id": 204,
+      "type": "ImageStitch",
+      "pos": [300, 7100],
+      "size": [240, 130],
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 225
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 226
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [227]
+        }
+      ],
+      "title": "拼接 right",
+      "properties": {
+        "Node name for S&R": "ImageStitch"
+      },
+      "widgets_values": ["right", true, 16, "white"],
+      "flags": {},
+      "mode": 0,
+      "order": 110
+    },
+    {
+      "id": 205,
+      "type": "ImageStitch",
+      "pos": [560, 7100],
+      "size": [240, 130],
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 227
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 228
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [242]
+        }
+      ],
+      "title": "拼接 right",
+      "properties": {
+        "Node name for S&R": "ImageStitch"
+      },
+      "widgets_values": ["right", true, 16, "white"],
+      "flags": {},
+      "mode": 0,
+      "order": 111
+    },
+    {
+      "id": 206,
+      "type": "ImageStitch",
+      "pos": [40, 7260],
+      "size": [240, 130],
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 229
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 230
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [231]
+        }
+      ],
+      "title": "拼接 right",
+      "properties": {
+        "Node name for S&R": "ImageStitch"
+      },
+      "widgets_values": ["right", true, 16, "white"],
+      "flags": {},
+      "mode": 0,
+      "order": 112
+    },
+    {
+      "id": 207,
+      "type": "ImageStitch",
+      "pos": [300, 7260],
+      "size": [240, 130],
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 231
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 232
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [233]
+        }
+      ],
+      "title": "拼接 right",
+      "properties": {
+        "Node name for S&R": "ImageStitch"
+      },
+      "widgets_values": ["right", true, 16, "white"],
+      "flags": {},
+      "mode": 0,
+      "order": 113
+    },
+    {
+      "id": 208,
+      "type": "ImageStitch",
+      "pos": [560, 7260],
+      "size": [240, 130],
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 233
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 234
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [244]
+        }
+      ],
+      "title": "拼接 right",
+      "properties": {
+        "Node name for S&R": "ImageStitch"
+      },
+      "widgets_values": ["right", true, 16, "white"],
+      "flags": {},
+      "mode": 0,
+      "order": 114
+    },
+    {
+      "id": 209,
+      "type": "ImageStitch",
+      "pos": [40, 7420],
+      "size": [240, 130],
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 235
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 236
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [237]
+        }
+      ],
+      "title": "拼接 right",
+      "properties": {
+        "Node name for S&R": "ImageStitch"
+      },
+      "widgets_values": ["right", true, 16, "white"],
+      "flags": {},
+      "mode": 0,
+      "order": 115
+    },
+    {
+      "id": 210,
+      "type": "ImageStitch",
+      "pos": [300, 7420],
+      "size": [240, 130],
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 237
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 238
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [239]
+        }
+      ],
+      "title": "拼接 right",
+      "properties": {
+        "Node name for S&R": "ImageStitch"
+      },
+      "widgets_values": ["right", true, 16, "white"],
+      "flags": {},
+      "mode": 0,
+      "order": 116
+    },
+    {
+      "id": 211,
+      "type": "ImageStitch",
+      "pos": [560, 7420],
+      "size": [240, 130],
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 239
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 240
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [246]
+        }
+      ],
+      "title": "拼接 right",
+      "properties": {
+        "Node name for S&R": "ImageStitch"
+      },
+      "widgets_values": ["right", true, 16, "white"],
+      "flags": {},
+      "mode": 0,
+      "order": 117
+    },
+    {
+      "id": 212,
+      "type": "ImageStitch",
+      "pos": [40, 7580],
+      "size": [240, 130],
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 241
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 242
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [243]
+        }
+      ],
+      "title": "拼接 down",
+      "properties": {
+        "Node name for S&R": "ImageStitch"
+      },
+      "widgets_values": ["down", true, 16, "white"],
+      "flags": {},
+      "mode": 0,
+      "order": 118
+    },
+    {
+      "id": 213,
+      "type": "ImageStitch",
+      "pos": [300, 7580],
+      "size": [240, 130],
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 243
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 244
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [245]
+        }
+      ],
+      "title": "拼接 down",
+      "properties": {
+        "Node name for S&R": "ImageStitch"
+      },
+      "widgets_values": ["down", true, 16, "white"],
+      "flags": {},
+      "mode": 0,
+      "order": 119
+    },
+    {
+      "id": 214,
+      "type": "ImageStitch",
+      "pos": [560, 7580],
+      "size": [240, 130],
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 245
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 246
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [247]
+        }
+      ],
+      "title": "拼接 down",
+      "properties": {
+        "Node name for S&R": "ImageStitch"
+      },
+      "widgets_values": ["down", true, 16, "white"],
+      "flags": {},
+      "mode": 0,
+      "order": 120
+    },
+    {
+      "id": 230,
+      "type": "SaveImageTimestamp",
+      "pos": [1100, 6940],
+      "size": [500, 400],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 247
+        }
+      ],
+      "outputs": [],
+      "title": "保存 16 视角总览",
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": ["MultiView_Sheet"],
+      "color": "#232",
+      "bgcolor": "#353",
+      "flags": {},
+      "mode": 0,
+      "order": 121
+    },
+    {
+      "id": 12,
+      "type": "Note",
+      "pos": [1460, 430],
+      "size": [640, 380],
+      "inputs": [],
+      "outputs": [],
+      "title": "用途：人物多角度",
+      "properties": {},
+      "widgets_values": ["用途：一张人物图 → 16 个方向（角色参考）\n绿色节点上传人物图，直接 Queue。一次出 16 张分视角 + 1 张 4×4 总览。\n若出现未知节点 Wait For Image：重启 ComfyUI 后再打开本工作流。\n\n12 个水平环绕（每 30 度一档）：0 / 30 / 60 / 90 / 120 / 150 / 180 / 210 / 240 / 270 / 300 / 330。\n另外 4 个高低机位：俯拍、仰拍、顶视、左前俯 45°。\n16 张是串行生成的，大约要跑十几分钟，属正常。\n\n原图尽量单人、脸清晰。背面/顶视是「猜」的，背后印花、头顶发缝可能不准。\n身份漂了：在对应绿色指令里补一句五官特征。\n想留原背景：删掉指令里「背景换成干净浅灰棚拍」那句。\n只要某几个角度：从后往前静音不需要的行，同时静音总览拼接。\n\n8 步 Lightning + CFG 1，约 1.5MP。底模 INT8 ConvRot，和 03 相同。提分辨率用 02 / 08。"],
+      "color": "#432",
+      "bgcolor": "#653",
+      "flags": {},
+      "mode": 0,
+      "order": 122
+    }
+  ],
+  "links": [
+    [1, 1, 0, 4, 0, "MODEL"],
+    [2, 4, 0, 5, 0, "MODEL"],
+    [3, 5, 0, 6, 0, "MODEL"],
+    [4, 7, 0, 8, 0, "IMAGE"],
+    [5, 8, 0, 9, 0, "IMAGE"],
+    [6, 3, 0, 9, 1, "VAE"],
+    [7, 2, 0, 10, 0, "CLIP"],
+    [8, 3, 0, 10, 1, "VAE"],
+    [9, 8, 0, 10, 2, "IMAGE"],
+    [10, 10, 0, 11, 0, "CONDITIONING"],
+    [11, 2, 0, 21, 0, "CLIP"],
+    [12, 3, 0, 21, 1, "VAE"],
+    [13, 8, 0, 21, 2, "IMAGE"],
+    [14, 21, 0, 22, 0, "CONDITIONING"],
+    [15, 6, 0, 23, 0, "MODEL"],
+    [16, 22, 0, 23, 1, "CONDITIONING"],
+    [17, 11, 0, 23, 2, "CONDITIONING"],
+    [18, 9, 0, 23, 3, "LATENT"],
+    [19, 23, 0, 24, 0, "LATENT"],
+    [20, 3, 0, 24, 1, "VAE"],
+    [21, 24, 0, 25, 0, "IMAGE"],
+    [22, 8, 0, 30, 0, "IMAGE"],
+    [23, 24, 0, 30, 1, "IMAGE"],
+    [24, 2, 0, 31, 0, "CLIP"],
+    [25, 3, 0, 31, 1, "VAE"],
+    [26, 30, 0, 31, 2, "IMAGE"],
+    [27, 31, 0, 32, 0, "CONDITIONING"],
+    [28, 6, 0, 33, 0, "MODEL"],
+    [29, 32, 0, 33, 1, "CONDITIONING"],
+    [30, 11, 0, 33, 2, "CONDITIONING"],
+    [31, 9, 0, 33, 3, "LATENT"],
+    [32, 33, 0, 34, 0, "LATENT"],
+    [33, 3, 0, 34, 1, "VAE"],
+    [34, 34, 0, 35, 0, "IMAGE"],
+    [35, 8, 0, 40, 0, "IMAGE"],
+    [36, 34, 0, 40, 1, "IMAGE"],
+    [37, 2, 0, 41, 0, "CLIP"],
+    [38, 3, 0, 41, 1, "VAE"],
+    [39, 40, 0, 41, 2, "IMAGE"],
+    [40, 41, 0, 42, 0, "CONDITIONING"],
+    [41, 6, 0, 43, 0, "MODEL"],
+    [42, 42, 0, 43, 1, "CONDITIONING"],
+    [43, 11, 0, 43, 2, "CONDITIONING"],
+    [44, 9, 0, 43, 3, "LATENT"],
+    [45, 43, 0, 44, 0, "LATENT"],
+    [46, 3, 0, 44, 1, "VAE"],
+    [47, 44, 0, 45, 0, "IMAGE"],
+    [48, 8, 0, 50, 0, "IMAGE"],
+    [49, 44, 0, 50, 1, "IMAGE"],
+    [50, 2, 0, 51, 0, "CLIP"],
+    [51, 3, 0, 51, 1, "VAE"],
+    [52, 50, 0, 51, 2, "IMAGE"],
+    [53, 51, 0, 52, 0, "CONDITIONING"],
+    [54, 6, 0, 53, 0, "MODEL"],
+    [55, 52, 0, 53, 1, "CONDITIONING"],
+    [56, 11, 0, 53, 2, "CONDITIONING"],
+    [57, 9, 0, 53, 3, "LATENT"],
+    [58, 53, 0, 54, 0, "LATENT"],
+    [59, 3, 0, 54, 1, "VAE"],
+    [60, 54, 0, 55, 0, "IMAGE"],
+    [61, 8, 0, 60, 0, "IMAGE"],
+    [62, 54, 0, 60, 1, "IMAGE"],
+    [63, 2, 0, 61, 0, "CLIP"],
+    [64, 3, 0, 61, 1, "VAE"],
+    [65, 60, 0, 61, 2, "IMAGE"],
+    [66, 61, 0, 62, 0, "CONDITIONING"],
+    [67, 6, 0, 63, 0, "MODEL"],
+    [68, 62, 0, 63, 1, "CONDITIONING"],
+    [69, 11, 0, 63, 2, "CONDITIONING"],
+    [70, 9, 0, 63, 3, "LATENT"],
+    [71, 63, 0, 64, 0, "LATENT"],
+    [72, 3, 0, 64, 1, "VAE"],
+    [73, 64, 0, 65, 0, "IMAGE"],
+    [74, 8, 0, 70, 0, "IMAGE"],
+    [75, 64, 0, 70, 1, "IMAGE"],
+    [76, 2, 0, 71, 0, "CLIP"],
+    [77, 3, 0, 71, 1, "VAE"],
+    [78, 70, 0, 71, 2, "IMAGE"],
+    [79, 71, 0, 72, 0, "CONDITIONING"],
+    [80, 6, 0, 73, 0, "MODEL"],
+    [81, 72, 0, 73, 1, "CONDITIONING"],
+    [82, 11, 0, 73, 2, "CONDITIONING"],
+    [83, 9, 0, 73, 3, "LATENT"],
+    [84, 73, 0, 74, 0, "LATENT"],
+    [85, 3, 0, 74, 1, "VAE"],
+    [86, 74, 0, 75, 0, "IMAGE"],
+    [87, 8, 0, 80, 0, "IMAGE"],
+    [88, 74, 0, 80, 1, "IMAGE"],
+    [89, 2, 0, 81, 0, "CLIP"],
+    [90, 3, 0, 81, 1, "VAE"],
+    [91, 80, 0, 81, 2, "IMAGE"],
+    [92, 81, 0, 82, 0, "CONDITIONING"],
+    [93, 6, 0, 83, 0, "MODEL"],
+    [94, 82, 0, 83, 1, "CONDITIONING"],
+    [95, 11, 0, 83, 2, "CONDITIONING"],
+    [96, 9, 0, 83, 3, "LATENT"],
+    [97, 83, 0, 84, 0, "LATENT"],
+    [98, 3, 0, 84, 1, "VAE"],
+    [99, 84, 0, 85, 0, "IMAGE"],
+    [100, 8, 0, 90, 0, "IMAGE"],
+    [101, 84, 0, 90, 1, "IMAGE"],
+    [102, 2, 0, 91, 0, "CLIP"],
+    [103, 3, 0, 91, 1, "VAE"],
+    [104, 90, 0, 91, 2, "IMAGE"],
+    [105, 91, 0, 92, 0, "CONDITIONING"],
+    [106, 6, 0, 93, 0, "MODEL"],
+    [107, 92, 0, 93, 1, "CONDITIONING"],
+    [108, 11, 0, 93, 2, "CONDITIONING"],
+    [109, 9, 0, 93, 3, "LATENT"],
+    [110, 93, 0, 94, 0, "LATENT"],
+    [111, 3, 0, 94, 1, "VAE"],
+    [112, 94, 0, 95, 0, "IMAGE"],
+    [113, 8, 0, 100, 0, "IMAGE"],
+    [114, 94, 0, 100, 1, "IMAGE"],
+    [115, 2, 0, 101, 0, "CLIP"],
+    [116, 3, 0, 101, 1, "VAE"],
+    [117, 100, 0, 101, 2, "IMAGE"],
+    [118, 101, 0, 102, 0, "CONDITIONING"],
+    [119, 6, 0, 103, 0, "MODEL"],
+    [120, 102, 0, 103, 1, "CONDITIONING"],
+    [121, 11, 0, 103, 2, "CONDITIONING"],
+    [122, 9, 0, 103, 3, "LATENT"],
+    [123, 103, 0, 104, 0, "LATENT"],
+    [124, 3, 0, 104, 1, "VAE"],
+    [125, 104, 0, 105, 0, "IMAGE"],
+    [126, 8, 0, 110, 0, "IMAGE"],
+    [127, 104, 0, 110, 1, "IMAGE"],
+    [128, 2, 0, 111, 0, "CLIP"],
+    [129, 3, 0, 111, 1, "VAE"],
+    [130, 110, 0, 111, 2, "IMAGE"],
+    [131, 111, 0, 112, 0, "CONDITIONING"],
+    [132, 6, 0, 113, 0, "MODEL"],
+    [133, 112, 0, 113, 1, "CONDITIONING"],
+    [134, 11, 0, 113, 2, "CONDITIONING"],
+    [135, 9, 0, 113, 3, "LATENT"],
+    [136, 113, 0, 114, 0, "LATENT"],
+    [137, 3, 0, 114, 1, "VAE"],
+    [138, 114, 0, 115, 0, "IMAGE"],
+    [139, 8, 0, 120, 0, "IMAGE"],
+    [140, 114, 0, 120, 1, "IMAGE"],
+    [141, 2, 0, 121, 0, "CLIP"],
+    [142, 3, 0, 121, 1, "VAE"],
+    [143, 120, 0, 121, 2, "IMAGE"],
+    [144, 121, 0, 122, 0, "CONDITIONING"],
+    [145, 6, 0, 123, 0, "MODEL"],
+    [146, 122, 0, 123, 1, "CONDITIONING"],
+    [147, 11, 0, 123, 2, "CONDITIONING"],
+    [148, 9, 0, 123, 3, "LATENT"],
+    [149, 123, 0, 124, 0, "LATENT"],
+    [150, 3, 0, 124, 1, "VAE"],
+    [151, 124, 0, 125, 0, "IMAGE"],
+    [152, 8, 0, 130, 0, "IMAGE"],
+    [153, 124, 0, 130, 1, "IMAGE"],
+    [154, 2, 0, 131, 0, "CLIP"],
+    [155, 3, 0, 131, 1, "VAE"],
+    [156, 130, 0, 131, 2, "IMAGE"],
+    [157, 131, 0, 132, 0, "CONDITIONING"],
+    [158, 6, 0, 133, 0, "MODEL"],
+    [159, 132, 0, 133, 1, "CONDITIONING"],
+    [160, 11, 0, 133, 2, "CONDITIONING"],
+    [161, 9, 0, 133, 3, "LATENT"],
+    [162, 133, 0, 134, 0, "LATENT"],
+    [163, 3, 0, 134, 1, "VAE"],
+    [164, 134, 0, 135, 0, "IMAGE"],
+    [165, 8, 0, 140, 0, "IMAGE"],
+    [166, 134, 0, 140, 1, "IMAGE"],
+    [167, 2, 0, 141, 0, "CLIP"],
+    [168, 3, 0, 141, 1, "VAE"],
+    [169, 140, 0, 141, 2, "IMAGE"],
+    [170, 141, 0, 142, 0, "CONDITIONING"],
+    [171, 6, 0, 143, 0, "MODEL"],
+    [172, 142, 0, 143, 1, "CONDITIONING"],
+    [173, 11, 0, 143, 2, "CONDITIONING"],
+    [174, 9, 0, 143, 3, "LATENT"],
+    [175, 143, 0, 144, 0, "LATENT"],
+    [176, 3, 0, 144, 1, "VAE"],
+    [177, 144, 0, 145, 0, "IMAGE"],
+    [178, 8, 0, 150, 0, "IMAGE"],
+    [179, 144, 0, 150, 1, "IMAGE"],
+    [180, 2, 0, 151, 0, "CLIP"],
+    [181, 3, 0, 151, 1, "VAE"],
+    [182, 150, 0, 151, 2, "IMAGE"],
+    [183, 151, 0, 152, 0, "CONDITIONING"],
+    [184, 6, 0, 153, 0, "MODEL"],
+    [185, 152, 0, 153, 1, "CONDITIONING"],
+    [186, 11, 0, 153, 2, "CONDITIONING"],
+    [187, 9, 0, 153, 3, "LATENT"],
+    [188, 153, 0, 154, 0, "LATENT"],
+    [189, 3, 0, 154, 1, "VAE"],
+    [190, 154, 0, 155, 0, "IMAGE"],
+    [191, 8, 0, 160, 0, "IMAGE"],
+    [192, 154, 0, 160, 1, "IMAGE"],
+    [193, 2, 0, 161, 0, "CLIP"],
+    [194, 3, 0, 161, 1, "VAE"],
+    [195, 160, 0, 161, 2, "IMAGE"],
+    [196, 161, 0, 162, 0, "CONDITIONING"],
+    [197, 6, 0, 163, 0, "MODEL"],
+    [198, 162, 0, 163, 1, "CONDITIONING"],
+    [199, 11, 0, 163, 2, "CONDITIONING"],
+    [200, 9, 0, 163, 3, "LATENT"],
+    [201, 163, 0, 164, 0, "LATENT"],
+    [202, 3, 0, 164, 1, "VAE"],
+    [203, 164, 0, 165, 0, "IMAGE"],
+    [204, 8, 0, 170, 0, "IMAGE"],
+    [205, 164, 0, 170, 1, "IMAGE"],
+    [206, 2, 0, 171, 0, "CLIP"],
+    [207, 3, 0, 171, 1, "VAE"],
+    [208, 170, 0, 171, 2, "IMAGE"],
+    [209, 171, 0, 172, 0, "CONDITIONING"],
+    [210, 6, 0, 173, 0, "MODEL"],
+    [211, 172, 0, 173, 1, "CONDITIONING"],
+    [212, 11, 0, 173, 2, "CONDITIONING"],
+    [213, 9, 0, 173, 3, "LATENT"],
+    [214, 173, 0, 174, 0, "LATENT"],
+    [215, 3, 0, 174, 1, "VAE"],
+    [216, 174, 0, 175, 0, "IMAGE"],
+    [217, 24, 0, 200, 0, "IMAGE"],
+    [218, 34, 0, 200, 1, "IMAGE"],
+    [219, 200, 0, 201, 0, "IMAGE"],
+    [220, 44, 0, 201, 1, "IMAGE"],
+    [221, 201, 0, 202, 0, "IMAGE"],
+    [222, 54, 0, 202, 1, "IMAGE"],
+    [223, 64, 0, 203, 0, "IMAGE"],
+    [224, 74, 0, 203, 1, "IMAGE"],
+    [225, 203, 0, 204, 0, "IMAGE"],
+    [226, 84, 0, 204, 1, "IMAGE"],
+    [227, 204, 0, 205, 0, "IMAGE"],
+    [228, 94, 0, 205, 1, "IMAGE"],
+    [229, 104, 0, 206, 0, "IMAGE"],
+    [230, 114, 0, 206, 1, "IMAGE"],
+    [231, 206, 0, 207, 0, "IMAGE"],
+    [232, 124, 0, 207, 1, "IMAGE"],
+    [233, 207, 0, 208, 0, "IMAGE"],
+    [234, 134, 0, 208, 1, "IMAGE"],
+    [235, 144, 0, 209, 0, "IMAGE"],
+    [236, 154, 0, 209, 1, "IMAGE"],
+    [237, 209, 0, 210, 0, "IMAGE"],
+    [238, 164, 0, 210, 1, "IMAGE"],
+    [239, 210, 0, 211, 0, "IMAGE"],
+    [240, 174, 0, 211, 1, "IMAGE"],
+    [241, 202, 0, 212, 0, "IMAGE"],
+    [242, 205, 0, 212, 1, "IMAGE"],
+    [243, 212, 0, 213, 0, "IMAGE"],
+    [244, 208, 0, 213, 1, "IMAGE"],
+    [245, 213, 0, 214, 0, "IMAGE"],
+    [246, 211, 0, 214, 1, "IMAGE"],
+    [247, 214, 0, 230, 0, "IMAGE"]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "1 模型",
+      "bounding": [20, 20, 1470, 400],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "2 人物原图",
+      "bounding": [20, 430, 1440, 360],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "3 正面 0°",
+      "bounding": [20, 800, 2040, 360],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "4 左前 30°",
+      "bounding": [20, 1180, 2040, 360],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 5,
+      "title": "5 左前 60°",
+      "bounding": [20, 1560, 2040, 360],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 6,
+      "title": "6 左侧 90°",
+      "bounding": [20, 1940, 2040, 360],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 7,
+      "title": "7 左后 120°",
+      "bounding": [20, 2320, 2040, 360],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 8,
+      "title": "8 左后 150°",
+      "bounding": [20, 2700, 2040, 360],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 9,
+      "title": "9 背面 180°",
+      "bounding": [20, 3080, 2040, 360],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 10,
+      "title": "10 右后 210°",
+      "bounding": [20, 3460, 2040, 360],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 11,
+      "title": "11 右后 240°",
+      "bounding": [20, 3840, 2040, 360],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 12,
+      "title": "12 右侧 270°",
+      "bounding": [20, 4220, 2040, 360],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 13,
+      "title": "13 右前 300°",
+      "bounding": [20, 4600, 2040, 360],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 14,
+      "title": "14 右前 330°",
+      "bounding": [20, 4980, 2040, 360],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 15,
+      "title": "15 俯拍 30°",
+      "bounding": [20, 5360, 2040, 360],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 16,
+      "title": "16 仰拍 20°",
+      "bounding": [20, 5740, 2040, 360],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 17,
+      "title": "17 顶视",
+      "bounding": [20, 6120, 2040, 360],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 18,
+      "title": "18 左前俯 45°",
+      "bounding": [20, 6500, 2040, 360],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 20,
+      "title": "总览 4×4 拼接",
+      "bounding": [20, 6900, 1620, 780],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.52,
+      "offset": [40, 0]
+    },
+    "frontendVersion": "1.23.4"
+  },
+  "version": 0.4
+}
