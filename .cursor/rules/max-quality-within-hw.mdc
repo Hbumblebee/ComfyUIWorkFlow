@@ -1,0 +1,31 @@
+---
+description: 新建/调整工作流时顶满本机性能但不超限，输出文件必须以时间戳结尾
+alwaysApply: true
+---
+
+# 本机极限质量工作流
+
+每次新建或调整 ComfyUI 工作流时必须同时满足：用最好的模型、参数和流程；且不能超过本机硬件。
+
+## 本机上限（2026-09 实测）
+
+- GPU：NVIDIA GeForce RTX 5060 Ti，VRAM **16311 MiB**（按 **14 GB 可用** 设计，留 1.5–2 GB 余量）
+- CPU：AMD Ryzen 7 9700X（8 核 / 16 线程）
+- 内存：约 **32 GB**（不要把大模型权重和巨大中间图画到系统内存爆掉）
+- 禁止：fp32 权重、batch>1、原生 4K 扩散采样、同时常驻两套大 UNet、超分前不限边长
+
+## 质量优先（在上限内尽量顶满）
+
+- 写实文生图 / 照片向：`z_image_turbo_bf16` + `qwen_3_4b` + `ae`；8 步、CFG 1、`res_multistep` + `simple`
+- 图编辑 / 换脸：`qwen_image_edit_2511_int8_convrot` + `qwen_2.5_vl_7b_fp8_scaled` + Lightning 4 步
+- 动漫：`z-anime-base-fp8`（不要用写实 Turbo 硬出二次元）
+- 提分辨率：先出好构图，再用 RealESRGAN；超分输入最长边先压到 **2048**，4K 用超分得到，不要直接 4096 采样
+- 默认分辨率：方图 1024；竖图约 768x1280 或 832x1216；长边一般不超过 **1536**
+- 有 fp16/bf16 且能塞进 14 GB 就用，否则才降到 fp8/int8；不要为“保险”无故降级
+
+## 输出命名（强制）
+
+- 保存节点必须用 `SaveImageTimestamp`，禁止默认 `SaveImage`（会变成 `xxx_00001.png`）
+- 最终文件名：`前缀_YYYYMMDD_HHMMSS.png`（节点自动加时间戳）
+- `filename_prefix` 只写语义前缀（如 `ZImageTurbo_T2I`），不要手写时间戳、不要 `_00001`
+- 同一图里多张输出：每个保存节点用不同前缀

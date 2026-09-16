@@ -277,7 +277,7 @@
     },
     {
       "id": 18,
-      "type": "SaveImage",
+      "type": "SaveImageTimestamp",
       "pos": [2150, 200],
       "size": [500, 400],
       "flags": {},
@@ -286,7 +286,7 @@
       "inputs": [{ "name": "images", "type": "IMAGE", "link": 24 }],
       "outputs": [],
       "title": "Save face swap",
-      "properties": { "Node name for S&R": "SaveImage" },
+      "properties": { "Node name for S&R": "SaveImageTimestamp" },
       "widgets_values": ["FaceSwap"]
     },
     {

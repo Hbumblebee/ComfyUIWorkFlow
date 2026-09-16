@@ -162,7 +162,7 @@
     },
     {
       "id": 11,
-      "type": "SaveImage",
+      "type": "SaveImageTimestamp",
       "pos": [1560, 80],
       "size": [420, 360],
       "flags": {},
@@ -171,7 +171,7 @@
       "inputs": [{ "name": "images", "type": "IMAGE", "link": 15 }],
       "outputs": [],
       "title": "Save 预览",
-      "properties": { "Node name for S&R": "SaveImage" },
+      "properties": { "Node name for S&R": "SaveImageTimestamp" },
       "widgets_values": ["Anime_Preview"]
     },
     {
@@ -258,7 +258,7 @@
     },
     {
       "id": 17,
-      "type": "SaveImage",
+      "type": "SaveImageTimestamp",
       "pos": [2200, 420],
       "size": [420, 360],
       "flags": {},
@@ -267,7 +267,7 @@
       "inputs": [{ "name": "images", "type": "IMAGE", "link": 22 }],
       "outputs": [],
       "title": "Save 细节",
-      "properties": { "Node name for S&R": "SaveImage" },
+      "properties": { "Node name for S&R": "SaveImageTimestamp" },
       "widgets_values": ["Anime_Detail"]
     },
     {
@@ -334,7 +334,7 @@
     },
     {
       "id": 22,
-      "type": "SaveImage",
+      "type": "SaveImageTimestamp",
       "pos": [2540, 80],
       "size": [420, 380],
       "flags": {},
@@ -343,7 +343,7 @@
       "inputs": [{ "name": "images", "type": "IMAGE", "link": 29 }],
       "outputs": [],
       "title": "Save 4K",
-      "properties": { "Node name for S&R": "SaveImage" },
+      "properties": { "Node name for S&R": "SaveImageTimestamp" },
       "widgets_values": ["Anime_4K"]
     },
     {

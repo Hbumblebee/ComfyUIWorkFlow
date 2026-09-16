@@ -83,7 +83,7 @@
     },
     {
       "id": 6,
-      "type": "SaveImage",
+      "type": "SaveImageTimestamp",
       "pos": [1440, 80],
       "size": [360, 300],
       "flags": {},
@@ -92,7 +92,7 @@
       "inputs": [{ "name": "images", "type": "IMAGE", "link": 7 }],
       "outputs": [],
       "title": "Save 同尺寸",
-      "properties": { "Node name for S&R": "SaveImage" },
+      "properties": { "Node name for S&R": "SaveImageTimestamp" },
       "widgets_values": ["Enhance_Detail"]
     },
     {
@@ -128,7 +128,7 @@
     },
     {
       "id": 9,
-      "type": "SaveImage",
+      "type": "SaveImageTimestamp",
       "pos": [1440, 420],
       "size": [420, 320],
       "flags": {},
@@ -137,7 +137,7 @@
       "inputs": [{ "name": "images", "type": "IMAGE", "link": 10 }],
       "outputs": [],
       "title": "Save 4K",
-      "properties": { "Node name for S&R": "SaveImage" },
+      "properties": { "Node name for S&R": "SaveImageTimestamp" },
       "widgets_values": ["Enhance_4K"]
     },
     {

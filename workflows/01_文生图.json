@@ -142,7 +142,7 @@
     },
     {
       "id": 10,
-      "type": "SaveImage",
+      "type": "SaveImageTimestamp",
       "pos": [1540, 180],
       "size": [520, 420],
       "flags": {},
@@ -150,7 +150,7 @@
       "mode": 0,
       "inputs": [{ "name": "images", "type": "IMAGE", "link": 10 }],
       "outputs": [],
-      "properties": { "Node name for S&R": "SaveImage" },
+      "properties": { "Node name for S&R": "SaveImageTimestamp" },
       "widgets_values": ["ZImageTurbo_T2I"]
     },
     {

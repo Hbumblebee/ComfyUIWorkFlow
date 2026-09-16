@@ -193,7 +193,7 @@
     },
     {
       "id": 13,
-      "type": "SaveImage",
+      "type": "SaveImageTimestamp",
       "pos": [1860, 80],
       "size": [420, 400],
       "flags": {},
@@ -202,7 +202,7 @@
       "inputs": [{ "name": "images", "type": "IMAGE", "link": 16 }],
       "outputs": [],
       "title": "Save realistic",
-      "properties": { "Node name for S&R": "SaveImage" },
+      "properties": { "Node name for S&R": "SaveImageTimestamp" },
       "widgets_values": ["RealisticPhoto"]
     },
     {

@@ -235,7 +235,7 @@
     },
     {
       "id": 16,
-      "type": "SaveImage",
+      "type": "SaveImageTimestamp",
       "pos": [2090, 200],
       "size": [500, 400],
       "flags": {},
@@ -243,7 +243,7 @@
       "mode": 0,
       "inputs": [{ "name": "images", "type": "IMAGE", "link": 20 }],
       "outputs": [],
-      "properties": { "Node name for S&R": "SaveImage" },
+      "properties": { "Node name for S&R": "SaveImageTimestamp" },
       "widgets_values": ["QwenEdit2511"]
     },
     {
