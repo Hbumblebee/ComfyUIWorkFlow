@@ -34,7 +34,7 @@ class SaveImageTimestamp:
     FUNCTION = "save_images"
     OUTPUT_NODE = True
     CATEGORY = "image"
-    DESCRIPTION = "Saves images as prefix_YYYYMMDD_HHMMSS.png without 00001 counters."
+    DESCRIPTION = "Saves images as prefix_YYYYMMDD_HHMMSS.png without 00001 counters. RGBA images keep transparency."
 
     def _unique_path(self, folder, filename):
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -59,8 +59,15 @@ class SaveImageTimestamp:
 
         results = []
         for image in images:
-            i = 255.0 * image.cpu().numpy()
-            img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
+            arr = np.clip(255.0 * image.cpu().numpy(), 0, 255).astype(np.uint8)
+            if arr.ndim == 2:
+                img = Image.fromarray(arr, mode="L")
+            elif arr.shape[-1] == 4:
+                img = Image.fromarray(arr, mode="RGBA")
+            elif arr.shape[-1] == 1:
+                img = Image.fromarray(arr.squeeze(-1), mode="L")
+            else:
+                img = Image.fromarray(arr[..., :3], mode="RGB")
             metadata = None
             if not args.disable_metadata:
                 metadata = PngInfo()

@@ -1,0 +1,156 @@
+{
+  "id": "19-tu-pian-fan-tui",
+  "revision": 0,
+  "last_node_id": 7,
+  "last_link_id": 5,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "CLIPLoader",
+      "pos": [40, 80],
+      "size": [420, 106],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [{ "name": "CLIP", "type": "CLIP", "links": [1] }],
+      "properties": {
+        "Node name for S&R": "CLIPLoader",
+        "models": [
+          {
+            "name": "qwen3vl_8b_fp8_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Qwen3-VL/resolve/main/text_encoders/qwen3vl_8b_fp8_scaled.safetensors",
+            "directory": "text_encoders"
+          }
+        ]
+      },
+      "widgets_values": ["qwen3vl_8b_fp8_scaled.safetensors", "qwen_image", "default"],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 2,
+      "type": "LoadImage",
+      "pos": [40, 240],
+      "size": [360, 420],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        { "name": "IMAGE", "type": "IMAGE", "links": [2] },
+        { "name": "MASK", "type": "MASK", "links": null }
+      ],
+      "title": "要反推的图",
+      "properties": { "Node name for S&R": "LoadImage" },
+      "widgets_values": ["", "image"],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 3,
+      "type": "ImageClampMaxDimension",
+      "pos": [440, 240],
+      "size": [300, 82],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [{ "name": "image", "type": "IMAGE", "link": 2 }],
+      "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [3] }],
+      "title": "VL 输入最长边 1536",
+      "properties": { "Node name for S&R": "ImageClampMaxDimension" },
+      "widgets_values": ["lanczos", 1536]
+    },
+    {
+      "id": 4,
+      "type": "TextGenerate",
+      "pos": [780, 80],
+      "size": [460, 560],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        { "name": "clip", "type": "CLIP", "link": 1 },
+        { "name": "image", "shape": 7, "type": "IMAGE", "link": 3 },
+        { "name": "video", "shape": 7, "type": "IMAGE", "link": null },
+        { "name": "audio", "shape": 7, "type": "AUDIO", "link": null }
+      ],
+      "outputs": [{ "name": "generated_text", "type": "STRING", "links": [4, 5] }],
+      "title": "反推指令",
+      "properties": { "Node name for S&R": "TextGenerate" },
+      "widgets_values": [
+        "你是文生图提示词反推器。先逐项看清这张图，再写成可直接用于文生图的提示词。\n\n硬性规则：\n- 只写画面里确实能看见的内容。颜色、材质、花纹、层次、左右位置必须具体（例如「头顶到耳际是粉，耳下到发尾是蓝」，不要只写「蓝粉双色头发」）。\n- 看不见的不要猜名字、身份、品牌、故事设定。看不清的部位就跳过，不要写「可能是」。\n- 不要写「高质量」「杰作」「8k」「超详细」「最佳画质」这类空话。\n- 漏掉可见细节比写空话更差。中文提示词至少 220 字，必须覆盖下面清单，不要概括成两三句。\n\n必须写清：\n1. 画风：实拍照片 / 日系二次元插画 / 厚涂 / 水彩 / 3D 等；线稿粗细、平涂还是赛璐璐、有没有网点或颗粒。\n2. 人数与主体：性别观感、年龄段观感、体型、肤色。\n3. 头发：长度、发型、刘海怎么分、主色与挑染分别在哪一缕、光泽和发丝走向。\n4. 五官：瞳色与高光形状、眉毛、表情（眉、眼、嘴分别什么样）。\n5. 服装：由外到内、由上到下；领口/袖口/下摆、系带/扣子/拉链、花纹/刺绣/蕾丝的位置和颜色、内搭是否外露。\n6. 配饰与手脚：耳环项链手套鞋子指甲；手在做什么、手指怎么摆。\n7. 姿势与构图：全身/半身/特写、站坐躺弯腰、面向镜头的角度（正面/四分之三/侧面）、镜头高低、主体在画面中的位置、裁切到身体哪一截。\n8. 光影与背景：主光方向、阴影软硬、背景是纯色还是场景、有没有道具；图上的文字要原样抄写。\n\n按下面格式输出，不要前言后语，不要解释：\n\n【可见细节】\n分条列出你看见的一切，一条一个细节，不要概括。\n\n【中文】\n一段可直接贴进工作流 01 / 14（写实）或 06（动漫）的详细自然语言提示词。把上面细节全部写进去，连成通顺的一段，不要用项目符号。\n\n【English】\nSame content as one dense English paragraph prompt. Include materials, exact colors, camera, lighting, and style.\n\n【Tags】\ncomma-separated, dense, danbooru-like: 1girl/1boy, hair colors and cut, eyes, clothes layer by layer, pose, camera, lighting, background, style. No quality tags.",
+        2048,
+        "on",
+        0.22,
+        40,
+        0.9,
+        0.05,
+        1.08,
+        0,
+        0,
+        false,
+        true
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 5,
+      "type": "PreviewAny",
+      "pos": [1280, 80],
+      "size": [560, 640],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [{ "name": "source", "type": "*", "link": 4 }],
+      "outputs": [{ "name": "STRING", "type": "STRING", "links": null }],
+      "title": "反推结果",
+      "properties": { "Node name for S&R": "PreviewAny" },
+      "widgets_values": [null, null, null]
+    },
+    {
+      "id": 6,
+      "type": "SaveTextTimestamp",
+      "pos": [1280, 540],
+      "size": [360, 82],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [{ "name": "text", "type": "STRING", "link": 5 }],
+      "outputs": [{ "name": "text", "type": "STRING", "links": null }],
+      "title": "保存 txt",
+      "properties": { "Node name for S&R": "SaveTextTimestamp" },
+      "widgets_values": ["PromptReverse"]
+    },
+    {
+      "id": 7,
+      "type": "Note",
+      "pos": [40, 700],
+      "size": [700, 360],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "用途：根据图片反推提示词",
+      "properties": {},
+      "widgets_values": [
+        "用途：看图写出可再生成的提示词。加载图片后 Queue。右侧四段：可见细节 / 中文 / English / Tags。贴图用【中文】。同时保存 PromptReverse_时间戳.txt。\n\n【中文】贴 01 或 14（写实）、06（动漫）。看【画风】那句选工作流，二次元不要贴进写实。English / Tags 作补充。反推是描述你看见的画面，不是还原原作者提示词。\n\n底模 Qwen3-VL 8B FP8。CLIP 类型用 qwen_image。不要和扩散 UNet 同时开。\n\n温度：0.15 更准更死板 / 0.22 默认 / 0.40 更活。乱编细节就降到 0.15。太短：确认 max_length 是 2048。\n图太大：最长边压到 1536，细花纹、发色分界会更准。\n只要中文：把绿色指令最后的格式改成只留【中文】。"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    }
+  ],
+  "links": [
+    [1, 1, 0, 4, 0, "CLIP"],
+    [2, 2, 0, 3, 0, "IMAGE"],
+    [3, 3, 0, 4, 1, "IMAGE"],
+    [4, 4, 0, 5, 0, "STRING"],
+    [5, 4, 0, 6, 0, "STRING"]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": { "ds": { "scale": 0.85, "offset": [0, 0] }, "frontendVersion": "1.23.4" },
+  "version": 0.4
+}
