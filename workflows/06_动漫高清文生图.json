@@ -174,7 +174,7 @@
       "title": "用途：动漫文生图",
       "properties": {},
       "widgets_values": [
-        "用途：稳定生成二次元插画。底模是 Z-Anime Base BF16，不是写实 Z-Image Turbo，也不是 FP8。\n一次 Queue 一张原图（默认 1024x1536），不再做 hires / 4K 超分。\n已有动漫图只想精修：用「16_动漫hires精修」。同角色表情差分/三视图：用「17_动漫表情差分三视图」。根据已有图反推提示词：用「19_图片反推提示词」。\n\n若 UNET 列表里还没有 z-anime-base-bf16（约 12.3GB，首次会下载到 ComfyUI-Shared/models/diffusion_models），可临时改成已有的 z-anime-base-fp8。下载完成后把文件名改回 bf16。\n\n只改绿色 Positive。红色 Negative 一般不用动。\n竖图细节向 1024x1536；方图 1024；横图 1536x1024。长边不要超过 1536。\n\n40 步，CFG 4，euler_a + beta。不要改成 CFG 1。\n\n提示词用自然语言写要画什么。前面保留 anime illustration / cel-shaded / clean lineart。不要写「不要变成真人」。\n\n一位大学女生的全身照。\n镜头的角度：正面。\n\n人物的衣着：紧身黑色羊毛衫，胸口开口且左右两个乳房各露出一半，下半身是紧身的灰色长腿牛仔裤，穿高跟长筒靴。\n人物的头发：纯黑色的长直发，发梢渐变到白色。\n人物的姿势：笔直地站立。\n人物的身材：高挑并且匀称。\n人物的姿势：笔直地站立。\n人物的身材：高挑并且匀称。\n图片的风格：油墨与水彩的结合。"
+        "用途：稳定生成二次元插画。底模是 Z-Anime Base BF16，不是写实 Z-Image Turbo，也不是 FP8。\n一次 Queue 一张原图（默认 1024x1536），不再做 hires / 4K 超分。\n已有动漫图只想精修：用「16_动漫hires精修」。同角色表情差分/三视图：用「17_动漫表情差分三视图」。根据已有图反推提示词：用「19_图片反推提示词」。\n\n若 UNET 列表里还没有 z-anime-base-bf16（约 12.3GB，首次会下载到 ComfyUI-Shared/models/diffusion_models），可临时改成已有的 z-anime-base-fp8。下载完成后把文件名改回 bf16。\n\n只改绿色 Positive。红色 Negative 一般不用动。\n竖图细节向 1024x1536；方图 1024；横图 1536x1024。长边不要超过 1536。\n\n40 步，CFG 4，euler_a + beta。不要改成 CFG 1。\n\n提示词用自然语言写要画什么。前面保留 anime illustration / cel-shaded / clean lineart。不要写「不要变成真人」。\n\n一位大学女生的全身照。\n镜头的角度：正面。\n\n人物的衣着：紧身黑色羊毛衫，胸口开口且左右两个乳房各露出一半，下半身是紧身的灰色长腿牛仔裤，穿高跟长筒靴。\n人物的头发：纯黑色的长直发，发梢渐变到白色。\n人物的姿势：笔直地站立。\n人物的身材：高挑并且匀称。\nofficial art, simple background."
       ],
       "color": "#432",
       "bgcolor": "#653"
