@@ -1,8 +1,8 @@
 {
   "id": "03-tu-bian-ji",
   "revision": 1,
-  "last_node_id": 18,
-  "last_link_id": 21,
+  "last_node_id": 19,
+  "last_link_id": 25,
   "nodes": [
     {
       "id": 1,
@@ -99,10 +99,30 @@
       "inputs": [],
       "outputs": [
         { "name": "IMAGE", "type": "IMAGE", "links": [10] },
-        { "name": "MASK", "type": "MASK", "links": null }
+        { "name": "MASK", "type": "MASK", "links": [22] }
       ],
       "properties": { "Node name for S&R": "LoadImage" },
       "widgets_values": ["7734fa66c2ed7f8274aff208c38119f0.jpg", "image"]
+    },
+    {
+      "id": 18,
+      "type": "CompositeCutoutOnFill",
+      "pos": [360, 430],
+      "size": [280, 110],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        { "name": "image", "type": "IMAGE", "link": 10 },
+        { "name": "mask", "type": "MASK", "link": 22 }
+      ],
+      "outputs": [
+        { "name": "IMAGE", "type": "IMAGE", "links": [23] },
+        { "name": "MASK", "type": "MASK", "links": [25] }
+      ],
+      "title": "透明图铺浅灰（挡住原背景）",
+      "properties": { "Node name for S&R": "CompositeCutoutOnFill" },
+      "widgets_values": [14277081, "LoadImage透明区"]
     },
     {
       "id": 8,
@@ -112,7 +132,7 @@
       "flags": {},
       "order": 7,
       "mode": 0,
-      "inputs": [{ "name": "image", "type": "IMAGE", "link": 10 }],
+      "inputs": [{ "name": "image", "type": "IMAGE", "link": 23 }],
       "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [11, 12, 13] }],
       "properties": { "Node name for S&R": "ImageScaleToTotalPixels" },
       "widgets_values": ["lanczos", 1.5, 16]
@@ -229,9 +249,26 @@
         { "name": "samples", "type": "LATENT", "link": 19 },
         { "name": "vae", "type": "VAE", "link": 21 }
       ],
-      "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [20] }],
+      "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [24] }],
       "properties": { "Node name for S&R": "VAEDecode" },
       "widgets_values": []
+    },
+    {
+      "id": 19,
+      "type": "ApplyLoadImageAlpha",
+      "pos": [1840, 280],
+      "size": [210, 80],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        { "name": "image", "type": "IMAGE", "link": 24 },
+        { "name": "mask", "type": "MASK", "link": 25 }
+      ],
+      "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [20] }],
+      "title": "贴回透明通道",
+      "properties": { "Node name for S&R": "ApplyLoadImageAlpha" },
+      "widgets_values": [false]
     },
     {
       "id": 16,
@@ -239,7 +276,7 @@
       "pos": [2090, 200],
       "size": [500, 400],
       "flags": {},
-      "order": 15,
+      "order": 16,
       "mode": 0,
       "inputs": [{ "name": "images", "type": "IMAGE", "link": 20 }],
       "outputs": [],
@@ -259,7 +296,7 @@
       "title": "用途：图编辑",
       "properties": {},
       "widgets_values": [
-        "用途：改人物的表情、衣服、动作、场景\n加载一张图，在绿色节点写「要改什么」，不要重写整张画面。\n\n示例：\n- 把她的表情改成微笑\n- 把衣服换成黑色高领毛衣\n- 把背景换成夜晚的城市街道，人物保持不变\n- 让她微微侧头看向画面左侧\n\n表情、衣服、光线、背景最稳。大动作容易跑偏。\n只换衣服且要锁姿势和脸：用「18_虚拟试衣」（人物图 + 衣服参考图）。\n8 步 Lightning + CFG 1。工作分辨率约 1.5MP。\n底模是 INT8 ConvRot（14GB 内最接近 BF16；FP8/BF16 整模塞不进）。"
+        "用途：改人物的表情、衣服、动作、场景\n加载一张图，在绿色节点写「要改什么」，不要重写整张画面。\n\n11 的透明 PNG 请直接丢这里：LoadImage 会丢掉 alpha 并把原背景读回来，所以会先铺浅灰再编辑，保存前再贴回透明通道。普通 JPG 不受影响。\n要换新场景且保留新背景：把「贴回透明通道」的 restore_alpha 关掉。\n衣服轮廓变化很大时，把结果再走一遍 11。\n\n示例：\n- 把她的表情改成微笑\n- 把衣服换成黑色高领毛衣\n- 把背景换成夜晚的城市街道，人物保持不变\n- 让她微微侧头看向画面左侧\n\n表情、衣服、光线、背景最稳。大动作容易跑偏。\n8 步 Lightning + CFG 1。工作分辨率约 1.5MP。\n底模是 INT8 ConvRot（14GB 内最接近 BF16；FP8/BF16 整模塞不进）。"
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -275,7 +312,7 @@
     [7, 4, 0, 5, 0, "MODEL"],
     [8, 5, 0, 6, 0, "MODEL"],
     [9, 6, 0, 14, 0, "MODEL"],
-    [10, 7, 0, 8, 0, "IMAGE"],
+    [10, 7, 0, 18, 0, "IMAGE"],
     [11, 8, 0, 9, 2, "IMAGE"],
     [12, 8, 0, 10, 2, "IMAGE"],
     [13, 8, 0, 13, 0, "IMAGE"],
@@ -285,8 +322,12 @@
     [17, 12, 0, 14, 2, "CONDITIONING"],
     [18, 13, 0, 14, 3, "LATENT"],
     [19, 14, 0, 15, 0, "LATENT"],
-    [20, 15, 0, 16, 0, "IMAGE"],
-    [21, 3, 0, 15, 1, "VAE"]
+    [20, 19, 0, 16, 0, "IMAGE"],
+    [21, 3, 0, 15, 1, "VAE"],
+    [22, 7, 1, 18, 1, "MASK"],
+    [23, 18, 0, 8, 0, "IMAGE"],
+    [24, 15, 0, 19, 0, "IMAGE"],
+    [25, 18, 1, 19, 1, "MASK"]
   ],
   "groups": [],
   "config": {},

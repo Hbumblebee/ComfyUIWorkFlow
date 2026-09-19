@@ -1,8 +1,8 @@
 {
   "id": "15-qu-bei-jing",
   "revision": 0,
-  "last_node_id": 12,
-  "last_link_id": 11,
+  "last_node_id": 13,
+  "last_link_id": 13,
   "nodes": [
     {
       "id": 1,
@@ -111,7 +111,7 @@
       "order": 6,
       "mode": 0,
       "inputs": [{ "name": "image", "type": "IMAGE", "link": 6 }],
-      "outputs": [{ "name": "MASK", "type": "MASK", "links": [7, 10] }],
+      "outputs": [{ "name": "MASK", "type": "MASK", "links": [7, 10, 12] }],
       "properties": { "Node name for S&R": "ImageToMask" },
       "widgets_values": ["red"]
     },
@@ -130,15 +130,35 @@
       "widgets_values": []
     },
     {
-      "id": 9,
-      "type": "JoinImageWithAlpha",
-      "pos": [840, 290],
-      "size": [280, 70],
+      "id": 13,
+      "type": "CompositeCutoutOnFill",
+      "pos": [840, 80],
+      "size": [280, 90],
       "flags": {},
       "order": 8,
       "mode": 0,
       "inputs": [
         { "name": "image", "type": "IMAGE", "link": 8 },
+        { "name": "mask", "type": "MASK", "link": 12 }
+      ],
+      "outputs": [
+        { "name": "IMAGE", "type": "IMAGE", "links": [13] },
+        { "name": "MASK", "type": "MASK", "links": null }
+      ],
+      "title": "透明区 RGB 清成黑",
+      "properties": { "Node name for S&R": "CompositeCutoutOnFill" },
+      "widgets_values": [0, "前景遮罩"]
+    },
+    {
+      "id": 9,
+      "type": "JoinImageWithAlpha",
+      "pos": [840, 290],
+      "size": [280, 70],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        { "name": "image", "type": "IMAGE", "link": 13 },
         { "name": "alpha", "type": "MASK", "link": 9 }
       ],
       "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [11] }],
@@ -187,7 +207,7 @@
       "title": "用途：去背景 / 透明 PNG",
       "properties": {},
       "widgets_values": [
-        "用途：抠出主体，保存带透明通道的 PNG。加载图片后 Queue。\n\n模型是 Comfy-Org 打包的 BiRefNet（约 424MB），放到 ComfyUI-Shared/models/background_removal/birefnet.safetensors。没下完时节点列表是空的。\n\n看「前景遮罩预览」：白=保留，黑=变透明。头发被切掉：GrowMask 调到 4–8。边缘发硬：Blur 调到 5–7。留了一圈背景：GrowMask 改成 0 或 -2。\n\n不要接大扩散模型。人像/动漫/物品都能抠。换背景请用抠好的图再走 03 或 11，不要和本图叠一套 UNet。"
+        "用途：抠出主体，保存带透明通道的 PNG。加载图片后 Queue。\n\n模型是 Comfy-Org 打包的 BiRefNet（约 424MB），放到 ComfyUI-Shared/models/background_removal/birefnet.safetensors。没下完时节点列表是空的。\n\n看「前景遮罩预览」：白=保留，黑=变透明。头发被切掉：GrowMask 调到 4–8。边缘发硬：Blur 调到 5–7。留了一圈背景：GrowMask 改成 0 或 -2。\n\n透明区的 RGB 会先铺成黑再写 alpha，避免 Photoshop / 03 的 LoadImage 把原背景读回来。抠完要改表情衣服：走 03，它会铺浅灰给模型看，保存时再贴回透明通道。\n\n不要接大扩散模型。人像/动漫/物品都能抠。"
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -201,10 +221,12 @@
     [5, 5, 0, 6, 0, "IMAGE"],
     [6, 6, 0, 7, 0, "IMAGE"],
     [7, 7, 0, 8, 0, "MASK"],
-    [8, 1, 0, 9, 0, "IMAGE"],
+    [8, 1, 0, 13, 0, "IMAGE"],
     [9, 8, 0, 9, 1, "MASK"],
     [10, 7, 0, 11, 0, "MASK"],
-    [11, 9, 0, 10, 0, "IMAGE"]
+    [11, 9, 0, 10, 0, "IMAGE"],
+    [12, 7, 0, 13, 1, "MASK"],
+    [13, 13, 0, 9, 0, "IMAGE"]
   ],
   "groups": [],
   "config": {},
