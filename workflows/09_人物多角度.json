@@ -1,8 +1,8 @@
 {
   "id": "9-ren-wu-duo-jiao-du",
-  "revision": 8,
-  "last_node_id": 65,
-  "last_link_id": 80,
+  "revision": 9,
+  "last_node_id": 71,
+  "last_link_id": 90,
   "nodes": [
     {
       "id": 1,
@@ -455,7 +455,7 @@
         "Node name for S&R": "TextEncodeQwenImageEditPlus"
       },
       "widgets_values": [
-        "profile, side view, three-quarter view, 3/4 view, looking left, looking right, one eye only, one ear only, face turned away, 侧面, 侧脸, 斜侧, 3/4侧面, 只看见一只眼睛, 只看见一只耳朵, sitting, seated, lying down, kneeling, squatting, walking, running, jumping, action pose, dynamic pose, leaning, arms crossed, hands on hips, hands in pockets, 坐着, 躺着, 蹲着, 跪着, 叉腰, 抱胸, 插兜, 迈步, 动态姿势, 自动调色, 滤镜, 美白, 换发色, 换衣服颜色, 肤色变化, color shift, recolor, filter, bleaching, mottled background, stained backdrop, color blotches, dirty background, textured background, noisy background, chromatic spots, 杂色, 色斑, 脏背景, 背景噪点, 背景纹理, 背景污渍"
+        "profile, side view, three-quarter view, 3/4 view, looking left, looking right, one eye only, one ear only, face turned away, 侧面, 侧脸, 斜侧, 3/4侧面, 只看见一只眼睛, 只看见一只耳朵, sitting, seated, lying down, kneeling, squatting, walking, running, jumping, action pose, dynamic pose, leaning, arms crossed, hands on hips, hands in pockets, 坐着, 躺着, 蹲着, 跪着, 叉腰, 抱胸, 插兜, 迈步, 动态姿势, 自动调色, 滤镜, 美白, 换发色, 换衣服颜色, 肤色变化, color shift, recolor, filter, bleaching, mottled background, stained backdrop, color blotches, dirty background, textured background, noisy background, chromatic spots, floor, ground plane, contact shadow, pedestal, platform, 杂色, 色斑, 脏背景, 背景噪点, 背景纹理, 背景污渍, 地面, 地板, 脚底阴影, 台座"
       ],
       "title": "Negative 正面",
       "color": "#322",
@@ -557,7 +557,7 @@
         "Node name for S&R": "TextEncodeQwenImageEditPlus"
       },
       "widgets_values": [
-        "Generate a character-sheet FRONT VIEW. Do not copy Picture 1's camera angle.\n把相机放到人物自己面部的正前方、平视。这张必须是正面全身，不是侧面、不是斜侧、不是 3/4 侧面。\n正面硬条件：两只眼睛都完整看见且左右对称；两只耳朵都看见；鼻子在脸正中央；双肩与镜头平行、胸口正对镜头。\nfront view, facing the camera, symmetrical face, both eyes visible, both ears visible, nose centered, shoulders square to camera.\nNOT profile, NOT side view, NOT three-quarter view, NOT 3/4 view.\n如果 Picture 1 是侧面、斜侧或背面，必须把相机转到脸的正前方再拍，禁止沿用原图的侧面机位，禁止把侧脸图当作正面输出。\n必须是完整全身站立图：从头顶到鞋底都在画面内，脚下留一点地面；即使 Picture 1 只有头、半身或大半身，也要按同一人补全腰、臀、腿和鞋。下半身服装按已经看见的上装风格合理延续，不要截在腰或大腿。标准站姿：身体直立，双脚与肩同宽，重心平均，双臂自然垂在身体两侧并略微离开躯干，手放松。不要坐、蹲、跪、躺、倚靠，不要叉腰、抱胸、插兜、举手、迈步或扭胯，不要沿用原图姿势。表情自然，与原图气质一致。\nPicture 1 只提供人物身份，不是机位模板。无论原图镜头对着哪一面，本张只输出人物自己的正面 0 度。Picture 2 是空的浅灰棚拍底板，只提供背景颜色，不是第二个人物。\n严格保持人物身份、五官结构、脸型、发型、发色、肤色、瞳色、唇色、体型、年龄、原图已经能看见的服装款式与颜色、配饰完全不变。肤色、头发、眼睛、嘴唇、衣服、配饰的颜色必须与 Picture 1 一致，不要自动调色、不要加滤镜、不要美白、不要改变冷暖或饱和度。换背景时只改背景，人物固有色一点都不要变。保持原图画风（照片保持照片，插画保持插画）。中性均匀光线只用于看清形体，不要给人物重新打光到改变颜色。不要变成另一个人，不要改掉原图已经露出的衣服，不要添加文字、箭头或九宫格。只锁定人物和衣服的固有色，不要锁定背景颜色。人物以外的每一个像素都必须是无纹理、无渐变斑、无脏点的均匀浅灰棚拍纯色，和 Picture 2 完全一致。不要把 Picture 1 背景里的杂色、色斑、噪点、衣服颜色或原场景颜色带到新背景上。seamless uniform light gray studio backdrop, no texture, no stains, no color blotches, no film grain, no noise."
+        "Generate a character-sheet FRONT VIEW. Do not copy Picture 1's camera angle.\n把相机放到人物自己面部的正前方、平视。这张必须是正面全身，不是侧面、不是斜侧、不是 3/4 侧面。\n正面硬条件：两只眼睛都完整看见且左右对称；两只耳朵都看见；鼻子在脸正中央；双肩与镜头平行、胸口正对镜头。\nfront view, facing the camera, symmetrical face, both eyes visible, both ears visible, nose centered, shoulders square to camera.\nNOT profile, NOT side view, NOT three-quarter view, NOT 3/4 view.\n如果 Picture 1 是侧面、斜侧或背面，必须把相机转到脸的正前方再拍，禁止沿用原图的侧面机位，禁止把侧脸图当作正面输出。\n必须是完整全身站立图：从头顶到鞋底都在画面内，不要地面、不要地板、不要脚底接触阴影、不要台座；即使 Picture 1 只有头、半身或大半身，也要按同一人补全腰、臀、腿和鞋。下半身服装按已经看见的上装风格合理延续，不要截在腰或大腿。标准站姿：身体直立，双脚与肩同宽，重心平均，双臂自然垂在身体两侧并略微离开躯干，手放松。不要坐、蹲、跪、躺、倚靠，不要叉腰、抱胸、插兜、举手、迈步或扭胯，不要沿用原图姿势。表情自然，与原图气质一致。\nPicture 1 只提供人物身份，不是机位模板。无论原图镜头对着哪一面，本张只输出人物自己的正面 0 度。Picture 2 是空的浅灰棚拍底板，只提供背景颜色，不是第二个人物。\n严格保持人物身份、五官结构、脸型、发型、发色、肤色、瞳色、唇色、体型、年龄、原图已经能看见的服装款式与颜色、配饰完全不变。肤色、头发、眼睛、嘴唇、衣服、配饰的颜色必须与 Picture 1 一致，不要自动调色、不要加滤镜、不要美白、不要改变冷暖或饱和度。换背景时只改背景，人物固有色一点都不要变。保持原图画风（照片保持照片，插画保持插画）。中性均匀光线只用于看清形体，不要给人物重新打光到改变颜色。不要变成另一个人，不要改掉原图已经露出的衣服，不要添加文字、箭头或九宫格。只锁定人物和衣服的固有色，不要锁定背景颜色。人物以外的每一个像素都必须是无纹理、无渐变斑、无脏点的均匀浅灰棚拍纯色，和 Picture 2 完全一致。不要地面、不要地板、不要脚底接触阴影、不要台座。不要把 Picture 1 背景里的杂色、色斑、噪点、衣服颜色或原场景颜色带到新背景上。seamless uniform light gray studio backdrop, no floor, no ground plane, no contact shadow, no pedestal, no texture, no stains, no color blotches, no film grain, no noise."
       ],
       "title": "正面 指令",
       "color": "#232",
@@ -690,10 +690,10 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            19,
             24,
             33,
-            46
+            46,
+            82
           ]
         }
       ],
@@ -706,7 +706,7 @@
       "id": 25,
       "type": "SaveImageTimestamp",
       "pos": [
-        1680,
+        2000,
         820
       ],
       "size": [
@@ -792,7 +792,7 @@
         "Node name for S&R": "TextEncodeQwenImageEditPlus"
       },
       "widgets_values": [
-        "Picture 1 是已经生成好的正面全身站立图（两眼可见的正面），不是原图。必须沿用 Picture 1 已经补全的全身、服装（含下半身和鞋）、站姿、体型、发型、发色、肤色和配饰，不要重新发明衣服或体型，不要回到原图去改服装。以这张正面为 0 度，只把相机逆时针绕到人物左手一侧、正左侧 90 度。标准 left profile：镜头正对左耳、左脸颊、左肩；只能看见左眼和左耳，看不见右眼和右耳；鼻子指向画面右边。true left profile, only one eye visible, only left ear visible. NOT front view, NOT three-quarter, NOT facing camera.禁止左右镜像，不要生成右侧。必须仍是完整全身站立图：从头顶到鞋底都在画面内，脚下留一点地面。站姿与 Picture 1 相同。只看到左侧脸，不要把脸转向镜头。\n这是角色设定转面：摄像机绕着 Picture 1 里的人物转，人物像雕塑一样保持同一站姿站在原地，只换机位不换姿势。不要转身、不要转头去找镜头、不要斜眼或回头看向观众；视线看向人物自己面朝的正前方，不是看向摄像机。\nPicture 2 是空的浅灰棚拍底板，只提供背景颜色，不是第二个人物。转面时把人物以外全部重新铺成 Picture 2，不要沿用 Picture 1 的背景。\n严格保持人物身份、五官结构、脸型、发型、发色、肤色、瞳色、唇色、体型、年龄、服装款式与颜色、配饰与 Picture 1 完全一致。肤色、头发、眼睛、嘴唇、衣服、配饰的颜色必须与 Picture 1 一致，不要自动调色、不要加滤镜、不要美白、不要改变冷暖或饱和度。不要变成另一个人，不要添加文字、箭头或九宫格。只锁定人物和衣服的固有色，不要锁定背景颜色。人物以外的每一个像素都必须是无纹理、无渐变斑、无脏点的均匀浅灰棚拍纯色，和 Picture 2 完全一致。不要把 Picture 1 背景里的杂色、色斑、噪点、衣服颜色或原场景颜色带到新背景上。seamless uniform light gray studio backdrop, no texture, no stains, no color blotches, no film grain, no noise."
+        "Picture 1 是已经生成好的正面全身站立图（两眼可见的正面），不是原图。必须沿用 Picture 1 已经补全的全身、服装（含下半身和鞋）、站姿、体型、发型、发色、肤色和配饰，不要重新发明衣服或体型，不要回到原图去改服装。以这张正面为 0 度，只把相机逆时针绕到人物左手一侧、正左侧 90 度。标准 left profile：镜头正对左耳、左脸颊、左肩；只能看见左眼和左耳，看不见右眼和右耳；鼻子指向画面右边。true left profile, only one eye visible, only left ear visible. NOT front view, NOT three-quarter, NOT facing camera.禁止左右镜像，不要生成右侧。必须仍是完整全身站立图：从头顶到鞋底都在画面内，不要地面、不要地板、不要脚底接触阴影、不要台座。站姿与 Picture 1 相同。只看到左侧脸，不要把脸转向镜头。\n这是角色设定转面：摄像机绕着 Picture 1 里的人物转，人物像雕塑一样保持同一站姿站在原地，只换机位不换姿势。不要转身、不要转头去找镜头、不要斜眼或回头看向观众；视线看向人物自己面朝的正前方，不是看向摄像机。\nPicture 2 是空的浅灰棚拍底板，只提供背景颜色，不是第二个人物。转面时把人物以外全部重新铺成 Picture 2，不要沿用 Picture 1 的背景。\n严格保持人物身份、五官结构、脸型、发型、发色、肤色、瞳色、唇色、体型、年龄、服装款式与颜色、配饰与 Picture 1 完全一致。肤色、头发、眼睛、嘴唇、衣服、配饰的颜色必须与 Picture 1 一致，不要自动调色、不要加滤镜、不要美白、不要改变冷暖或饱和度。不要变成另一个人，不要添加文字、箭头或九宫格。只锁定人物和衣服的固有色，不要锁定背景颜色。人物以外的每一个像素都必须是无纹理、无渐变斑、无脏点的均匀浅灰棚拍纯色，和 Picture 2 完全一致。不要地面、不要地板、不要脚底接触阴影、不要台座。不要把 Picture 1 背景里的杂色、色斑、噪点、衣服颜色或原场景颜色带到新背景上。seamless uniform light gray studio backdrop, no floor, no ground plane, no contact shadow, no pedestal, no texture, no stains, no color blotches, no film grain, no noise."
       ],
       "title": "侧面 指令",
       "color": "#232",
@@ -925,9 +925,9 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            32,
             34,
-            59
+            59,
+            84
           ]
         }
       ],
@@ -940,7 +940,7 @@
       "id": 35,
       "type": "SaveImageTimestamp",
       "pos": [
-        1680,
+        2000,
         1220
       ],
       "size": [
@@ -1067,7 +1067,7 @@
         "Node name for S&R": "TextEncodeQwenImageEditPlus"
       },
       "widgets_values": [
-        "Picture 1 是已经生成好的正面全身站立图，不是原图，也不是侧面图。必须沿用 Picture 1 已经补全的全身、服装（含下半身和鞋）、站姿、体型、发型、发色、肤色和配饰，不要重新发明衣服或体型，不要回到原图去改服装。以这张正面为 0 度，只把相机放到人物自身正后方 180 度，只看到后脑勺、后背和发型后侧。不要回头、不要露出正脸。必须仍是完整全身站立图：从头顶到鞋底都在画面内，脚下留一点地面。站姿与 Picture 1 相同。\n这是角色设定转面：摄像机绕着 Picture 1 里的人物转，人物像雕塑一样保持同一站姿站在原地，只换机位不换姿势。不要转身、不要转头去找镜头、不要斜眼或回头看向观众；视线看向人物自己面朝的正前方，不是看向摄像机。\nPicture 2 是空的浅灰棚拍底板，只提供背景颜色，不是第二个人物。转面时把人物以外全部重新铺成 Picture 2，不要沿用 Picture 1 的背景。\n严格保持人物身份、五官结构、脸型、发型、发色、肤色、瞳色、唇色、体型、年龄、服装款式与颜色、配饰与 Picture 1 完全一致。肤色、头发、眼睛、嘴唇、衣服、配饰的颜色必须与 Picture 1 一致，不要自动调色、不要加滤镜、不要美白、不要改变冷暖或饱和度。不要变成另一个人，不要添加文字、箭头或九宫格。只锁定人物和衣服的固有色，不要锁定背景颜色。人物以外的每一个像素都必须是无纹理、无渐变斑、无脏点的均匀浅灰棚拍纯色，和 Picture 2 完全一致。不要把 Picture 1 背景里的杂色、色斑、噪点、衣服颜色或原场景颜色带到新背景上。seamless uniform light gray studio backdrop, no texture, no stains, no color blotches, no film grain, no noise."
+        "Picture 1 是已经生成好的正面全身站立图，不是原图，也不是侧面图。必须沿用 Picture 1 已经补全的全身、服装（含下半身和鞋）、站姿、体型、发型、发色、肤色和配饰，不要重新发明衣服或体型，不要回到原图去改服装。以这张正面为 0 度，只把相机放到人物自身正后方 180 度，只看到后脑勺、后背和发型后侧。不要回头、不要露出正脸。必须仍是完整全身站立图：从头顶到鞋底都在画面内，不要地面、不要地板、不要脚底接触阴影、不要台座。站姿与 Picture 1 相同。\n这是角色设定转面：摄像机绕着 Picture 1 里的人物转，人物像雕塑一样保持同一站姿站在原地，只换机位不换姿势。不要转身、不要转头去找镜头、不要斜眼或回头看向观众；视线看向人物自己面朝的正前方，不是看向摄像机。\nPicture 2 是空的浅灰棚拍底板，只提供背景颜色，不是第二个人物。转面时把人物以外全部重新铺成 Picture 2，不要沿用 Picture 1 的背景。\n严格保持人物身份、五官结构、脸型、发型、发色、肤色、瞳色、唇色、体型、年龄、服装款式与颜色、配饰与 Picture 1 完全一致。肤色、头发、眼睛、嘴唇、衣服、配饰的颜色必须与 Picture 1 一致，不要自动调色、不要加滤镜、不要美白、不要改变冷暖或饱和度。不要变成另一个人，不要添加文字、箭头或九宫格。只锁定人物和衣服的固有色，不要锁定背景颜色。人物以外的每一个像素都必须是无纹理、无渐变斑、无脏点的均匀浅灰棚拍纯色，和 Picture 2 完全一致。不要地面、不要地板、不要脚底接触阴影、不要台座。不要把 Picture 1 背景里的杂色、色斑、噪点、衣服颜色或原场景颜色带到新背景上。seamless uniform light gray studio backdrop, no floor, no ground plane, no contact shadow, no pedestal, no texture, no stains, no color blotches, no film grain, no noise."
       ],
       "title": "背面 指令",
       "color": "#232",
@@ -1200,8 +1200,8 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            45,
-            47
+            47,
+            86
           ]
         }
       ],
@@ -1214,7 +1214,7 @@
       "id": 45,
       "type": "SaveImageTimestamp",
       "pos": [
-        1680,
+        2000,
         1620
       ],
       "size": [
@@ -1341,7 +1341,7 @@
         "Node name for S&R": "TextEncodeQwenImageEditPlus"
       },
       "widgets_values": [
-        "Picture 1 是已经生成好的正面全身站立图，不是原图。只把镜头推近成头肩特写：画面裁到头顶到锁骨，脸占据画面大部分。不要全身，不要半身。必须保持 Picture 1 的正面机位：两只眼睛都完整看见，鼻子在脸正中央，脸正对镜头。front-facing headshot, both eyes visible, symmetrical face. NOT profile, NOT side view, NOT three-quarter.能看清五官、肤质、眉毛、眼睛、嘴唇。不要变成侧面特写。\nPicture 2 是空的浅灰棚拍底板，只提供背景颜色，不是第二个人物。\n严格保持人物身份、五官结构、脸型、发型、发色、肤色、瞳色、唇色、体型、年龄、服装款式与颜色、配饰与 Picture 1 完全一致。肤色、头发、眼睛、嘴唇、衣服、配饰的颜色必须与 Picture 1 一致，不要自动调色、不要加滤镜、不要美白、不要改变冷暖或饱和度。不要变成另一个人，不要添加文字、箭头或九宫格。只锁定人物和衣服的固有色，不要锁定背景颜色。人物以外的每一个像素都必须是无纹理、无渐变斑、无脏点的均匀浅灰棚拍纯色，和 Picture 2 完全一致。不要把 Picture 1 背景里的杂色、色斑、噪点、衣服颜色或原场景颜色带到新背景上。seamless uniform light gray studio backdrop, no texture, no stains, no color blotches, no film grain, no noise."
+        "Picture 1 是已经生成好的正面全身站立图，不是原图。只把镜头推近成头肩特写：画面裁到头顶到锁骨，脸占据画面大部分。不要全身，不要半身。必须保持 Picture 1 的正面机位：两只眼睛都完整看见，鼻子在脸正中央，脸正对镜头。front-facing headshot, both eyes visible, symmetrical face. NOT profile, NOT side view, NOT three-quarter.能看清五官、肤质、眉毛、眼睛、嘴唇。不要变成侧面特写。\nPicture 2 是空的浅灰棚拍底板，只提供背景颜色，不是第二个人物。\n严格保持人物身份、五官结构、脸型、发型、发色、肤色、瞳色、唇色、体型、年龄、服装款式与颜色、配饰与 Picture 1 完全一致。肤色、头发、眼睛、嘴唇、衣服、配饰的颜色必须与 Picture 1 一致，不要自动调色、不要加滤镜、不要美白、不要改变冷暖或饱和度。不要变成另一个人，不要添加文字、箭头或九宫格。只锁定人物和衣服的固有色，不要锁定背景颜色。人物以外的每一个像素都必须是无纹理、无渐变斑、无脏点的均匀浅灰棚拍纯色，和 Picture 2 完全一致。不要地面、不要地板、不要脚底接触阴影、不要台座。不要把 Picture 1 背景里的杂色、色斑、噪点、衣服颜色或原场景颜色带到新背景上。seamless uniform light gray studio backdrop, no floor, no ground plane, no contact shadow, no pedestal, no texture, no stains, no color blotches, no film grain, no noise."
       ],
       "title": "正面脸特写 指令",
       "color": "#223",
@@ -1474,8 +1474,8 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            58,
-            60
+            60,
+            88
           ]
         }
       ],
@@ -1488,7 +1488,7 @@
       "id": 55,
       "type": "SaveImageTimestamp",
       "pos": [
-        1680,
+        2000,
         2020
       ],
       "size": [
@@ -1615,7 +1615,7 @@
         "Node name for S&R": "TextEncodeQwenImageEditPlus"
       },
       "widgets_values": [
-        "Picture 1 是已经生成好的左侧全身侧面图，不是原图、不是正面。只把镜头推近成头肩特写：画面裁到头顶到锁骨，脸占据画面大部分。不要全身，不要半身。必须保持 Picture 1 的正左侧 90 度轮廓：只能看见左眼、左耳和左侧脸，鼻子指向画面右边，不要把脸转向镜头，不要变成正面。left profile headshot, only one eye visible. NOT front view, NOT facing camera.\n不要转身、不要转头去找镜头。\nPicture 2 是空的浅灰棚拍底板，只提供背景颜色，不是第二个人物。\n严格保持人物身份、五官结构、脸型、发型、发色、肤色、瞳色、唇色、体型、年龄、服装款式与颜色、配饰与 Picture 1 完全一致。肤色、头发、眼睛、嘴唇、衣服、配饰的颜色必须与 Picture 1 一致，不要自动调色、不要加滤镜、不要美白、不要改变冷暖或饱和度。不要变成另一个人，不要添加文字、箭头或九宫格。只锁定人物和衣服的固有色，不要锁定背景颜色。人物以外的每一个像素都必须是无纹理、无渐变斑、无脏点的均匀浅灰棚拍纯色，和 Picture 2 完全一致。不要把 Picture 1 背景里的杂色、色斑、噪点、衣服颜色或原场景颜色带到新背景上。seamless uniform light gray studio backdrop, no texture, no stains, no color blotches, no film grain, no noise."
+        "Picture 1 是已经生成好的左侧全身侧面图，不是原图、不是正面。只把镜头推近成头肩特写：画面裁到头顶到锁骨，脸占据画面大部分。不要全身，不要半身。必须保持 Picture 1 的正左侧 90 度轮廓：只能看见左眼、左耳和左侧脸，鼻子指向画面右边，不要把脸转向镜头，不要变成正面。left profile headshot, only one eye visible. NOT front view, NOT facing camera.\n不要转身、不要转头去找镜头。\nPicture 2 是空的浅灰棚拍底板，只提供背景颜色，不是第二个人物。\n严格保持人物身份、五官结构、脸型、发型、发色、肤色、瞳色、唇色、体型、年龄、服装款式与颜色、配饰与 Picture 1 完全一致。肤色、头发、眼睛、嘴唇、衣服、配饰的颜色必须与 Picture 1 一致，不要自动调色、不要加滤镜、不要美白、不要改变冷暖或饱和度。不要变成另一个人，不要添加文字、箭头或九宫格。只锁定人物和衣服的固有色，不要锁定背景颜色。人物以外的每一个像素都必须是无纹理、无渐变斑、无脏点的均匀浅灰棚拍纯色，和 Picture 2 完全一致。不要地面、不要地板、不要脚底接触阴影、不要台座。不要把 Picture 1 背景里的杂色、色斑、噪点、衣服颜色或原场景颜色带到新背景上。seamless uniform light gray studio backdrop, no floor, no ground plane, no contact shadow, no pedestal, no texture, no stains, no color blotches, no film grain, no noise."
       ],
       "title": "侧面脸特写 指令",
       "color": "#223",
@@ -1748,7 +1748,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            71
+            90
           ]
         }
       ],
@@ -1761,7 +1761,7 @@
       "id": 65,
       "type": "SaveImageTimestamp",
       "pos": [
-        1680,
+        2000,
         2420
       ],
       "size": [
@@ -1807,7 +1807,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "用途：一张人物图 → 3 张全身转面 + 2 张脸部特写（角色参考）\n绿色节点上传人物图，直接 Queue。一次出 5 张：全身正面 / 侧面 / 背面，脸部正面 / 侧面特写。\n若出现未知节点 Wait For Image：重启 ComfyUI 后再打开本工作流。\n\n生成顺序：原图只用来生成正面全身；侧面和背面都以这张正面为 Picture 1 再转相机，这样腰腿、鞋和衣服会跟着正面已经补全的结果走。背面仍等侧面跑完再开始，只是为了串行省显存，参考图仍是正面不是侧面。\n脸部正面特写从生成好的正面全身推近；脸部侧面特写从生成好的侧面全身推近。不再出俯视/仰视脸。\n\n全身三视图：正面 0°、左侧 90°、背面 180°。侧面固定为人物自己的左侧，禁止把左面镜像当右面。\n原图可以是侧面、斜侧、背面，不要把它当成正面。0° 是人物自己脸和胸口朝向的正面：两眼、两耳都看见，不是侧脸。\n正面固定为标准站姿（直立、双臂自然下垂），即使原图只有半身也会补全腰腿和鞋；侧面/背面沿用正面那套补全。下半身仍是推断的，裙子/裤子/鞋可能不准，但三张会一致。\n人物应像雕塑一样站定，相机绕着转；侧面/背面如果在看镜头，把对应绿色指令再强调「不要转头看镜头」。\n颜色必须跟正面走；如果自动变色，确认「不要自动调色」那句还在。\n\n背面的发型后侧、背后印花仍是从正面猜的，可能不准。\n身份漂了：先看正面是否漂，再在对应绿色指令里补一句五官特征（眼镜、痣、发色）。\n想留原背景：删掉指令里「背景换成干净浅灰棚拍」那句。\n只要某几个角度：从后往前静音不需要的行。静音正面的话侧面/背面/脸特写也会停。\n\n侧面/背面杂色：转相机时模型会把正面背景斑点和衣服颜色涂到新露出来的背景上。各视角的 Picture 2 是纯浅灰底板，背景必须整片铺平，不要跟人物一起锁色。\n8 步 Lightning + CFG 1。转面画布 1024x1536（全身竖图），脸特写 1024x1024。视角串行跑，避免 14GB 显存被并行顶满。\n底模 INT8 ConvRot，和 03 / 07 / 10 相同。提分辨率用 02 / 08。角色一致出图用 10。"
+        "用途：一张人物图 → 3 张全身转面 + 2 张脸部特写（透明 PNG）\n绿色节点上传人物图，直接 Queue。一次出 5 张透明底：全身正面 / 侧面 / 背面，脸部正面 / 侧面特写。\n若出现未知节点 Wait For Image：重启 ComfyUI Desktop 后再打开本工作流。\n\n生成顺序：原图只用来生成正面全身；侧面和背面都以这张正面为 Picture 1 再转相机，这样腰腿、鞋和衣服会跟着正面已经补全的结果走。背面仍等侧面跑完再开始，只是为了串行省显存，参考图仍是正面不是侧面。\n脸部正面特写从生成好的正面全身推近；脸部侧面特写从生成好的侧面全身推近。不再出俯视/仰视脸。\n\n全身三视图：正面 0°、左侧 90°、背面 180°。侧面固定为人物自己的左侧，禁止把左面镜像当右面。\n原图可以是侧面、斜侧、背面，不要把它当成正面。0° 是人物自己脸和胸口朝向的正面：两眼、两耳都看见，不是侧脸。\n正面固定为标准站姿（直立、双臂自然下垂），即使原图只有半身也会补全腰腿和鞋；侧面/背面沿用正面那套补全。下半身仍是推断的，裙子/裤子/鞋可能不准，但三张会一致。\n人物应像雕塑一样站定，相机绕着转；侧面/背面如果在看镜头，把对应绿色指令再强调「不要转头看镜头」。\n颜色必须跟正面走；如果自动变色，确认「不要自动调色」那句还在。\n\n背面的发型后侧、背后印花仍是从正面猜的，可能不准。\n身份漂了：先看正面是否漂，再在对应绿色指令里补一句五官特征（眼镜、痣、发色）。\n只要某几个角度：从后往前静音不需要的行。静音正面的话侧面/背面/脸特写也会停。\n\n保存前用 BiRefNet 抠掉浅灰棚拍，写出透明 PNG。转面中间图仍带浅灰底，只锁身份不进最终文件。头发被切掉：去背景节点 expand 调到 4–8。留了一圈灰边：expand 改成 0 或 -2。\n8 步 Lightning + CFG 1。转面画布 1024x1536（全身竖图），脸特写 1024x1024。视角串行跑，避免 14GB 显存被并行顶满。\n底模 INT8 ConvRot，和 03 / 07 / 10 相同。提分辨率用 02 / 08。角色一致出图用 10。"
       ],
       "title": "用途：人物多角度",
       "color": "#432",
@@ -1871,7 +1871,7 @@
         "Node name for S&R": "TextEncodeQwenImageEditPlus"
       },
       "widgets_values": [
-        "looking at the camera, eye contact, turning head toward camera, over-the-shoulder glance, front view, facing camera, both eyes visible, symmetrical face, 斜眼看镜头, 转头看镜头, 回头看镜头, 正面脸, 正对镜头, sitting, seated, lying down, kneeling, squatting, walking, running, jumping, action pose, dynamic pose, leaning, arms crossed, hands on hips, hands in pockets, 坐着, 躺着, 蹲着, 跪着, 叉腰, 抱胸, 插兜, 迈步, 动态姿势, 自动调色, 滤镜, 美白, 换发色, 换衣服颜色, 肤色变化, color shift, recolor, filter, bleaching, mottled background, stained backdrop, color blotches, dirty background, textured background, noisy background, chromatic spots, 杂色, 色斑, 脏背景, 背景噪点, 背景纹理, 背景污渍"
+        "looking at the camera, eye contact, turning head toward camera, over-the-shoulder glance, front view, facing camera, both eyes visible, symmetrical face, 斜眼看镜头, 转头看镜头, 回头看镜头, 正面脸, 正对镜头, sitting, seated, lying down, kneeling, squatting, walking, running, jumping, action pose, dynamic pose, leaning, arms crossed, hands on hips, hands in pockets, 坐着, 躺着, 蹲着, 跪着, 叉腰, 抱胸, 插兜, 迈步, 动态姿势, 自动调色, 滤镜, 美白, 换发色, 换衣服颜色, 肤色变化, color shift, recolor, filter, bleaching, mottled background, stained backdrop, color blotches, dirty background, textured background, noisy background, chromatic spots, floor, ground plane, contact shadow, pedestal, platform, 杂色, 色斑, 脏背景, 背景噪点, 背景纹理, 背景污渍, 地面, 地板, 脚底阴影, 台座"
       ],
       "title": "Negative 侧面背面",
       "color": "#322",
@@ -1954,6 +1954,311 @@
         14277081
       ],
       "title": "棚拍浅灰底（锁背景）",
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 66,
+      "type": "LoadBackgroundRemovalModel",
+      "pos": [
+        1260,
+        700
+      ],
+      "size": [
+        280,
+        82
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "bg_model",
+          "type": "BACKGROUND_REMOVAL",
+          "links": [
+            81,
+            83,
+            85,
+            87,
+            89
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadBackgroundRemovalModel",
+        "models": [
+          {
+            "name": "birefnet.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/BiRefNet/resolve/main/background_removal/birefnet.safetensors",
+            "directory": "background_removal"
+          }
+        ]
+      },
+      "widgets_values": [
+        "birefnet.safetensors"
+      ],
+      "title": "BiRefNet 去背景",
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 67,
+      "type": "CutoutToTransparent",
+      "pos": [
+        1680,
+        820
+      ],
+      "size": [
+        280,
+        82
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "bg_removal_model",
+          "type": "BACKGROUND_REMOVAL",
+          "link": 81
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 82
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            19
+          ]
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CutoutToTransparent"
+      },
+      "widgets_values": [
+        2,
+        true,
+        3
+      ],
+      "title": "去背景 正面",
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 68,
+      "type": "CutoutToTransparent",
+      "pos": [
+        1680,
+        1220
+      ],
+      "size": [
+        280,
+        82
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "bg_removal_model",
+          "type": "BACKGROUND_REMOVAL",
+          "link": 83
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 84
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            32
+          ]
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CutoutToTransparent"
+      },
+      "widgets_values": [
+        2,
+        true,
+        3
+      ],
+      "title": "去背景 侧面",
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 69,
+      "type": "CutoutToTransparent",
+      "pos": [
+        1680,
+        1620
+      ],
+      "size": [
+        280,
+        82
+      ],
+      "flags": {},
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "bg_removal_model",
+          "type": "BACKGROUND_REMOVAL",
+          "link": 85
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 86
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            45
+          ]
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CutoutToTransparent"
+      },
+      "widgets_values": [
+        2,
+        true,
+        3
+      ],
+      "title": "去背景 背面",
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 70,
+      "type": "CutoutToTransparent",
+      "pos": [
+        1680,
+        2020
+      ],
+      "size": [
+        280,
+        82
+      ],
+      "flags": {},
+      "order": 34,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "bg_removal_model",
+          "type": "BACKGROUND_REMOVAL",
+          "link": 87
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 88
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            58
+          ]
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CutoutToTransparent"
+      },
+      "widgets_values": [
+        2,
+        true,
+        3
+      ],
+      "title": "去背景 正面脸特写",
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 71,
+      "type": "CutoutToTransparent",
+      "pos": [
+        1680,
+        2420
+      ],
+      "size": [
+        280,
+        82
+      ],
+      "flags": {},
+      "order": 40,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "bg_removal_model",
+          "type": "BACKGROUND_REMOVAL",
+          "link": 89
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 90
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            71
+          ]
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CutoutToTransparent"
+      },
+      "widgets_values": [
+        2,
+        true,
+        3
+      ],
+      "title": "去背景 侧面脸特写",
       "color": "#223",
       "bgcolor": "#335"
     }
@@ -2105,7 +2410,7 @@
     ],
     [
       19,
-      24,
+      67,
       0,
       25,
       0,
@@ -2193,7 +2498,7 @@
     ],
     [
       32,
-      34,
+      68,
       0,
       35,
       0,
@@ -2297,7 +2602,7 @@
     ],
     [
       45,
-      44,
+      69,
       0,
       45,
       0,
@@ -2401,7 +2706,7 @@
     ],
     [
       58,
-      54,
+      70,
       0,
       55,
       0,
@@ -2505,7 +2810,7 @@
     ],
     [
       71,
-      64,
+      71,
       0,
       65,
       0,
@@ -2582,6 +2887,86 @@
       61,
       3,
       "IMAGE"
+    ],
+    [
+      81,
+      66,
+      0,
+      67,
+      0,
+      "BACKGROUND_REMOVAL"
+    ],
+    [
+      82,
+      24,
+      0,
+      67,
+      1,
+      "IMAGE"
+    ],
+    [
+      83,
+      66,
+      0,
+      68,
+      0,
+      "BACKGROUND_REMOVAL"
+    ],
+    [
+      84,
+      34,
+      0,
+      68,
+      1,
+      "IMAGE"
+    ],
+    [
+      85,
+      66,
+      0,
+      69,
+      0,
+      "BACKGROUND_REMOVAL"
+    ],
+    [
+      86,
+      44,
+      0,
+      69,
+      1,
+      "IMAGE"
+    ],
+    [
+      87,
+      66,
+      0,
+      70,
+      0,
+      "BACKGROUND_REMOVAL"
+    ],
+    [
+      88,
+      54,
+      0,
+      70,
+      1,
+      "IMAGE"
+    ],
+    [
+      89,
+      66,
+      0,
+      71,
+      0,
+      "BACKGROUND_REMOVAL"
+    ],
+    [
+      90,
+      64,
+      0,
+      71,
+      1,
+      "IMAGE"
     ]
   ],
   "groups": [
@@ -2604,7 +2989,7 @@
       "bounding": [
         20,
         430,
-        1440,
+        1620,
         380
       ],
       "color": "#3f789e",
@@ -2617,7 +3002,7 @@
       "bounding": [
         20,
         800,
-        2120,
+        2480,
         380
       ],
       "color": "#3f789e",
@@ -2630,7 +3015,7 @@
       "bounding": [
         20,
         1200,
-        2120,
+        2480,
         380
       ],
       "color": "#3f789e",
@@ -2643,7 +3028,7 @@
       "bounding": [
         20,
         1600,
-        2120,
+        2480,
         380
       ],
       "color": "#3f789e",
@@ -2656,7 +3041,7 @@
       "bounding": [
         20,
         2000,
-        2120,
+        2480,
         380
       ],
       "color": "#3f789e",
@@ -2669,7 +3054,7 @@
       "bounding": [
         20,
         2400,
-        2120,
+        2480,
         380
       ],
       "color": "#3f789e",

@@ -1,0 +1,1378 @@
+{
+  "id": "14-ren-wu-duo-shi-jiao-bian-dong-zuo",
+  "revision": 2,
+  "last_node_id": 50,
+  "last_link_id": 53,
+  "version": 0.4,
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7,
+      "offset": [
+        40,
+        0
+      ]
+    },
+    "frontendVersion": "1.23.4"
+  },
+  "nodes": [
+    {
+      "id": 1,
+      "type": "UNETLoader",
+      "pos": [
+        40,
+        60
+      ],
+      "size": [
+        420,
+        82
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "qwen_image_edit_2511_int8_convrot.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "CLIPLoader",
+      "pos": [
+        40,
+        190
+      ],
+      "size": [
+        420,
+        106
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            14,
+            21
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+        "qwen_image",
+        "default"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [
+        40,
+        340
+      ],
+      "size": [
+        420,
+        60
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            15,
+            22,
+            27,
+            35
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "qwen_image_vae.safetensors"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        500,
+        60
+      ],
+      "size": [
+        380,
+        82
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "Qwen-Image-Edit-2511-Lightning-8steps-V1.0-bf16.safetensors",
+        1
+      ]
+    },
+    {
+      "id": 5,
+      "type": "ModelSamplingAuraFlow",
+      "pos": [
+        920,
+        60
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingAuraFlow"
+      },
+      "widgets_values": [
+        3.1
+      ]
+    },
+    {
+      "id": 6,
+      "type": "CFGNorm",
+      "pos": [
+        1220,
+        60
+      ],
+      "size": [
+        250,
+        82
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            29
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CFGNorm"
+      },
+      "widgets_values": [
+        1,
+        false
+      ]
+    },
+    {
+      "id": 10,
+      "type": "LoadImage",
+      "pos": [
+        40,
+        500
+      ],
+      "size": [
+        300,
+        314
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            4,
+            9,
+            16,
+            23,
+            52,
+            53
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "正面全身（必须两眼可见的正面）",
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 11,
+      "type": "LoadImage",
+      "pos": [
+        40,
+        850
+      ],
+      "size": [
+        300,
+        314
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "侧面全身（左侧90度）",
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 12,
+      "type": "LoadImage",
+      "pos": [
+        40,
+        1200
+      ],
+      "size": [
+        300,
+        314
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            6
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "背面全身（180度）",
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 13,
+      "type": "LoadImage",
+      "pos": [
+        360,
+        500
+      ],
+      "size": [
+        300,
+        314
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            7,
+            9
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "脸部正面特写",
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 14,
+      "type": "LoadImage",
+      "pos": [
+        360,
+        850
+      ],
+      "size": [
+        300,
+        314
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            8,
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "脸部侧面特写",
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 21,
+      "type": "ActionPromptText",
+      "pos": [
+        700,
+        1200
+      ],
+      "size": [
+        430,
+        160
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "action_prompt",
+          "type": "STRING",
+          "links": [
+            13
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ActionPromptText"
+      },
+      "widgets_values": [
+        "坐在椅子上，双手放在膝盖上，面朝前方，自然放松"
+      ],
+      "title": "人物A动作提示词（无参考图时必填）",
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 30,
+      "type": "CharacterActionPack",
+      "pos": [
+        700,
+        500
+      ],
+      "size": [
+        340,
+        290
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "front",
+          "type": "IMAGE",
+          "link": 4
+        },
+        {
+          "name": "side",
+          "type": "IMAGE",
+          "link": 5
+        },
+        {
+          "name": "back",
+          "type": "IMAGE",
+          "link": 6
+        },
+        {
+          "name": "face_front",
+          "type": "IMAGE",
+          "link": 7
+        },
+        {
+          "name": "face_side",
+          "type": "IMAGE",
+          "link": 8
+        },
+        {
+          "name": "face_above",
+          "type": "IMAGE",
+          "link": 9
+        },
+        {
+          "name": "face_below",
+          "type": "IMAGE",
+          "link": 10
+        },
+        {
+          "name": "pose",
+          "type": "IMAGE",
+          "link": 52
+        },
+        {
+          "name": "has_pose",
+          "type": "BOOLEAN",
+          "link": 51
+        },
+        {
+          "name": "action_prompt",
+          "type": "STRING",
+          "link": 13
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "name": "image2",
+          "type": "IMAGE",
+          "links": [
+            17
+          ]
+        },
+        {
+          "name": "image3",
+          "type": "IMAGE",
+          "links": [
+            18
+          ]
+        },
+        {
+          "name": "canvas",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "links": [
+            19
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "STRING",
+          "links": [
+            24
+          ]
+        },
+        {
+          "name": "denoise",
+          "type": "FLOAT",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CharacterActionPack"
+      },
+      "widgets_values": [],
+      "title": "打包：人物B多角度 + 人物A动作",
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 31,
+      "type": "ImageScaleToTotalPixels",
+      "pos": [
+        1080,
+        500
+      ],
+      "size": [
+        280,
+        106
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 26
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            28
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageScaleToTotalPixels"
+      },
+      "widgets_values": [
+        "lanczos",
+        1.5,
+        16
+      ],
+      "title": "动作画布 ~1.5MP"
+    },
+    {
+      "id": 32,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [
+        1080,
+        660
+      ],
+      "size": [
+        430,
+        160
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 14
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "link": 19,
+          "widget": {
+            "name": "prompt"
+          }
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 15,
+          "shape": 7
+        },
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 16,
+          "shape": 7
+        },
+        {
+          "name": "image2",
+          "type": "IMAGE",
+          "link": 17,
+          "shape": 7
+        },
+        {
+          "name": "image3",
+          "type": "IMAGE",
+          "link": 18,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            20
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": [
+        ""
+      ],
+      "title": "动作 Positive",
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 33,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [
+        1540,
+        660
+      ],
+      "size": [
+        280,
+        58
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            30
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": [
+        "index_timestep_zero"
+      ]
+    },
+    {
+      "id": 34,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [
+        1080,
+        860
+      ],
+      "size": [
+        430,
+        160
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 21
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "link": 24,
+          "widget": {
+            "name": "prompt"
+          }
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 22,
+          "shape": 7
+        },
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 23,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            25
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": [
+        ""
+      ],
+      "title": "动作 Negative",
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 35,
+      "type": "FluxKontextMultiReferenceLatentMethod",
+      "pos": [
+        1540,
+        860
+      ],
+      "size": [
+        280,
+        58
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 25
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            31
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxKontextMultiReferenceLatentMethod"
+      },
+      "widgets_values": [
+        "index_timestep_zero"
+      ]
+    },
+    {
+      "id": 36,
+      "type": "VAEEncode",
+      "pos": [
+        1080,
+        1080
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 28
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 27
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            32
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEEncode"
+      },
+      "widgets_values": [],
+      "title": "编码动作画布"
+    },
+    {
+      "id": 37,
+      "type": "KSampler",
+      "pos": [
+        1340,
+        1080
+      ],
+      "size": [
+        315,
+        262
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 29
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 30
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 31
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            34
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        0,
+        "randomize",
+        8,
+        1,
+        "euler",
+        "simple",
+        1.0
+      ],
+      "title": "采样 动作"
+    },
+    {
+      "id": 38,
+      "type": "VAEDecode",
+      "pos": [
+        1680,
+        1080
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 34
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 35
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            36
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 39,
+      "type": "SaveImageTimestamp",
+      "pos": [
+        1920,
+        970
+      ],
+      "size": [
+        420,
+        300
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 36
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImageTimestamp"
+      },
+      "widgets_values": [
+        "ActionPose"
+      ],
+      "title": "保存 动作图",
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 40,
+      "type": "Note",
+      "pos": [
+        40,
+        1550
+      ],
+      "size": [
+        640,
+        420
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "Note"
+      },
+      "widgets_values": [
+        "用途：用户上传人物多角度图 + 写动作文字 → 1张换动作图\n\n== 上传人物B多角度图（5个绿色节点）==\n  正面全身：必须两眼都看见的正面全身图\n  侧面全身：左侧90度侧面全身图\n  背面全身：180度背面全身图\n  脸部正面特写：正面脸部特写\n  脸部侧面特写：侧面脸部特写\n  这5张可以用09工作流生成，也可以是手头已有的角色设定图。\n  脸部俯视/仰视特写自动复用正面/侧面，不需要额外上传。\n\n== 写动作提示词（1个绿色节点）==\n  在 ActionPromptText 节点写动作描述，例如：\n  \"坐在椅子上，双手放在膝盖上\"\n  \"奔跑，双臂摆动，一脚抬起\"\n  \"跳跃，双脚离地，双臂上举\"\n  \"单手托腮坐在台阶上，翘二郎腿\"\n  写越具体效果越好。\n\n== 参数 ==\n  底模：qwen_image_edit_2511_int8_convrot + Lightning 8步 + CFG 1\n  denoise=1.0（全生成，不参考任何动作图）\n  14GB 显存足够\n\n== 常见问题 ==\n  身份漂了：在 ActionPromptText 补一句五官特征（眼镜、痣、发色）\n  动作不像：尽量写具体，写明肢体位置和朝向\n  想出多个动作：复制采样区域，改 ActionPromptText"
+      ],
+      "title": "用途：人物多视角变动作（纯文字版）",
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 50,
+      "type": "PrimitiveNode",
+      "pos": [
+        700,
+        1200
+      ],
+      "size": [
+        200,
+        80
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "BOOLEAN",
+          "type": "BOOLEAN",
+          "links": [
+            51
+          ]
+        }
+      ],
+      "properties": {},
+      "widgets_values": [
+        false
+      ],
+      "title": "has_pose = False"
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      4,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      4,
+      0,
+      5,
+      0,
+      "MODEL"
+    ],
+    [
+      3,
+      5,
+      0,
+      6,
+      0,
+      "MODEL"
+    ],
+    [
+      4,
+      10,
+      0,
+      30,
+      0,
+      "IMAGE"
+    ],
+    [
+      5,
+      11,
+      0,
+      30,
+      1,
+      "IMAGE"
+    ],
+    [
+      6,
+      12,
+      0,
+      30,
+      2,
+      "IMAGE"
+    ],
+    [
+      7,
+      13,
+      0,
+      30,
+      3,
+      "IMAGE"
+    ],
+    [
+      8,
+      14,
+      0,
+      30,
+      4,
+      "IMAGE"
+    ],
+    [
+      9,
+      13,
+      0,
+      30,
+      5,
+      "IMAGE"
+    ],
+    [
+      10,
+      14,
+      0,
+      30,
+      6,
+      "IMAGE"
+    ],
+    [
+      13,
+      21,
+      0,
+      30,
+      9,
+      "STRING"
+    ],
+    [
+      14,
+      2,
+      0,
+      32,
+      0,
+      "CLIP"
+    ],
+    [
+      15,
+      3,
+      0,
+      32,
+      2,
+      "VAE"
+    ],
+    [
+      16,
+      10,
+      0,
+      32,
+      3,
+      "IMAGE"
+    ],
+    [
+      17,
+      30,
+      1,
+      32,
+      4,
+      "IMAGE"
+    ],
+    [
+      18,
+      30,
+      2,
+      32,
+      5,
+      "IMAGE"
+    ],
+    [
+      19,
+      30,
+      4,
+      32,
+      1,
+      "STRING"
+    ],
+    [
+      20,
+      32,
+      0,
+      33,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      21,
+      2,
+      0,
+      34,
+      0,
+      "CLIP"
+    ],
+    [
+      22,
+      3,
+      0,
+      34,
+      2,
+      "VAE"
+    ],
+    [
+      23,
+      10,
+      0,
+      34,
+      3,
+      "IMAGE"
+    ],
+    [
+      24,
+      30,
+      5,
+      34,
+      1,
+      "STRING"
+    ],
+    [
+      25,
+      34,
+      0,
+      35,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      27,
+      3,
+      0,
+      36,
+      1,
+      "VAE"
+    ],
+    [
+      28,
+      31,
+      0,
+      36,
+      0,
+      "IMAGE"
+    ],
+    [
+      29,
+      6,
+      0,
+      37,
+      0,
+      "MODEL"
+    ],
+    [
+      30,
+      33,
+      0,
+      37,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      31,
+      35,
+      0,
+      37,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      32,
+      36,
+      0,
+      37,
+      3,
+      "LATENT"
+    ],
+    [
+      34,
+      37,
+      0,
+      38,
+      0,
+      "LATENT"
+    ],
+    [
+      35,
+      3,
+      0,
+      38,
+      1,
+      "VAE"
+    ],
+    [
+      36,
+      38,
+      0,
+      39,
+      0,
+      "IMAGE"
+    ],
+    [
+      51,
+      50,
+      0,
+      30,
+      8,
+      "BOOLEAN"
+    ],
+    [
+      52,
+      10,
+      0,
+      30,
+      7,
+      "IMAGE"
+    ],
+    [
+      53,
+      10,
+      0,
+      31,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "1 模型",
+      "bounding": [
+        20,
+        20,
+        1470,
+        400
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "2 人物B多角度图（上传）",
+      "bounding": [
+        20,
+        460,
+        640,
+        1080
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "3 动作提示词",
+      "bounding": [
+        20,
+        1160,
+        1140,
+        250
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "4 打包 + 编码 + 采样 + 保存",
+      "bounding": [
+        680,
+        460,
+        1660,
+        700
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ]
+}

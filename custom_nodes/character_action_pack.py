@@ -21,12 +21,15 @@ IDENTITY_LOCK = (
 )
 
 POSE_PROMPT = (
-    "人物A提供动作，人物B提供身份。Picture 1 是人物A的动作参考图；"
+    "人物B提供身份。"
+    "Picture 1 是人物B正面全身；"
     "Picture 2 是人物B的全身三视图拼图（从左到右：正面、侧面、背面）；"
     "Picture 3 是人物B的脸部四特写拼图（正面、侧面、上面、下面）。\n"
-    "生成人物B做出人物A的动作：姿势、肢体、构图、镜头和场景光线跟 Picture 1 走；"
-    "脸、发型、体型、服装必须是人物B。不要用人物A的五官、发色或衣服。"
-    "衣服随新动作自然褶皱，但款式和颜色必须仍是人物B。融合自然，光影跟 Picture 1 一致。\n"
+    "画布上已经有一张动作参考图的粗略结构，请保留它的姿势、肢体、构图和镜头角度，"
+    "但把人物换成人物B：脸、发型、体型、服装必须是人物B。"
+    "不要保留画布里原来人物的五官、发色或衣服。"
+    "衣服随新动作自然褶皱，但款式和颜色必须仍是人物B。"
+    "不要直接复制画布内容，只保留动作姿势的结构，人物身份全部替换为人物B。\n"
     + IDENTITY_LOCK
 )
 
@@ -42,6 +45,7 @@ TEXT_PROMPT = (
 
 NEG_POSE = (
     "人物A的脸, 换成动作参考图里的人, 保留人物A的五官, 人物A的发型, 人物A的衣服, "
+    "直接复制参考图, 和Picture 1一模一样, 复刻参考图, "
     "标准站姿, A-pose, T-pose, 自动调色, 滤镜, 美白, 换发色, 换衣服颜色, "
     "肤色变化, color shift, recolor, filter, bleaching"
 )
@@ -227,20 +231,24 @@ class CharacterActionPack:
         face_sheet = _to_1_5mp(_vcat(face_row1, face_row2))
 
         if has_pose:
-            image1 = _to_1_5mp(pose)
-            canvas = pose
+            image1 = _to_1_5mp(front)
+            image2 = body_sheet
+            image3 = face_sheet
+            canvas = _to_1_5mp(pose)
             extra = f"\n人物A的动作补充：{action}" if action else ""
             prompt = POSE_PROMPT + extra
             negative = NEG_POSE
-            denoise = 0.85
+            denoise = 0.55
         else:
             image1 = _to_1_5mp(front)
+            image2 = body_sheet
+            image3 = face_sheet
             canvas = front
             prompt = TEXT_PROMPT.format(action=action)
             negative = NEG_TEXT
             denoise = 1.0
 
-        return (image1, body_sheet, face_sheet, canvas, prompt, negative, denoise)
+        return (image1, image2, image3, canvas, prompt, negative, denoise)
 
 
 class ActionPromptText:
