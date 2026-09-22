@@ -1,8 +1,8 @@
 {
   "id": "06-dong-man-gao-qing",
-  "revision": 3,
-  "last_node_id": 23,
-  "last_link_id": 15,
+  "revision": 4,
+  "last_node_id": 30,
+  "last_link_id": 24,
   "nodes": [
     {
       "id": 1,
@@ -53,16 +53,16 @@
       "id": 5,
       "type": "CLIPTextEncode",
       "pos": [440, 80],
-      "size": [450, 280],
+      "size": [450, 340],
       "flags": {},
       "order": 3,
       "mode": 0,
       "inputs": [{ "name": "clip", "type": "CLIP", "link": 2 }],
       "outputs": [{ "name": "CONDITIONING", "type": "CONDITIONING", "links": [7] }],
-      "title": "Positive",
+      "title": "Positive (替换风格关键词)",
       "properties": { "Node name for S&R": "CLIPTextEncode" },
       "widgets_values": [
-        "High-quality anime illustration, professional anime key visual. "
+        "一位大学女生的全身照。镜头的角度：正面。人物的衣着：半透明高领紧身连体衣。人物的头发：纯黑色的长直发。人物的身材：胸部饱满坚挺呈八字形。人物的姿势：双腿微微地分开站立。动漫图风格：painterly illustration, brush strokes, soft blended shading, pixiv top ranking. High-quality anime illustration, professional anime key visual, extremely detailed, sharp focus, intricate details."
       ],
       "color": "#232",
       "bgcolor": "#353"
@@ -70,8 +70,8 @@
     {
       "id": 6,
       "type": "CLIPTextEncode",
-      "pos": [440, 400],
-      "size": [450, 220],
+      "pos": [440, 460],
+      "size": [450, 200],
       "flags": {},
       "order": 4,
       "mode": 0,
@@ -80,7 +80,7 @@
       "title": "Negative",
       "properties": { "Node name for S&R": "CLIPTextEncode" },
       "widgets_values": [
-        "photorealistic, real photograph, 3d render, cgi, plastic skin, western cartoon, blurry, lowres, extra fingers, fused fingers, bad anatomy, watermark, logo, text, messy lineart, muddy colors, oversmoothed face, distorted hands, cropped head"
+        "photorealistic, real photograph, 3d render, cgi, plastic skin, western cartoon, blurry, lowres, extra fingers, fused fingers, bad anatomy, watermark, logo, text, messy lineart, muddy colors, oversmoothed face, distorted hands, cropped head, jpeg artifacts, noisy, grainy, dull colors, flat shading, sketch, rough draft"
       ],
       "color": "#322",
       "bgcolor": "#533"
@@ -127,7 +127,7 @@
         { "name": "latent_image", "type": "LATENT", "link": 11 }
       ],
       "outputs": [{ "name": "LATENT", "type": "LATENT", "links": [14] }],
-      "title": "Generate 40 steps CFG4",
+      "title": "Base 40 steps CFG4",
       "properties": { "Node name for S&R": "KSampler" },
       "widgets_values": [0, "randomize", 40, 4, "euler_ancestral", "beta", 1]
     },
@@ -143,7 +143,7 @@
         { "name": "samples", "type": "LATENT", "link": 14 },
         { "name": "vae", "type": "VAE", "link": 4 }
       ],
-      "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [15] }],
+      "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [15, 20] }],
       "properties": { "Node name for S&R": "VAEDecode" },
       "widgets_values": []
     },
@@ -162,19 +162,91 @@
       "widgets_values": ["Anime_T2I"]
     },
     {
-      "id": 23,
-      "type": "Note",
-      "pos": [40, 630],
-      "size": [400, 380],
+      "id": 24,
+      "type": "UpscaleModelLoader",
+      "pos": [40, 620],
+      "size": [360, 58],
       "flags": {},
       "order": 10,
       "mode": 0,
       "inputs": [],
+      "outputs": [{ "name": "UPSCALE_MODEL", "type": "UPSCALE_MODEL", "links": [21] }],
+      "properties": { "Node name for S&R": "UpscaleModelLoader" },
+      "widgets_values": ["4x-AnimeSharp.pth"]
+    },
+    {
+      "id": 25,
+      "type": "ImageClampMaxDimension",
+      "pos": [1300, 280],
+      "size": [300, 82],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [{ "name": "image", "type": "IMAGE", "link": 20 }],
+      "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [22] }],
+      "title": "SR input max 2048",
+      "properties": { "Node name for S&R": "ImageClampMaxDimension" },
+      "widgets_values": ["lanczos", 2048]
+    },
+    {
+      "id": 26,
+      "type": "ImageUpscaleWithModel",
+      "pos": [1560, 480],
+      "size": [280, 46],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        { "name": "upscale_model", "type": "UPSCALE_MODEL", "link": 21 },
+        { "name": "image", "type": "IMAGE", "link": 22 }
+      ],
+      "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [23] }],
+      "title": "4x-AnimeSharp",
+      "properties": { "Node name for S&R": "ImageUpscaleWithModel" },
+      "widgets_values": []
+    },
+    {
+      "id": 27,
+      "type": "ImageScaleToMaxDimension",
+      "pos": [1880, 480],
+      "size": [300, 82],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [{ "name": "image", "type": "IMAGE", "link": 23 }],
+      "outputs": [{ "name": "IMAGE", "type": "IMAGE", "links": [24] }],
+      "title": "Scale -> 4K",
+      "properties": { "Node name for S&R": "ImageScaleToMaxDimension" },
+      "widgets_values": ["lanczos", 4096]
+    },
+    {
+      "id": 28,
+      "type": "SaveImageTimestamp",
+      "pos": [2220, 480],
+      "size": [420, 360],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [{ "name": "images", "type": "IMAGE", "link": 24 }],
       "outputs": [],
-      "title": "用途：动漫文生图",
+      "title": "Save 4K 高清",
+      "properties": { "Node name for S&R": "SaveImageTimestamp" },
+      "widgets_values": ["Anime_T2I_4K"]
+    },
+    {
+      "id": 23,
+      "type": "Note",
+      "pos": [40, 720],
+      "size": [460, 580],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "★ 动漫风格菜单（复制关键词到 Positive 节点）",
       "properties": {},
       "widgets_values": [
-        "一位大学女生的全身照。\n镜头的角度：正面。\n人物的衣着：半透明高领紧身连体衣。\n人物的头发：纯黑色的长直发。\n人物的身材：胸部饱满坚挺呈八字形。\n人物的姿势：双腿微微地分开站立。\n动漫图风格：painterly illustration, brush strokes, soft blended shading, pixiv top （pixiv 厚涂插画（笔触明显，体积感强））"
+        "用法：把下面某一种风格的英文关键词，替换到 Positive 节点里「动漫图风格：」后面的部分。\nPositive 节点结构：[人物/场景描述] + 动漫图风格：[风格关键词] + 通用质量词。\n\n═══ 8 种动漫风格 ═══\n\n1. 厚涂插画（笔触明显，体积感强，pixiv 顶级）\npainterly illustration, brush strokes, soft blended shading, pixiv top ranking\n\n2. 赛璐璐（动画番剧标准，平涂色块，干净线条）\ncel shading, flat colors, clean line art, anime production, sharp edges, vibrant colors\n\n3. 水彩风（柔和晕染，纸纹质感，透明色调）\nwatercolor style, soft edges, paper texture, pastel colors, transparent wash, dreamy atmosphere\n\n4. 新海诚风（电影级天空，光晕，超细背景）\nmakoto shinkai style, vibrant sky, detailed clouds, lens flare, cinematic lighting, hyperdetailed background\n\n5. 吉卜力风（手绘温度，水彩背景，怀旧暖光）\nstudio ghibli style, hand-drawn, watercolor background, soft warm lighting, nostalgic, lush nature\n\n6. 赛博朋克动漫（霓虹，暗调，未来都市）\ncyberpunk anime, neon lights, dark atmosphere, futuristic city, holographic, rain, glowing signs\n\n7. 90年代复古（胶片颗粒，复古色调，怀旧）\n1990s anime style, film grain, vintage colors, cel animation, retro, nostalgic, scan lines\n\n8. 水墨线稿（黑白墨笔，漫画白描，留白意境）\nmonochrome, ink drawing, manga line art, brush ink, sumi-e style, high contrast, white background\n\n═══ 使用提示 ═══\n\n• 底模 z-anime-base-bf16，40 步，CFG 4，euler_ancestral + beta。\n• 默认竖图 1024x1536（改 EmptySD3LatentImage 节点可换比例）。\n  方图 1024x1024 / 横图 1536x1024 / 细节竖图 1024x1536。\n• 一次出两张：Anime_T2I（原图 1024x1536）+ Anime_T2I_4K（超分 4K）。\n• 超分用 4x-AnimeSharp（动漫专用，线条锐利）。\n• 想换风格：只改 Positive 节点里「动漫图风格：」后面的英文即可。\n• 想换人物/场景：改 Positive 节点里前面的中文描述即可。\n• 通用质量词保持不动：High-quality anime illustration, professional anime key visual, extremely detailed, sharp focus, intricate details."
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -190,7 +262,12 @@
     [11, 7, 0, 9, 3, "LATENT"],
     [12, 8, 0, 9, 0, "MODEL"],
     [14, 9, 0, 10, 0, "LATENT"],
-    [15, 10, 0, 11, 0, "IMAGE"]
+    [15, 10, 0, 11, 0, "IMAGE"],
+    [20, 10, 0, 25, 0, "IMAGE"],
+    [21, 24, 0, 26, 0, "UPSCALE_MODEL"],
+    [22, 25, 0, 26, 1, "IMAGE"],
+    [23, 26, 0, 27, 0, "IMAGE"],
+    [24, 27, 0, 28, 0, "IMAGE"]
   ],
   "groups": [],
   "config": {},
