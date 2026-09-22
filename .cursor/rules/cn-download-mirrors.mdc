@@ -1,0 +1,48 @@
+---
+description: 本机在国内，下载 ComfyUI 模型/Python 包必须走国内镜像：pip 优先阿里云，HuggingFace 走 hf-mirror.com，避免直连超时
+alwaysApply: true
+---
+
+# 国内下载镜像（本机必用）
+
+本机在中国大陆，直连 HuggingFace / PyPI 经常超时或极慢。装 ComfyUI 模型、Python 包时**必须**优先走国内镜像，不要直连。
+
+## pip（Python 包，含 ComfyUI 的 comfy-* / comfyui-* 包）
+
+按优先级依次尝试，前者没有再降级到后者：
+
+1. **阿里云**（首选，ComfyUI 新包同步最勤）：
+   `-i https://mirrors.aliyun.com/pypi/simple/`
+2. **清华**（备选，老包全但新包偶尔没同步）：
+   `-i https://pypi.tuna.tsinghua.edu.cn/simple`
+3. **官方 PyPI**（最后手段，慢）：`https://pypi.org/simple`
+
+升级 ComfyUI 的 `requirements.txt` 时，**先用阿里云**：
+```powershell
+& $py -m pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/ --timeout 60
+```
+
+⚠️ 不要用 `--extra-index-url` 把官方 PyPI 和国内镜像混着跑——pip 会去官方源解析依赖，在国内会卡死。要么全阿里云，要么全清华，缺包再单独装。
+
+## HuggingFace 模型（ComfyUI-Shared/models）
+
+直连 `huggingface.co` 会超时。**把域名换成 `hf-mirror.com`** 即可，路径不变：
+
+```
+https://huggingface.co/Comfy-Org/xxx/resolve/main/...
+  ↓ 改成
+https://hf-mirror.com/Comfy-Org/xxx/resolve/main/...
+```
+
+下载用 `curl -L -C - --retry 10 -o <dest> <url>`（断点续传 + 自动重试）。
+
+## GitHub raw 文件（工作流模板、input 图片等）
+
+`raw.githubusercontent.com` 直连通常可用；不行就用 jsdelivr CDN：
+`https://cdn.jsdelivr.net/gh/<org>/<repo>@<branch>/<path>`
+
+## ComfyUI 安装位置（本机）
+
+- 程序：`C:\Users\23580\ComfyUI-Installs\SelfComfyUi\ComfyUI`（git 仓库，venv 在 `.venv\`）
+- 模型共享目录：`C:\Users\23580\ComfyUI-Shared\models`（各子目录：`diffusion_models` / `text_encoders` / `vae` / `loras` / `embeddings` 等）
+- 输入图片：`C:\Users\23580\ComfyUI-Shared\input`
