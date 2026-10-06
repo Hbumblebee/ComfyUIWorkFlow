@@ -62,6 +62,14 @@ class MiniMaxH3CanvasFromImage:
             "optional": {
                 "snap_to_multiple": ("INT", {"default": 32, "min": 1, "max": 256, "step": 1}),
                 "max_pixels": ("INT", {"default": MAX_PIXELS, "min": 65536, "max": 16777216, "step": 1024}),
+                "long_edge": ("INT", {
+                    "default": 0, "min": 0, "max": 4096, "step": 32,
+                    "tooltip": "Hard cap on the long side (0 = off). Set 1344 to lock the model's native ceiling.",
+                }),
+                "native_only": ("BOOLEAN", {
+                    "default": False,
+                    "tooltip": "Clamp to H3's trained canvas (768 short edge, 768x1344 cap) instead of scaling a bigger canvas from megapixels.",
+                }),
             },
         }
 
@@ -76,14 +84,18 @@ class MiniMaxH3CanvasFromImage:
         "already resized to it so the first frame is never stretched."
     )
 
-    def resolve(self, image, megapixels, upscale_method, snap_to_multiple=32, max_pixels=MAX_PIXELS):
+    def resolve(self, image, megapixels, upscale_method, snap_to_multiple=32, max_pixels=MAX_PIXELS,
+                long_edge=0, native_only=False):
         src_h, src_w = int(image.shape[1]), int(image.shape[2])
         multiple = max(1, int(snap_to_multiple))
 
         canvas_w, canvas_h = adapt_canvas(src_w, src_h)
+        native_w, native_h = canvas_w, canvas_h
 
         # megapixels is a pixel budget, exactly like the Resolution Selector template
         scale = math.sqrt((megapixels * 1024 * 1024) / (canvas_w * canvas_h))
+        if native_only:
+            scale = min(1.0, scale)
         canvas_w = max(multiple, round(canvas_w * scale / multiple) * multiple)
         canvas_h = max(multiple, round(canvas_h * scale / multiple) * multiple)
 
@@ -93,13 +105,21 @@ class MiniMaxH3CanvasFromImage:
             canvas_w = max(multiple, round(canvas_w * shrink / multiple) * multiple)
             canvas_h = max(multiple, round(canvas_h * shrink / multiple) * multiple)
 
+        # keep the ratio while pulling the long side under the requested ceiling
+        cap_edge = int(long_edge)
+        longest = max(canvas_w, canvas_h)
+        if cap_edge > 0 and longest > cap_edge and longest > multiple:
+            shrink = cap_edge / longest
+            canvas_w = max(multiple, int(canvas_w * shrink / multiple) * multiple)
+            canvas_h = max(multiple, int(canvas_h * shrink / multiple) * multiple)
+
         if canvas_w != src_w or canvas_h != src_h:
             image = _resize(image, canvas_w, canvas_h, upscale_method)
 
-        return {
-            "ui": {"text": [f"{src_w}x{src_h}  ->  {canvas_w}x{canvas_h}  ({megapixels} MP)"]},
-            "result": (image, canvas_w, canvas_h),
-        }
+        label = f"{src_w}x{src_h}  ->  {canvas_w}x{canvas_h}  ({canvas_w * canvas_h / 1024 / 1024:.3f} MP)"
+        if canvas_w > native_w or canvas_h > native_h:
+            label += "  |  over H3 native canvas - enable native_only or lower megapixels"
+        return {"ui": {"text": [label]}, "result": (image, canvas_w, canvas_h)}
 
 
 NODE_CLASS_MAPPINGS = {
