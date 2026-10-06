@@ -434,13 +434,13 @@
         "ver": "0.33.0"
       },
       "widgets_values": [
-        "video/MiniMax_H3",
+        "video/MiniMaxH3_I2V_%year%%month%%day%_%hour%%minute%%second%",
         "auto",
         "auto",
         "auto"
       ],
       "widgets_values_named": {
-        "filename_prefix": "video/MiniMax_H3",
+        "filename_prefix": "video/MiniMaxH3_I2V_%year%%month%%day%_%hour%%minute%%second%",
         "format": "auto",
         "format.codec": "auto",
         "codec": "auto"
