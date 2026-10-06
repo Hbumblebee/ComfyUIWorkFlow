@@ -1,9 +1,36 @@
 {
   "id": "e3f2b845-8f2c-4b5a-9caf-eac1029d3e7e",
   "revision": 0,
-  "last_node_id": 126,
-  "last_link_id": 245,
+  "last_node_id": 129,
+  "last_link_id": 248,
   "nodes": [
+    {
+      "id": 129,
+      "type": "MarkdownNote",
+      "pos": [
+        -1660,
+        5680
+      ],
+      "size": [
+        540,
+        220
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Note: Canvas = Image Aspect Ratio",
+      "properties": {},
+      "widgets_values": [
+        "## Canvas follows the image\n\n`MiniMaxH3ImageToVideo` stretches `first_frame` straight onto `width` x `height` (it resizes with crop `disabled`), so a fixed size squashes the frame. **MiniMax H3 Canvas From Image** avoids that:\n\n- aspect ratio comes from the loaded image\n- H3 geometry: 768px short edge, capped at 768x1344, both sides rounded to a multiple of 32\n- `megapixels` is the only size dial (0.4 keeps the old pixel budget; 0.98 MP is the official 768p, i.e. 1344x768 for 16:9 and 1024x1024 for 1:1)\n- the node also returns the image already resized to that canvas\n\nThe video therefore always matches the image's aspect ratio."
+      ],
+      "widgets_values_named": {
+        "text": "## Canvas follows the image\n\n`MiniMaxH3ImageToVideo` stretches `first_frame` straight onto `width` x `height` (it resizes with crop `disabled`), so a fixed size squashes the frame. **MiniMax H3 Canvas From Image** avoids that:\n\n- aspect ratio comes from the loaded image\n- H3 geometry: 768px short edge, capped at 768x1344, both sides rounded to a multiple of 32\n- `megapixels` is the only size dial (0.4 keeps the old pixel budget; 0.98 MP is the official 768p, i.e. 1344x768 for 16:9 and 1024x1024 for 1:1)\n- the node also returns the image already resized to that canvas\n\nThe video therefore always matches the image's aspect ratio."
+      },
+      "color": "#222",
+      "bgcolor": "#000"
+    },
     {
       "id": 114,
       "type": "LoadImage",
@@ -24,7 +51,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            218
+            246
           ]
         },
         {
@@ -48,22 +75,66 @@
       }
     },
     {
-      "id": 115,
-      "type": "ResolutionSelector",
+      "id": 127,
+      "type": "MiniMaxH3CanvasFromImage",
       "pos": [
         -1110,
-        5230
+        4980
       ],
       "size": [
-        270,
-        170
+        330,
+        210
       ],
       "flags": {},
-      "order": 1,
+      "order": 9,
       "mode": 0,
-      "showAdvanced": false,
-      "inputs": [],
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 246
+        },
+        {
+          "name": "megapixels",
+          "type": "FLOAT",
+          "widget": {
+            "name": "megapixels"
+          },
+          "link": null
+        },
+        {
+          "name": "upscale_method",
+          "type": "COMBO",
+          "widget": {
+            "name": "upscale_method"
+          },
+          "link": null
+        },
+        {
+          "name": "snap_to_multiple",
+          "type": "INT",
+          "widget": {
+            "name": "snap_to_multiple"
+          },
+          "link": null
+        },
+        {
+          "name": "max_pixels",
+          "type": "INT",
+          "widget": {
+            "name": "max_pixels"
+          },
+          "link": null
+        }
+      ],
       "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            248
+          ]
+        },
         {
           "name": "width",
           "type": "INT",
@@ -80,19 +151,19 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "ResolutionSelector",
-        "cnr_id": "comfy-core",
-        "ver": "0.33.0"
+        "Node name for S&R": "MiniMaxH3CanvasFromImage"
       },
       "widgets_values": [
-        "1:1 (Square)",
         0.4,
-        32
+        "lanczos",
+        32,
+        1032192
       ],
       "widgets_values_named": {
-        "aspect_ratio": "1:1 (Square)",
         "megapixels": 0.4,
-        "multiple": 32
+        "upscale_method": "lanczos",
+        "snap_to_multiple": 32,
+        "max_pixels": 1032192
       }
     },
     {
@@ -114,7 +185,7 @@
           "name": "first_frame",
           "shape": 7,
           "type": "IMAGE",
-          "link": 218
+          "link": 248
         },
         {
           "name": "last_frame",
@@ -248,10 +319,10 @@
       "title": "Note: MiniMax H3",
       "properties": {},
       "widgets_values": [
-        "## MiniMax H3\n\n[MiniMax H3](https://www.minimax.io/blog/minimax-h3) is MiniMax's general-purpose, omni-modal generation model. It jointly understands text, image, video, and audio, and generates video with **native stereo audio**: voice, sound effects, and music are modeled jointly in a single forward pass, not layered on afterward. Output is up to 2K resolution, 24fps, and up to about 15 seconds.\n\n## About this workflow\n\nThis template runs the **Image to Video** task (`MiniMaxH3ImageToVideo` node), which covers both:\n\n- **t2va** (text-to-video), when no images are connected\n- **fl2va** (first/last-frame image-to-video), when `first_frame` and/or `last_frame` are connected\n\n**Key inputs**\n\n- **first_frame / last_frame**: optional keyframes; the model generates the motion between them\n- **prompt**: describe the shots, motion, and the accompanying audio (dialogue, SFX, music) in one block\n- **width / height**: set via Resolution Selector. H3's native canvas is a 768px short edge, capped at 768x1344 pixels, rounded to a multiple of 32\n- **duration (seconds)**: converted to a valid frame `length` by the Math Expression node, snapping up to the model's 17-frame-per-block (17k+5) grid at 24fps"
+        "## MiniMax H3\n\n[MiniMax H3](https://www.minimax.io/blog/minimax-h3) is MiniMax's general-purpose, omni-modal generation model. It jointly understands text, image, video, and audio, and generates video with **native stereo audio**: voice, sound effects, and music are modeled jointly in a single forward pass, not layered on afterward. Output is up to 2K resolution, 24fps, and up to about 15 seconds.\n\n## About this workflow\n\nThis template runs the **Image to Video** task (`MiniMaxH3ImageToVideo` node), which covers both:\n\n- **t2va** (text-to-video), when no images are connected\n- **fl2va** (first/last-frame image-to-video), when `first_frame` and/or `last_frame` are connected\n\n**Key inputs**\n\n- **first_frame / last_frame**: optional keyframes; the model generates the motion between them\n- **prompt**: describe the shots, motion, and the accompanying audio (dialogue, SFX, music) in one block\n- **width / height**: driven by the **MiniMax H3 Canvas From Image** node, which takes the canvas from `first_frame`'s own aspect ratio (768px short edge, 768x1344 cap, multiple of 32) scaled to the `megapixels` budget, and hands back the frame already resized to it. H3's native canvas is a 768px short edge, capped at 768x1344 pixels, rounded to a multiple of 32\n- **megapixels**: canvas size budget. Keeping it identical to the old Resolution Selector value gives the same pixel count as before, only at the image's aspect ratio instead of a fixed 16:9\n- **duration (seconds)**: converted to a valid frame `length` by the Math Expression node, snapping up to the model's 17-frame-per-block (17k+5) grid at 24fps"
       ],
       "widgets_values_named": {
-        "text": "## MiniMax H3\n\n[MiniMax H3](https://www.minimax.io/blog/minimax-h3) is MiniMax's general-purpose, omni-modal generation model. It jointly understands text, image, video, and audio, and generates video with **native stereo audio**: voice, sound effects, and music are modeled jointly in a single forward pass, not layered on afterward. Output is up to 2K resolution, 24fps, and up to about 15 seconds.\n\n## About this workflow\n\nThis template runs the **Image to Video** task (`MiniMaxH3ImageToVideo` node), which covers both:\n\n- **t2va** (text-to-video), when no images are connected\n- **fl2va** (first/last-frame image-to-video), when `first_frame` and/or `last_frame` are connected\n\n**Key inputs**\n\n- **first_frame / last_frame**: optional keyframes; the model generates the motion between them\n- **prompt**: describe the shots, motion, and the accompanying audio (dialogue, SFX, music) in one block\n- **width / height**: set via Resolution Selector. H3's native canvas is a 768px short edge, capped at 768x1344 pixels, rounded to a multiple of 32\n- **duration (seconds)**: converted to a valid frame `length` by the Math Expression node, snapping up to the model's 17-frame-per-block (17k+5) grid at 24fps"
+        "text": "## MiniMax H3\n\n[MiniMax H3](https://www.minimax.io/blog/minimax-h3) is MiniMax's general-purpose, omni-modal generation model. It jointly understands text, image, video, and audio, and generates video with **native stereo audio**: voice, sound effects, and music are modeled jointly in a single forward pass, not layered on afterward. Output is up to 2K resolution, 24fps, and up to about 15 seconds.\n\n## About this workflow\n\nThis template runs the **Image to Video** task (`MiniMaxH3ImageToVideo` node), which covers both:\n\n- **t2va** (text-to-video), when no images are connected\n- **fl2va** (first/last-frame image-to-video), when `first_frame` and/or `last_frame` are connected\n\n**Key inputs**\n\n- **first_frame / last_frame**: optional keyframes; the model generates the motion between them\n- **prompt**: describe the shots, motion, and the accompanying audio (dialogue, SFX, music) in one block\n- **width / height**: driven by the **MiniMax H3 Canvas From Image** node, which takes the canvas from `first_frame`'s own aspect ratio (768px short edge, 768x1344 cap, multiple of 32) scaled to the `megapixels` budget, and hands back the frame already resized to it. H3's native canvas is a 768px short edge, capped at 768x1344 pixels, rounded to a multiple of 32\n- **megapixels**: canvas size budget. Keeping it identical to the old Resolution Selector value gives the same pixel count as before, only at the image's aspect ratio instead of a fixed 16:9\n- **duration (seconds)**: converted to a valid frame `length` by the Math Expression node, snapping up to the model's 17-frame-per-block (17k+5) grid at 24fps"
       },
       "color": "#222",
       "bgcolor": "#000"
@@ -311,97 +382,6 @@
       "bgcolor": "#000"
     },
     {
-      "id": 119,
-      "type": "ImageScaleToTotalPixels",
-      "pos": [
-        -1520,
-        5610
-      ],
-      "size": [
-        280,
-        170
-      ],
-      "flags": {},
-      "order": 5,
-      "mode": 0,
-      "showAdvanced": true,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            228
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "ImageScaleToTotalPixels",
-        "cnr_id": "comfy-core",
-        "ver": "0.33.0"
-      },
-      "widgets_values": [
-        "nearest-exact",
-        0.9,
-        32
-      ],
-      "widgets_values_named": {
-        "upscale_method": "nearest-exact",
-        "megapixels": 0.9,
-        "resolution_steps": 32
-      }
-    },
-    {
-      "id": 120,
-      "type": "GetImageSize",
-      "pos": [
-        -1490,
-        5830
-      ],
-      "size": [
-        230,
-        100
-      ],
-      "flags": {},
-      "order": 7,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 228
-        }
-      ],
-      "outputs": [
-        {
-          "name": "width",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "batch_size",
-          "type": "INT",
-          "links": null
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "GetImageSize",
-        "cnr_id": "comfy-core",
-        "ver": "0.33.0"
-      }
-    },
-    {
       "id": 92,
       "type": "SaveVideo",
       "pos": [
@@ -457,34 +437,34 @@
       "VIDEO"
     ],
     [
-      218,
-      114,
-      0,
-      105,
-      0,
-      "IMAGE"
-    ],
-    [
       219,
-      115,
-      0,
+      127,
+      1,
       105,
       2,
       "INT"
     ],
     [
       220,
-      115,
-      1,
+      127,
+      2,
       105,
       3,
       "INT"
     ],
     [
-      228,
-      119,
+      246,
+      114,
       0,
-      120,
+      127,
+      0,
+      "IMAGE"
+    ],
+    [
+      248,
+      127,
+      0,
+      105,
       0,
       "IMAGE"
     ]
@@ -492,12 +472,12 @@
   "groups": [
     {
       "id": 5,
-      "title": "Use Image Size",
+      "title": "Canvas Follows Image Aspect Ratio",
       "bounding": [
-        -1550,
-        5540,
-        340,
-        410
+        -1660,
+        4800,
+        940,
+        780
       ],
       "color": "#3f789e",
       "flags": {}
